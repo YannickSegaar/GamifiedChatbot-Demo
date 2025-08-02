@@ -1,0 +1,566 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fjordlight Adventures - Sustainable Norwegian Winter Tours</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: #3B534E; /* Forest Green */
+            --secondary-color: #6C92A6; /* Arctic Blue */
+            --accent-color: #F0F4F8; /* Pristine White/Light Blue-Gray */
+            --text-dark: #2c3e50;
+            --text-light: #576574;
+            --border-radius: 16px;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: 'Nunito Sans', sans-serif;
+            line-height: 1.7;
+            color: var(--text-dark);
+            background-color: #fdfdfd;
+        }
+
+        /* --- Header --- */
+        .header {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            padding: 1rem 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+            transition: background-color 0.3s;
+        }
+
+        .nav-container {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .logo .fa-snowflake {
+            color: var(--secondary-color);
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        .nav-menu a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+            position: relative;
+        }
+        
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: var(--secondary-color);
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        /* --- Hero Section --- */
+        .hero {
+            background: linear-gradient(rgba(44, 62, 80, 0.5), rgba(44, 62, 80, 0.5)),
+                        url('https://images.unsplash.com/photo-1548786811-dd6e453ccca7?q=80&w=1974&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
+            height: 95vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            padding: 0 2rem;
+        }
+
+        .hero-content h1 {
+            font-size: 3.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
+            font-weight: 700;
+        }
+
+        .hero-content p {
+            font-size: 1.4rem;
+            margin-bottom: 2.5rem;
+            text-shadow: 1px 1px 4px rgba(0,0,0,0.5);
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        
+        .cta-button {
+            background: var(--secondary-color);
+            color: white;
+            padding: 1rem 2.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(108, 146, 166, 0.4);
+        }
+
+        .cta-button:hover {
+            background: var(--primary-color);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(59, 83, 78, 0.4);
+        }
+
+        /* --- Featured Tours Section --- */
+        .featured {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 6rem 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.8rem;
+            margin-bottom: 1rem;
+            color: var(--primary-color);
+            font-weight: 700;
+        }
+        
+        .section-subtitle {
+            text-align: center;
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 4rem;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .tours-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2.5rem;
+        }
+
+        .tour-card {
+            background: white;
+            border-radius: var(--border-radius);
+            overflow: hidden;
+            box-shadow: 0 8px 30px rgba(108, 146, 166, 0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+
+        .tour-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 40px rgba(108, 146, 166, 0.2);
+        }
+
+        .tour-image {
+            height: 250px;
+            background-size: cover;
+            background-position: center;
+            position: relative;
+        }
+        
+        .tour-image .tour-persona {
+            position: absolute;
+            top: 1rem;
+            left: 1rem;
+            background: rgba(59, 83, 78, 0.8);
+            backdrop-filter: blur(5px);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tour-info {
+            padding: 1.5rem 2rem;
+        }
+
+        .tour-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            color: var(--primary-color);
+        }
+
+        .tour-description {
+            color: var(--text-light);
+            font-size: 1rem;
+            line-height: 1.6;
+            margin-bottom: 1.5rem;
+        }
+        
+        .tour-details {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-top: 1rem;
+            border-top: 1px solid #eee;
+        }
+
+        .tour-details .duration, .tour-details .difficulty {
+            font-weight: 600;
+            color: var(--text-dark);
+        }
+        
+        .tour-details i {
+            color: var(--secondary-color);
+            margin-right: 0.5rem;
+        }
+
+        /* --- Sustainability Section --- */
+        .sustainability {
+            background: var(--accent-color);
+            padding: 6rem 2rem;
+        }
+        
+        .sustainability-content {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: flex;
+            align-items: center;
+            gap: 4rem;
+        }
+        
+        .sustainability-text {
+            flex: 1;
+        }
+
+        .sustainability-image {
+            flex: 1;
+            max-width: 500px;
+        }
+        
+        .sustainability-image img {
+            width: 100%;
+            border-radius: var(--border-radius);
+            box-shadow: 0 10px 30px rgba(108, 146, 166, 0.2);
+        }
+
+        /* --- Footer --- */
+        .footer {
+            background: var(--primary-color);
+            color: white;
+            padding: 4rem 2rem 2rem;
+        }
+
+        .footer-content {
+            max-width: 1300px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 1.5rem;
+            color: white;
+            font-size: 1.2rem;
+            font-weight: 700;
+        }
+        
+        .footer-section p, .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            margin-bottom: 0.8rem;
+            transition: color 0.3s;
+        }
+        
+        .footer-section a:hover {
+            color: white;
+        }
+
+        .social-icons a {
+            font-size: 1.5rem;
+            margin-right: 1rem;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 3rem;
+            margin-top: 3rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            color: #aaa;
+        }
+
+        /* --- Responsive Design --- */
+        @media (max-width: 992px) {
+            .sustainability-content {
+                flex-direction: column;
+            }
+        }
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            .nav-menu {
+                flex-direction: column;
+                text-align: center;
+                gap: 1rem;
+            }
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            .hero-content p {
+                font-size: 1.2rem;
+            }
+            .tours-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fa-solid fa-snowflake"></i>
+                Fjordlight Adventures
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="#tours">Winter Tours</a></li>
+                    <li><a href="#sustainability">Our Promise</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Embrace the Arctic Silence</h1>
+            <p>Discover Norway's pristine winter landscapes on unforgettable, sustainable adventures. Find the perfect tour for your travel style.</p>
+            <a href="#tours" class="cta-button">Explore Our Tours</a>
+        </div>
+    </section>
+
+    <!-- Featured Tours Section -->
+    <section class="featured" id="tours">
+        <h2 class="section-title">Signature Winter Experiences</h2>
+        <p class="section-subtitle">Each tour is crafted with a deep respect for nature and local culture, ensuring a responsible and authentic Norwegian adventure. Not sure which to choose? Our AI guide can help you find your perfect match!</p>
+        <div class="tours-grid">
+            <!-- Tour Card 1 -->
+            <div class="tour-card">
+                <div class="tour-image" style="background-image: url('https://images.unsplash.com/photo-1531366936337-7c912a4589a7?q=80&w=2070&auto=format&fit=crop');">
+                    <div class="tour-persona"><i class="fa-solid fa-bolt"></i> Adventure Seeker</div>
+                </div>
+                <div class="tour-info">
+                    <h3 class="tour-title">Fjord Adrenaline Package</h3>
+                    <p class="tour-description">Combine a high-speed RIB boat safari on the fjord with an exhilarating snowshoe hike to a stunning viewpoint.</p>
+                    <div class="tour-details">
+                        <div class="duration"><i class="fa-regular fa-clock"></i> 6 Hours</div>
+                        <div class="difficulty"><i class="fa-solid fa-mountain"></i> High</div>
+                    </div>
+                </div>
+            </div>
+            <!-- Tour Card 2 -->
+            <div class="tour-card">
+                <div class="tour-image" style="background-image: url('https://images.unsplash.com/photo-1533109721025-d1ae7de8488a?q=80&w=1974&auto=format&fit=crop');">
+                    <div class="tour-persona"><i class="fa-solid fa-people-group"></i> Cultural Immersionist</div>
+                </div>
+                <div class="tour-info">
+                    <h3 class="tour-title">Heritage Trail & Local Flavors</h3>
+                    <p class="tour-description">Journey on the historic Flåm Railway, visit a traditional Stave Church, and enjoy a meal with local chefs.</p>
+                    <div class="tour-details">
+                        <div class="duration"><i class="fa-regular fa-clock"></i> Full Day</div>
+                        <div class="difficulty"><i class="fa-solid fa-person-hiking"></i> Low</div>
+                    </div>
+                </div>
+            </div>
+            <!-- Tour Card 3 -->
+            <div class="tour-card">
+                <div class="tour-image" style="background-image: url('https://images.unsplash.com/photo-1547756536-cdeaf2a2fa8c?q=80&w=2070&auto=format&fit=crop');">
+                    <div class="tour-persona"><i class="fa-solid fa-camera"></i> Nature Photographer</div>
+                </div>
+                <div class="tour-info">
+                    <h3 class="tour-title">Arctic Light & Landscape Safari</h3>
+                    <p class="tour-description">A tour for photographers, taking you to iconic viewpoints at the golden hour to capture the perfect winter shot.</p>
+                    <div class="tour-details">
+                        <div class="duration"><i class="fa-regular fa-clock"></i> 5 Hours</div>
+                        <div class="difficulty"><i class="fa-solid fa-person-hiking"></i> Medium</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sustainability Section -->
+    <section class="sustainability" id="sustainability">
+        <div class="sustainability-content">
+            <div class="sustainability-text">
+                <h2 class="section-title" style="text-align: left;">Travel with Purpose</h2>
+                <p class="section-subtitle" style="text-align: left; margin-left: 0;">Our promise is to protect the pristine beauty of Norway for generations to come. We partner exclusively with local, eco-certified guides and utilize electric-powered transport wherever possible. When you travel with Fjordlight, you're not just a tourist; you're a guardian of the Arctic.</p>
+                <a href="#tours" class="cta-button">Our Sustainable Tours</a>
+            </div>
+            <div class="sustainability-image">
+                <img src="https://images.unsplash.com/photo-1629053093138-72b68f50ef75?q=80&w=2071&auto=format&fit=crop" alt="Electric boat on a Norwegian fjord">
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" id="contact">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Fjordlight Adventures</h4>
+                <p>Your guide to authentic, sustainable, and unforgettable winter experiences in the heart of the Norwegian fjords.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <a href="#tours">All Tours</a>
+                <a href="#sustainability">Sustainability</a>
+                <a href="#">About Us</a>
+                <a href="#">FAQ</a>
+            </div>
+            <div class="footer-section">
+                <h4>Contact Us</h4>
+                <p><i class="fas fa-phone"></i> +47 123 45 678</p>
+                <p><i class="fas fa-envelope"></i> contact@fjordlight.com</p>
+                <p><i class="fas fa-map-marker-alt"></i> Flåm, Norway</p>
+            </div>
+            <div class="footer-section">
+                <h4>Follow Us</h4>
+                <div class="social-icons">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-youtube"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Fjordlight Adventures. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+   <body>
+  <!-- Confetti Canvas -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- Voiceflow Chat Widget Container -->
+  <div id="flat-chat"></div>
+  <div id="voiceflow-chat-frame"></div>
+
+  <!-- Confetti Library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
+  <!-- Voiceflow Chat Widget and Extensions Script -->
+  <script type="module">
+    console.log("Script loaded. Initializing Voiceflow chat widget...");
+
+    // Import extensions from the extensions.js file
+    import {
+      TourFinderQuizExtension1,
+      PropertyCalculatorExtension1,
+      PropertyCalculatorExtension2,
+      PropertyCalculatorExtension3,
+      PropertyCalculatorExtension4,
+      PropertyCalculatorExtension5,
+      PropertyCalculatorExtension6,
+      DirectionsWorkflowExtension7,
+      DirectionsWorkflowExtension22,
+      DirectionsWorkflowExtension23,
+      DirectionsWorkflowExtension24
+    } from '/extensions.js';
+
+    // Load the Voiceflow chat widget with extensions
+    (function (d, t) {
+      var v = d.createElement(t),
+        s = d.getElementsByTagName(t)[0];
+      v.onload = function () {
+        console.log("Voiceflow widget script loaded. Initializing chat...");
+
+        window.voiceflow.chat.load({
+          verify: { projectID: '6798b43c9f655dc50cb7cb58' }, // Replace with your Voiceflow project ID
+          url: 'https://general-runtime.voiceflow.com',
+          versionID: 'production', // Use 'development' for testing or 'production' for live
+          voice: { 
+            url: "https://runtime-api.voiceflow.com" 
+          },
+          user: {
+            name: 'Demo User',
+          },
+          render: {
+            mode: 'overlay',
+          },
+          autostart: true,
+          allowDangerousHTML: true,
+          assistant: {
+            extensions: [
+            TourFinderQuizExtension1,
+            PropertyCalculatorExtension1,
+            PropertyCalculatorExtension2,
+            PropertyCalculatorExtension3,
+            PropertyCalculatorExtension4,
+            PropertyCalculatorExtension5,
+            PropertyCalculatorExtension6,
+            DirectionsWorkflowExtension7,
+            DirectionsWorkflowExtension22,
+            DirectionsWorkflowExtension23,
+            DirectionsWorkflowExtension24
+            ],
+            stylesheet: "https://yannicksegaar.github.io/DX_Demo/VF_styles.css",
+          },
+        }).then(() => {
+          console.log("Voiceflow chat initialized successfully.");
+          // Initialize the handoff listener with the Voiceflow runtime
+          setupHandoffListener(window.voiceflow.chat.runtime);
+        }).catch((error) => {
+          console.error("Error initializing Voiceflow chat:", error);
+        });
+      };
+      v.src = 'https://cdn.voiceflow.com/widget-next/bundle.mjs'; // Updated to the new widget version
+      v.type = 'text/javascript';
+      s.parentNode.insertBefore(v, s);
+    })(document, 'script');
+  </script>
+</body>
+</html>
