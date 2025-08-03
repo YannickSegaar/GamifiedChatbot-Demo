@@ -12567,3 +12567,60 @@ export const WinterExplorerQuizExtension4 = {
     };
   }
 };
+
+// YRS: SNOWFALL EXTENSION VERSION 1
+
+// This variable holds the active snow instance so we can access it later to stop it.
+let snowInstance = null;
+
+export const SnowfallExtension1 = {
+  name: 'Snowfall',
+  type: 'effect',
+
+  // This function tells Voiceflow to run the effect when a Custom Action
+  // with the name 'snow' is triggered.
+  match: ({ trace }) => trace.type === 'snow',
+
+  // This function runs when the 'match' is successful.
+  effect: ({ trace }) => {
+    // Safely get the action from the payload using optional chaining (?.),
+    // just like in your new confetti example.
+    const action = trace.payload?.action;
+
+    if (action === 'start') {
+      // If the action is 'start' and snow isn't already running, create it.
+      if (!snowInstance) {
+        console.log('Starting snow effect... ❄️');
+        snowInstance = new SnowFall();
+      }
+    } else if (action === 'stop') {
+      // If the action is 'stop' and snow is running, destroy it.
+      if (snowInstance) {
+        console.log('Stopping snow effect...');
+        snowInstance.destroy();
+        snowInstance = null; // Clear the instance
+      }
+    }
+  },
+};
+
+// YRS: CONFETTI EXTENSION VERSION 1
+
+export const ConfettiExtension1 = {
+  name: 'Confetti',
+  type: 'effect',
+  match: ({ trace }) =>
+    trace.type === 'ext_confetti1' || trace.payload?.name === 'ext_confetti1',
+  effect: ({ trace }) => {
+    const canvas = document.querySelector('#confetti-canvas')
+
+    var myConfetti = confetti.create(canvas, {
+      resize: true,
+      useWorker: true,
+    })
+    myConfetti({
+      particleCount: 200,
+      spread: 160,
+    })
+  },
+}

@@ -506,22 +506,66 @@
         });
     </script>
 
-    <!-- Confetti Canvas -->
-    <canvas id="confetti-canvas"></canvas>
-    
-    <!-- Voiceflow Chat Widget Container -->
-    <div id="flat-chat"></div>
-    <div id="voiceflow-chat-frame"></div>
-    
-    <!-- Confetti Library -->
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-    
-    <!-- Voiceflow Chat Widget and Extensions Script -->
-    <script type="module">
-        console.log("Script loaded. Initializing Voiceflow chat widget...");
-        
-        // Import extensions from the extensions.js file
-        import {
+<body>
+  <!-- Confetti Canvas -->
+  <canvas id="confetti-canvas"></canvas>
+
+  <!-- Voiceflow Chat Widget Container -->
+  <div id="flat-chat"></div>
+  <div id="voiceflow-chat-frame"></div>
+
+  <!-- Confetti Library -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
+  <!-- Voiceflow Chat Widget and Extensions Script -->
+  <script type="module">
+    console.log("Script loaded. Initializing Voiceflow chat widget...");
+
+    // Import extensions from the extensions.js file
+    import {
+      TourFinderQuizExtension1,
+      PropertyCalculatorExtension1,
+      PropertyCalculatorExtension2,
+      PropertyCalculatorExtension3,
+      PropertyCalculatorExtension4,
+      PropertyCalculatorExtension5,
+      PropertyCalculatorExtension6,
+      DirectionsWorkflowExtension7,
+      DirectionsWorkflowExtension22,
+      DirectionsWorkflowExtension23,
+      DirectionsWorkflowExtension24,
+      WinterExplorerQuizExtension1,
+      WinterExplorerQuizExtension2,
+      WinterExplorerQuizExtension3,
+      WinterExplorerQuizExtension4,
+      SnowfallExtension1,
+      ConfettiExtension1
+    } from '/extensions.js';
+
+    // Load the Voiceflow chat widget with extensions
+    (function (d, t) {
+      var v = d.createElement(t),
+        s = d.getElementsByTagName(t)[0];
+      v.onload = function () {
+        console.log("Voiceflow widget script loaded. Initializing chat...");
+
+        window.voiceflow.chat.load({
+          verify: { projectID: '6798b43c9f655dc50cb7cb58' },
+          url: 'https://general-runtime.voiceflow.com',
+          versionID: 'production',
+          voice: { 
+            url: "https://runtime-api.voiceflow.com" 
+          },
+          user: {
+            name: 'Demo User',
+          },
+          render: {
+            mode: 'overlay',
+          },
+          autostart: false, // Changed to false so we can control the timing
+          allowDangerousHTML: true,
+          assistant: {
+            extensions: [
             TourFinderQuizExtension1,
             PropertyCalculatorExtension1,
             PropertyCalculatorExtension2,
@@ -533,60 +577,50 @@
             DirectionsWorkflowExtension22,
             DirectionsWorkflowExtension23,
             DirectionsWorkflowExtension24,
-            WinterExplorerQuizExtension1
-        } from '/extensions.js';
-        
-        // Load the Voiceflow chat widget with extensions
-        (function (d, t) {
-            var v = d.createElement(t),
-                s = d.getElementsByTagName(t)[0];
-            v.onload = function () {
-                console.log("Voiceflow widget script loaded. Initializing chat...");
-                
-                window.voiceflow.chat.load({
-                    verify: { projectID: '6798b43c9f655dc50cb7cb58' },
-                    url: 'https://general-runtime.voiceflow.com',
-                    versionID: 'production',
-                    voice: { 
-                        url: "https://runtime-api.voiceflow.com" 
-                    },
-                    user: {
-                        name: 'Demo User',
-                    },
-                    render: {
-                        mode: 'overlay',
-                    },
-                    autostart: true,
-                    allowDangerousHTML: true,
-                    assistant: {
-                        extensions: [
-                            TourFinderQuizExtension1,
-                            PropertyCalculatorExtension1,
-                            PropertyCalculatorExtension2,
-                            PropertyCalculatorExtension3,
-                            PropertyCalculatorExtension4,
-                            PropertyCalculatorExtension5,
-                            PropertyCalculatorExtension6,
-                            DirectionsWorkflowExtension7,
-                            DirectionsWorkflowExtension22,
-                            DirectionsWorkflowExtension23,
-                            DirectionsWorkflowExtension24,
-                            WinterExplorerQuizExtension1
-                        ],
-                        stylesheet: "https://yannicksegaar.github.io/DX_Demo/VF_styles.css",
-                    },
-                }).then(() => {
-                    console.log("Voiceflow chat initialized successfully.");
-                    // Initialize the handoff listener with the Voiceflow runtime
-                    setupHandoffListener(window.voiceflow.chat.runtime);
-                }).catch((error) => {
-                    console.error("Error initializing Voiceflow chat:", error);
-                });
-            };
-            v.src = 'https://cdn.voiceflow.com/widget/bundle.mjs'; // Use the correct widget version
-            v.type = 'text/javascript';
-            s.parentNode.insertBefore(v, s);
-        })(document, 'script');
-    </script>
+            WinterExplorerQuizExtension1,
+            WinterExplorerQuizExtension2,
+            WinterExplorerQuizExtension3,
+            WinterExplorerQuizExtension4,
+            SnowfallExtension1,
+            ConfettiExtension1
+            ],
+            stylesheet: "https://yannicksegaar.github.io/DX_Demo/VF_styles.css",
+          },
+        }).then(() => {
+          console.log("Voiceflow chat initialized successfully.");
+          
+          // Clear any existing proactive messages
+          window.voiceflow.chat.proactive.clear();
+          
+          // Add first proactive message "hi"
+          window.voiceflow.chat.proactive.push({
+            type: 'text',
+            payload: { message: 'Hi there!' }
+          });
+          
+          // Add second proactive message "hello" after a brief delay
+          setTimeout(() => {
+            window.voiceflow.chat.proactive.push({
+              type: 'text',
+              payload: { message: 'Snowman ☃️' }
+            });
+          }, 1500); // 1.5 second delay between messages
+          
+          // Auto-open the chat widget after 1.5 seconds
+          setTimeout(() => {
+            window.voiceflow.chat.open();
+          }, 2500);
+          
+          // Initialize the handoff listener with the Voiceflow runtime
+          setupHandoffListener(window.voiceflow.chat.runtime);
+        }).catch((error) => {
+          console.error("Error initializing Voiceflow chat:", error);
+        });
+      };
+      v.src = 'https://cdn.voiceflow.com/widget-next/bundle.mjs';
+      v.type = 'text/javascript';
+      s.parentNode.insertBefore(v, s);
+    })(document, 'script');
+  </script>
 </body>
 </html>
