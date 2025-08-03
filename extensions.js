@@ -13189,3 +13189,131 @@ export const AIConversationalQuizExtension4 = {
     renderQuestion();
   }
 };
+
+// YRS: AI Form Extension - VERSION 5
+
+// Final AI Quiz Extension - Designed for the Code Step Method
+export const AIConversationalQuizExtension = {
+  name: 'AIConversationalQuiz',
+  type: 'response',
+  match: ({ trace }) => trace.type === 'ext_ai_conversational_quiz',
+
+  render: ({ trace, element }) => {
+    console.log('Extension received payload:', trace.payload);
+    
+    // --- Data is now directly in trace.payload ---
+    const {
+      questions = [],
+      currentQuestionIndex = 0,
+      webhookUrl = '',
+      conversationHistory = []
+    } = trace.payload || {};
+
+    // --- Validation ---
+    if (!questions.length) {
+      element.innerHTML = `<div style="color: red; padding: 20px;">Error: No questions have been loaded.</div>`;
+      return;
+    }
+
+    // --- UI Rendering (same as before) ---
+    const quizContainer = document.createElement('div');
+    quizContainer.innerHTML = `
+      <style>
+        .ai-quiz-container { background-color: #fff; border-radius: 16px; padding: 20px; border: 1px solid #e0e7ef; box-shadow: 0 4px 12px rgba(108, 146, 166, 0.1); font-family: 'Nunito Sans', sans-serif; }
+        .progress-indicator { background: #e0e7ef; height: 4px; border-radius: 2px; margin-bottom: 15px; overflow: hidden; }
+        .progress-bar { background: #3B534E; height: 100%; transition: width 0.3s ease; }
+        .conversation-log { margin-bottom: 20px; max-height: 300px; overflow-y: auto; padding-right: 10px; }
+        .message { margin-bottom: 12px; padding: 10px 14px; border-radius: 12px; max-width: 85%; animation: fadeIn 0.5s ease-in-out; word-wrap: break-word; }
+        .user-message { background-color: #F0F4F8; color: #3B534E; margin-left: auto; text-align: right; }
+        .ai-message { background-color: #3B534E; color: white; margin-right: auto; }
+        .question-area h4 { color: #3B534E; margin-bottom: 15px; font-size: 16px; line-height: 1.4; }
+        .options-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; }
+        .option-button { background-color: white; border: 2px solid #6C92A6; color: #6C92A6; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.2s ease; font-size: 14px; }
+        .option-button:hover:not(:disabled) { background-color: #6C92A6; color: white; }
+        .option-button:disabled { opacity: 0.6; cursor: not-allowed; background-color: #e0e7ef; }
+        .loading-spinner { border: 4px solid #f3f3f3; border-top: 4px solid #3B534E; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: 20px auto; }
+        .quiz-complete { text-align: center; padding: 20px; background: #d4edda; border-radius: 8px; color: #155724; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+      </style>
+      <div class="progress-indicator"><div class="progress-bar"></div></div>
+      <div class="conversation-log"></div>
+      <div class="question-area"></div>
+    `;
+    element.appendChild(quizContainer);
+
+    const conversationLog = quizContainer.querySelector('.conversation-log');
+    const questionArea = quizContainer.querySelector('.question-area');
+    const progressBar = quizContainer.querySelector('.progress-bar');
+
+    // --- Core Logic (with updated payload for Voiceflow) ---
+    function renderHistory() { /* ... */ }
+    function renderQuestion() { /* ... */ }
+    async function handleAnswerSelection(event) { /* ... */ }
+    
+    function renderHistory() {
+      conversationLog.innerHTML = conversationHistory.map(item => `<div class="message ${item.role}-message">${item.content}</div>`).join('');
+      setTimeout(() => { conversationLog.scrollTop = conversationLog.scrollHeight; }, 0);
+    }
+
+    function renderQuestion() {
+      progressBar.style.width = `${(currentQuestionIndex / questions.length) * 100}%`;
+      if (currentQuestionIndex >= questions.length) {
+        questionArea.innerHTML = `<div class="quiz-complete"><h3>🎉 Thank You!</h3><p>We've noted your preferences.</p></div>`;
+        progressBar.style.width = '100%';
+        return;
+      }
+      const currentQuestion = questions[currentQuestionIndex];
+      questionArea.innerHTML = `<h4>${currentQuestion.text}</h4><div class="options-grid">${currentQuestion.options.map(opt => `<button class="option-button" data-answer="${opt}">${opt}</button>`).join('')}</div>`;
+      questionArea.querySelectorAll('.option-button').forEach(button => button.addEventListener('click', handleAnswerSelection));
+    }
+
+    async function handleAnswerSelection(event) {
+      const selectedAnswer = event.target.getAttribute('data-answer');
+      const currentQuestion = questions[currentQuestionIndex];
+      const updatedHistory = [...conversationHistory, { role: 'user', content: selectedAnswer }];
+      
+      questionArea.querySelectorAll('.option-button').forEach(btn => btn.disabled = true);
+      questionArea.innerHTML += `<div class="loading-spinner"></div>`;
+      renderHistory();
+
+      try {
+        const response = await fetch(webhookUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ question: currentQuestion.text, answer: selectedAnswer, history: updatedHistory })
+        });
+        if (!response.ok) throw new Error(`Webhook failed: ${response.statusText}`);
+        
+        const data = await response.json();
+        const aiResponse = data.reply || "Thanks for your answer!";
+        const finalHistory = [...updatedHistory, { role: 'ai', content: aiResponse }];
+
+        // Send updated variables back to Voiceflow
+        window.voiceflow.chat.interact({
+          type: 'complete',
+          payload: {
+            updatedHistory: finalHistory, // Send back the full array
+            nextQuestionIndex: currentQuestionIndex + 1,
+            isCompleted: currentQuestionIndex + 1 >= questions.length
+          }
+        });
+      } catch (error) {
+        console.error("Webhook call failed:", error);
+        window.voiceflow.chat.interact({
+          type: 'complete',
+          payload: {
+            updatedHistory: updatedHistory, // Send back history without AI response
+            nextQuestionIndex: currentQuestionIndex + 1,
+            isCompleted: currentQuestionIndex + 1 >= questions.length,
+            error: error.message
+          }
+        });
+      }
+    }
+
+    renderHistory();
+    renderQuestion();
+  }
+};
+
