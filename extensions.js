@@ -12815,3 +12815,239 @@ export const AIConversationalQuizExtension2 = {
     renderQuestion();
   }
 };
+
+
+// YRS AI Form Extension - VERSION 3
+
+/*
+  Final AI Conversational Quiz Extension (Updated with Voiceflow Expert's Code)
+  - Handles complex data safely by parsing JSON strings.
+  - Includes validation, a progress bar, and better state management.
+*/
+export const AIConversationalQuizExtension3 = {
+  name: 'AIConversationalQuiz',
+  type: 'response',
+  match: ({ trace }) => trace.type === 'ext_ai_conversational_quiz3',
+
+  render: ({ trace, element }) => {
+    console.log("AIQuizExtension received payload:", trace.payload);
+
+    // --- Robust Payload Parsing (as recommended by expert) ---
+    let questions, conversationHistory;
+    try {
+      questions = typeof trace.payload.questionsJSON === 'string'
+        ? JSON.parse(trace.payload.questionsJSON)
+        : (trace.payload.questions || []);
+        
+      conversationHistory = typeof trace.payload.conversationHistoryJSON === 'string'
+        ? JSON.parse(trace.payload.conversationHistoryJSON)
+        : (trace.payload.conversationHistory || []);
+    } catch (e) {
+      console.error('Error parsing JSON from payload:', e);
+      // Fallback to empty arrays on error
+      questions = [];
+      conversationHistory = [];
+    }
+
+    const {
+      currentQuestionIndex = 0,
+      webhookUrl = '',
+    } = trace.payload || {};
+
+    // --- Validation Checks ---
+    if (!questions.length) {
+      console.error('No questions were provided to the quiz extension.');
+      element.innerHTML = '<div style="padding: 20px; color: red;">Error: Quiz questions are not available.</div>';
+      return;
+    }
+    if (!webhookUrl) {
+      console.error('No webhookUrl was provided to the quiz extension.');
+      element.innerHTML = '<div style="padding: 20px; color: red;">Error: Webhook URL is not configured.</div>';
+      return;
+    }
+
+    // --- UI Rendering ---
+    const quizContainer = document.createElement('div');
+    quizContainer.className = 'ai-quiz-container';
+    quizContainer.innerHTML = `
+      <style>
+        .ai-quiz-container { background-color: #fff; border-radius: 16px; padding: 20px; border: 1px solid #e0e7ef; box-shadow: 0 4px 12px rgba(108, 146, 166, 0.1); font-family: 'Nunito Sans', sans-serif; }
+        .progress-indicator { background: #e0e7ef; height: 4px; border-radius: 2px; margin-bottom: 15px; overflow: hidden; }
+        .progress-bar { background: #3B534E; height: 100%; transition: width 0.3s ease; }
+        .conversation-log { margin-bottom: 20px; max-height: 300px; overflow-y: auto; padding-right: 10px; }
+        .message { margin-bottom: 12px; padding: 10px 14px; border-radius: 12px; max-width: 85%; animation: fadeIn 0.5s ease-in-out; word-wrap: break-word; }
+        .user-message { background-color: #F0F4F8; color: #3B534E; margin-left: auto; text-align: right; }
+        .ai-message { background-color: #3B534E; color: white; margin-right: auto; }
+        .question-area h4 { color: #3B534E; margin-bottom: 15px; font-size: 16px; line-height: 1.4; }
+        .options-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; }
+        .option-button { background-color: white; border: 2px solid #6C92A6; color: #6C92A6; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.2s ease; font-size: 14px; }
+        .option-button:hover:not(:disabled) { background-color: #6C92A6; color: white; transform: translateY(-1px); }
+        .option-button:disabled { opacity: 0.6; cursor: not-allowed; background-color: #e0e7ef; }
+        .loading-spinner { border: 4px solid #f3f3f3; border-top: 4px solid #3B534E; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: 20px auto; }
+        .quiz-complete { text-align: center; padding: 20px; background: #d4edda; border-radius: 8px; color: #155724; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+      </style>
+      <div class="progress-indicator">
+        <div class="progress-bar" style="width: ${((currentQuestionIndex) / questions.length) * 100}%"></div>
+      </div>
+      <div class="conversation-log" id="conversation-log"></div>
+      <div class="question-area" id="question-area"></div>
+    `;
+    element.appendChild(quizContainer);
+
+    const conversationLog = quizContainer.querySelector('#conversation-log');
+    const questionArea = quizContainer.querySelector('#question-area');
+    const progressBar = quizContainer.querySelector('.progress-bar');
+
+    // --- Core Logic Functions ---
+    function renderHistory() {
+      conversationLog.innerHTML = '';
+      conversationHistory.forEach(item => {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${item.role}-message`;
+        messageDiv.textContent = item.content;
+        conversationLog.appendChild(messageDiv);
+      });
+      setTimeout(() => { conversationLog.scrollTop = conversationLog.scrollHeight; }, 0);
+    }
+
+    function renderQuestion() {
+      progressBar.style.width = `${((currentQuestionIndex) / questions.length) * 100}%`;
+      if (currentQuestionIndex >= questions.length) {
+        questionArea.innerHTML = `<div class="quiz-complete"><h3>🎉 Thank You!</h3><p>We've noted your preferences.</p></div>`;
+        progressBar.style.width = '100%';
+        return;
+      }
+      const currentQuestion = questions[currentQuestionIndex];
+      questionArea.innerHTML = `<h4>${currentQuestion.text}</h4><div class="options-grid">${currentQuestion.options.map(opt => `<button class="option-button" data-answer="${opt}">${opt}</button>`).join('')}</div>`;
+      questionArea.querySelectorAll('.option-button').forEach(button => button.addEventListener('click', handleAnswerSelection));
+    }
+
+    async function handleAnswerSelection(event) {
+      const selectedAnswer = event.target.getAttribute('data-answer');
+      const currentQuestion = questions[currentQuestionIndex];
+      const newHistory = [...conversationHistory, { role: 'user', content: selectedAnswer }];
+      
+      questionArea.querySelectorAll('.option-button').forEach(btn => btn.disabled = true);
+      questionArea.innerHTML += `<div class="loading-spinner"></div>`;
+      renderHistory(); // Re-render to show user's answer immediately
+
+      try {
+        const response = await fetch(webhookUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ question: currentQuestion.text, answer: selectedAnswer, history: newHistory })
+        });
+        if (!response.ok) throw new Error(`Webhook failed with status: ${response.status}`);
+        
+        const data = await response.json();
+        const aiResponse = data.reply || "That's great! Let's continue.";
+        const finalHistory = [...newHistory, { role: 'ai', content: aiResponse }];
+
+        window.voiceflow.chat.interact({
+          type: 'complete',
+          payload: {
+            conversationHistoryJSON: JSON.stringify(finalHistory),
+            nextQuestionIndex: currentQuestionIndex + 1,
+            isCompleted: currentQuestionIndex + 1 >= questions.length
+          }
+        });
+      } catch (error) {
+        console.error("Error calling n8n webhook:", error);
+        window.voiceflow.chat.interact({
+          type: 'complete',
+          payload: {
+            conversationHistoryJSON: JSON.stringify(newHistory), // Send history without AI response
+            nextQuestionIndex: currentQuestionIndex + 1,
+            isCompleted: currentQuestionIndex + 1 >= questions.length,
+            error: error.message
+          }
+        });
+      }
+    }
+
+    // --- Initial Render ---
+    renderHistory();
+    renderQuestion();
+  }
+};
+
+
+
+// YRS: Simple Test Extension VERSION 1
+
+// A minimal extension to test the n8n webhook connection.
+export const SimpleTestExtension = {
+  name: 'SimpleTest',
+  type: 'response',
+  match: ({ trace }) => trace.type === 'ext_simple_test',
+
+  render: ({ trace, element }) => {
+    // --- Hardcode your n8n Webhook URL here for the test ---
+    const N8N_WEBHOOK_URL = 'https://n8n.romaix-n8n.xyz/webhook-test/AI-form';
+
+    const container = document.createElement('div');
+    container.innerHTML = `
+      <style>
+        .test-container { padding: 20px; border: 1px solid #e0e7ef; border-radius: 12px; font-family: sans-serif; }
+        .test-button { background-color: #007bff; color: white; border: none; padding: 10px 15px; border-radius: 8px; cursor: pointer; font-size: 16px; margin-bottom: 15px; }
+        .test-button:disabled { background-color: #ccc; }
+        .result-area { padding: 15px; border-radius: 8px; display: none; }
+        .result-area.success { background-color: #d4edda; color: #155724; }
+        .result-area.error { background-color: #f8d7da; color: #721c24; }
+        .loading-spinner { border: 4px solid #f3f3f3; border-top: 4px solid #007bff; border-radius: 50%; width: 20px; height: 20px; animation: spin 1s linear infinite; margin: 10px 0; display: none; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+      </style>
+      <div class="test-container">
+        <h4>Webhook Test</h4>
+        <button id="test-button" class="test-button">Call n8n</button>
+        <div id="loading-spinner" class="loading-spinner"></div>
+        <div id="result-area" class="result-area"></div>
+      </div>
+    `;
+    element.appendChild(container);
+
+    const button = container.querySelector('#test-button');
+    const resultArea = container.querySelector('#result-area');
+    const spinner = container.querySelector('#loading-spinner');
+
+    button.addEventListener('click', async () => {
+      // 1. Set UI to loading state
+      button.disabled = true;
+      spinner.style.display = 'block';
+      resultArea.style.display = 'none';
+
+      try {
+        // 2. Make the fetch call
+        const response = await fetch(N8N_WEBHOOK_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: 'Hello from the test extension!' })
+        });
+
+        if (!response.ok) {
+          throw new Error(`Webhook failed with status: ${response.status}`);
+        }
+        
+        const data = await response.json();
+
+        // 3. Display success
+        resultArea.className = 'result-area success';
+        resultArea.textContent = `Success! n8n says: "${data.message}"`;
+        resultArea.style.display = 'block';
+
+      } catch (error) {
+        // 4. Display error
+        console.error("Webhook call failed:", error);
+        resultArea.className = 'result-area error';
+        resultArea.textContent = `Error: ${error.message}`;
+        resultArea.style.display = 'block';
+      } finally {
+        // 5. Reset UI
+        button.disabled = false;
+        spinner.style.display = 'none';
+      }
+    });
+  }
+};
