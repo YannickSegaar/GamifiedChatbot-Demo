@@ -12633,3 +12633,46 @@ export const ConfettiExtension1 = {
 }
 
 
+// YRS: SNOWFALL EXTENSION VERSION 2
+
+// This extension is now designed to work with the Snowify library.
+export const SnowfallExtension2 = {
+  name: 'Snowfall',
+  type: 'effect',
+  
+  // This matches the Custom Action in Voiceflow.
+  // Action Name: ext_snowfall2
+  match: ({ trace }) =>
+    trace.type === 'ext_snowfall2' || trace.payload?.name === 'ext_snowfall2',
+  
+  // This function runs when the 'match' is successful.
+  effect: ({ trace }) => {
+    // The action ('start' or 'stop') is read from the payload.
+    const action = trace.payload?.action;
+
+    // Check if the Snowify library's init function is available.
+    if (typeof initSnowify === 'undefined') {
+        console.error('CRITICAL ERROR: The snowify.min.js library is not loaded. Check your HTML file.');
+        return;
+    }
+
+    if (action === 'start') {
+      console.log('Starting Snowify effect... ❄️');
+      // Call the library's initialization function.
+      // You can also pass options from the payload, e.g., { snowColor: 'lightBlue' }
+      const options = trace.payload?.options || {};
+      initSnowify(options);
+
+    } else if (action === 'stop') {
+      console.log('Stopping Snowify effect...');
+      // To stop this library, we must find and remove the canvas it creates.
+      // The Snowify library creates a canvas with the ID 'snow-canvas'.
+      const snowCanvas = document.getElementById('snow-canvas');
+      if (snowCanvas) {
+        snowCanvas.remove();
+      } else {
+        console.warn('Snowify canvas not found. Could not stop the effect.');
+      }
+    }
+  },
+};
