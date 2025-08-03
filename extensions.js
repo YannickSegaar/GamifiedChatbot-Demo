@@ -12577,14 +12577,14 @@ export const SnowfallExtension1 = {
   name: 'Snowfall',
   type: 'effect',
 
-  // This function tells Voiceflow to run the effect when a Custom Action
-  // with the name 'snow' is triggered.
-  match: ({ trace }) => trace.type === 'snow',
+  // This now has the exact same structure as your confetti extension.
+  // It will run if the Action Name is 'snow' OR if the payload contains a 'name' property of 'snow'.
+  match: ({ trace }) =>
+    trace.type === 'ext_snow1' || trace.payload?.name === 'ext_snow1',
 
   // This function runs when the 'match' is successful.
   effect: ({ trace }) => {
-    // Safely get the action from the payload using optional chaining (?.),
-    // just like in your new confetti example.
+    // Safely get the action from the payload.
     const action = trace.payload?.action;
 
     if (action === 'start') {
