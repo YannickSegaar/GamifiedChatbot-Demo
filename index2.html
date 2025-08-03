@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arctic Adventures - Premium Winter Tours</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f8f9fa;
+        }
+
+        /* Header */
+        .header {
+            background: linear-gradient(135deg, #2c5aa0 0%, #1e4080 100%);
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 2rem;
+        }
+
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-menu a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .nav-menu a:hover {
+            color: #87ceeb;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), 
+                        url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600"><defs><linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%23b3d9ff;stop-opacity:1" /><stop offset="50%" style="stop-color:%236bb6ff;stop-opacity:1" /><stop offset="100%" style="stop-color:%2387ceeb;stop-opacity:1" /></linearGradient></defs><rect width="1200" height="600" fill="url(%23bg)"/><g fill="%23ffffff" opacity="0.3"><polygon points="0,400 300,350 600,380 900,330 1200,360 1200,600 0,600"/><polygon points="0,450 200,420 500,440 800,410 1200,430 1200,600 0,600"/></g><g fill="%23ffffff" opacity="0.6"><circle cx="100" cy="80" r="3"/><circle cx="300" cy="120" r="2"/><circle cx="500" cy="60" r="4"/><circle cx="700" cy="100" r="2"/><circle cx="900" cy="70" r="3"/><circle cx="1100" cy="110" r="2"/></g></svg>');
+            background-size: cover;
+            background-position: center;
+            height: 500px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: white;
+        }
+
+        .hero-content h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
+
+        .hero-content p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
+        }
+
+        /* Search Bar */
+        .search-container {
+            background: white;
+            margin: -60px auto 60px;
+            max-width: 1000px;
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            position: relative;
+            z-index: 10;
+        }
+
+        .search-tabs {
+            display: flex;
+            margin-bottom: 2rem;
+            border-bottom: 1px solid #eee;
+        }
+
+        .search-tab {
+            padding: 1rem 2rem;
+            cursor: pointer;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s;
+        }
+
+        .search-tab.active {
+            border-bottom-color: #2c5aa0;
+            color: #2c5aa0;
+            font-weight: bold;
+        }
+
+        .search-form {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr auto;
+            gap: 1rem;
+            align-items: end;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .form-group label {
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+            color: #555;
+        }
+
+        .form-group input,
+        .form-group select {
+            padding: 0.8rem;
+            border: 2px solid #e1e5e9;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #2c5aa0;
+        }
+
+        .search-btn {
+            background: linear-gradient(135deg, #2c5aa0, #1e4080);
+            color: white;
+            border: none;
+            padding: 0.8rem 2rem;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1rem;
+            font-weight: bold;
+            transition: transform 0.3s;
+        }
+
+        .search-btn:hover {
+            transform: translateY(-2px);
+        }
+
+        /* Featured Tours */
+        .featured {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 2rem;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 3rem;
+            color: #2c5aa0;
+        }
+
+        .tours-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+        }
+
+        .tour-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+
+        .tour-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+        }
+
+        .tour-image {
+            height: 250px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* Individual tour images */
+        .tour-card:nth-child(1) .tour-image {
+            background: linear-gradient(45deg, #87ceeb, #4682b4);
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250"><defs><linearGradient id="aurora" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" style="stop-color:%2300ff7f;stop-opacity:0.8" /><stop offset="50%" style="stop-color:%230080ff;stop-opacity:0.8" /><stop offset="100%" style="stop-color:%23ff00ff;stop-opacity:0.8" /></linearGradient></defs><rect width="400" height="250" fill="%23001122"/><path d="M0,200 Q100,150 200,180 T400,160 L400,250 L0,250 Z" fill="%23ffffff" opacity="0.1"/><path d="M0,50 Q150,20 300,60 T400,40" stroke="url(%23aurora)" stroke-width="3" fill="none" opacity="0.9"/><path d="M50,80 Q200,50 350,90" stroke="url(%23aurora)" stroke-width="2" fill="none" opacity="0.7"/><g fill="%23ffffff" opacity="0.8"><circle cx="50" cy="30" r="1"/><circle cx="150" cy="40" r="1.5"/><circle cx="250" cy="25" r="1"/><circle cx="350" cy="35" r="1.5"/></g></svg>');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .tour-card:nth-child(2) .tour-image {
+            background: linear-gradient(45deg, #b0e0e6, #4682b4);
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250"><rect width="400" height="250" fill="%23e6f3ff"/><path d="M0,150 Q100,120 200,140 T400,130 L400,250 L0,250 Z" fill="%23ffffff"/><g fill="%233a5f8a" opacity="0.6"><polygon points="50,100 80,60 110,100"/><polygon points="150,120 180,80 210,120"/><polygon points="250,110 280,70 310,110"/><polygon points="320,100 350,60 380,100"/></g><g fill="%23ffffff" opacity="0.9"><circle cx="60" cy="40" r="2"/><circle cx="160" cy="50" r="3"/><circle cx="260" cy="45" r="2"/><circle cx="340" cy="35" r="2.5"/></g></svg>');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .tour-card:nth-child(3) .tour-image {
+            background: linear-gradient(45deg, #98fb98, #228b22);
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250"><rect width="400" height="250" fill="%23f0fff0"/><g fill="%23228b22" opacity="0.3"><polygon points="0,200 50,150 100,180 150,140 200,170 250,130 300,160 350,120 400,150 400,250 0,250"/></g><g fill="%23006400" opacity="0.6"><circle cx="80" cy="80" r="15"/><circle cx="180" cy="70" r="20"/><circle cx="280" cy="90" r="18"/><circle cx="320" cy="60" r="12"/></g><g fill="%23ffffff" opacity="0.7"><rect x="100" y="180" width="8" height="20"/><rect x="200" y="170" width="10" height="25"/><rect x="300" y="175" width="6" height="18"/></g></svg>');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .tour-card:nth-child(4) .tour-image {
+            background: linear-gradient(45deg, #ffffff, #b0c4de);
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250"><rect width="400" height="250" fill="%23f0f8ff"/><path d="M0,180 Q100,160 200,170 T400,165 L400,250 L0,250 Z" fill="%23ffffff"/><g fill="%23b0c4de" opacity="0.4"><ellipse cx="100" cy="150" rx="30" ry="15"/><ellipse cx="200" cy="140" rx="25" ry="12"/><ellipse cx="300" cy="155" rx="35" ry="18"/></g><g fill="%23483d8b" opacity="0.8"><rect x="150" y="100" width="100" height="80" rx="10"/><polygon points="175,100 200,70 225,100"/><circle cx="185" cy="120" r="3"/><circle cx="215" cy="120" r="3"/></g></svg>');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .tour-card:nth-child(5) .tour-image {
+            background: linear-gradient(45deg, #ffd700, #ff8c00);
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250"><rect width="400" height="250" fill="%23fff8dc"/><path d="M0,200 Q100,180 200,190 T400,185 L400,250 L0,250 Z" fill="%23f5deb3"/><g fill="%238b4513" opacity="0.6"><rect x="50" y="150" width="40" height="60"/><rect x="150" y="140" width="50" height="70"/><rect x="300" y="160" width="35" height="50"/><polygon points="50,150 70,120 90,150"/><polygon points="150,140 175,110 200,140"/><polygon points="300,160 317,130 335,160"/></g><g fill="%23ff6347" opacity="0.8"><circle cx="70" cy="170" r="8"/><circle cx="175" cy="160" r="10"/><circle cx="317" cy="180" r="6"/></g></svg>');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .tour-card:nth-child(6) .tour-image {
+            background: linear-gradient(45deg, #e0e0e0, #696969);
+            background-image: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 400 250"><rect width="400" height="250" fill="%23f5f5f5"/><path d="M0,150 L100,120 L200,140 L300,110 L400,130 L400,250 L0,250 Z" fill="%23dcdcdc"/><path d="M0,180 L150,160 L300,170 L400,155 L400,250 L0,250 Z" fill="%23c0c0c0"/><g fill="%23696969" opacity="0.7"><polygon points="80,80 120,40 160,80 120,120"/><polygon points="220,70 260,30 300,70 260,110"/></g><g fill="%23ffffff" opacity="0.9"><circle cx="100" cy="60" r="2"/><circle cx="240" cy="50" r="2.5"/><circle cx="320" cy="65" r="1.5"/></g></svg>');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .tour-badge {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            background: rgba(255, 107, 107, 0.9);
+            backdrop-filter: blur(10px);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .tour-badge.featured {
+            background: rgba(40, 167, 69, 0.9);
+            backdrop-filter: blur(10px);
+        }
+
+        .tour-badge.popular {
+            background: rgba(255, 193, 7, 0.9);
+            backdrop-filter: blur(10px);
+            color: #333;
+        }
+
+        .tour-info {
+            padding: 1.5rem;
+        }
+
+        .tour-price {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #2c5aa0;
+            margin-bottom: 0.5rem;
+        }
+
+        .tour-title {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 0.5rem;
+            color: #333;
+        }
+
+        .tour-location {
+            color: #666;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tour-features {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .feature {
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        .tour-description {
+            color: #666;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        /* Stats Section */
+        .stats {
+            background: linear-gradient(135deg, #2c5aa0, #1e4080);
+            color: white;
+            padding: 4rem 0;
+            margin: 4rem 0;
+        }
+
+        .stats-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            padding: 0 2rem;
+            text-align: center;
+        }
+
+        .stat-item h3 {
+            font-size: 3rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-item p {
+            font-size: 1.2rem;
+            opacity: 0.9;
+        }
+
+        /* Footer */
+        .footer {
+            background: #1a1a1a;
+            color: white;
+            padding: 3rem 0 1rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+            padding: 0 2rem;
+        }
+
+        .footer-section h4 {
+            margin-bottom: 1rem;
+            color: #87ceeb;
+        }
+
+        .footer-section a {
+            color: #ccc;
+            text-decoration: none;
+            display: block;
+            margin-bottom: 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .footer-section a:hover {
+            color: #87ceeb;
+        }
+
+        .footer-bottom {
+            text-align: center;
+            padding-top: 2rem;
+            margin-top: 2rem;
+            border-top: 1px solid #333;
+            color: #999;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-menu {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .hero-content h1 {
+                font-size: 2rem;
+            }
+
+            .search-form {
+                grid-template-columns: 1fr;
+            }
+
+            .tours-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">
+                <i class="fas fa-snowflake"></i> Arctic Adventures
+            </div>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#tours">Tours</a></li>
+                    <li><a href="#destinations">Destinations</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Discover Arctic Wonders</h1>
+            <p>Unforgettable winter adventures in the world's most pristine destinations</p>
+        </div>
+    </section>
+
+    <!-- Search Section -->
+    <div class="search-container">
+        <div class="search-tabs">
+            <div class="search-tab active">
+                <i class="fas fa-mountain"></i> Adventure Tours
+            </div>
+            <div class="search-tab">
+                <i class="fas fa-eye"></i> Aurora Viewing
+            </div>
+            <div class="search-tab">
+                <i class="fas fa-skiing"></i> Winter Sports
+            </div>
+        </div>
+        <form class="search-form">
+            <div class="form-group">
+                <label for="destination">Destination</label>
+                <input type="text" id="destination" placeholder="Iceland, Norway, Alaska..." value="Iceland">
+            </div>
+            <div class="form-group">
+                <label for="tour-type">Tour Type</label>
+                <select id="tour-type">
+                    <option>All Tours</option>
+                    <option>Aurora Tours</option>
+                    <option>Glacier Tours</option>
+                    <option>Wildlife Tours</option>
+                    <option>Adventure Sports</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="duration">Duration</label>
+                <select id="duration">
+                    <option>Any Duration</option>
+                    <option>1-3 Days</option>
+                    <option>4-7 Days</option>
+                    <option>1-2 Weeks</option>
+                    <option>2+ Weeks</option>
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="month">Month</label>
+                <select id="month">
+                    <option>Any Month</option>
+                    <option>December</option>
+                    <option>January</option>
+                    <option>February</option>
+                    <option>March</option>
+                </select>
+            </div>
+            <button type="submit" class="search-btn">
+                <i class="fas fa-search"></i> Search
+            </button>
+        </form>
+    </div>
+
+    <!-- Featured Tours -->
+    <section class="featured">
+        <h2 class="section-title">Featured Winter Tours</h2>
+        <div class="tours-grid">
+            <div class="tour-card">
+                <div class="tour-image">
+                    <div class="tour-badge featured">Featured</div>
+                </div>
+                <div class="tour-info">
+                    <div class="tour-price">€2,450</div>
+                    <h3 class="tour-title">Northern Lights Safari</h3>
+                    <div class="tour-location">
+                        <i class="fas fa-map-marker-alt"></i>
+                        Tromsø, Norway
+                    </div>
+                    <div class="tour-features">
+                        <div class="feature">
+                            <i class="fas fa-calendar"></i> 5 Days
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-users"></i> Max 8
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-star"></i> 4.9/5
+                        </div>
+                        <div class="feature">
+                            <i class="fas fa-camera"></i> Pro Gear
+                        </div>
+                    </div>
+                    <p class="tour-description">
+                        Capture stunning Arctic landscapes with professional photography equipment and guidance from award-winning nature photographers in remote Greenland locations.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stats Section -->
+    <section class="stats">
+        <div class="stats-container">
+            <div class="stat-item">
+                <h3>250+</h3>
+                <p>Successful Tours</p>
+            </div>
+            <div class="stat-item">
+                <h3>12</h3>
+                <p>Years Experience</p>
+            </div>
+            <div class="stat-item">
+                <h3>99%</h3>
+                <p>Aurora Success Rate</p>
+            </div>
+            <div class="stat-item">
+                <h3>15</h3>
+                <p>Arctic Destinations</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4>Arctic Adventures</h4>
+                <p>Your premier partner for authentic Arctic experiences. Discover the magic of winter with our expert guides and carefully crafted tours.</p>
+            </div>
+            <div class="footer-section">
+                <h4>Quick Links</h4>
+                <a href="#tours">All Tours</a>
+                <a href="#aurora">Aurora Tours</a>
+                <a href="#glacier">Glacier Tours</a>
+                <a href="#wildlife">Wildlife Tours</a>
+                <a href="#booking">Booking Info</a>
+            </div>
+            <div class="footer-section">
+                <h4>Destinations</h4>
+                <a href="#iceland">Iceland</a>
+                <a href="#norway">Norway</a>
+                <a href="#finland">Finland</a>
+                <a href="#sweden">Sweden</a>
+                <a href="#greenland">Greenland</a>
+            </div>
+            <div class="footer-section">
+                <h4>Contact</h4>
+                <p><i class="fas fa-phone"></i> +47 123 456 789</p>
+                <p><i class="fas fa-envelope"></i> <a href="mailto:info@arcticadventures.com" style="color: #ccc; text-decoration: none;">info@arcticadventures.com</a></p>
+                <p><i class="fas fa-map-marker-alt"></i> Storgata 15, Tromsø, Norway</p>
+                <div style="margin-top: 1rem;">
+                    <a href="#facebook"><i class="fab fa-facebook" style="font-size: 1.5rem; margin-right: 1rem;"></i></a>
+                    <a href="#instagram"><i class="fab fa-instagram" style="font-size: 1.5rem; margin-right: 1rem;"></i></a>
+                    <a href="#youtube"><i class="fab fa-youtube" style="font-size: 1.5rem;"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2025 Arctic Adventures. All rights reserved. | Privacy Policy | Terms of Service</p>
+        </div>
+    </footer>
+
+    <script>
+        // Search tabs functionality
+        document.querySelectorAll('.search-tab').forEach(tab => {
+            tab.addEventListener('click', function() {
+                document.querySelectorAll('.search-tab').forEach(t => t.classList.remove('active'));
+                this.classList.add('active');
+            });
+        });
+
+        // Tour card hover effects
+        document.querySelectorAll('.tour-card').forEach(card => {
+            card.addEventListener('click', function() {
+                alert('Tour details would open here. This is a demo!');
+            });
+        });
+
+        // Search form submission
+        document.querySelector('.search-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            alert('Search functionality would be implemented here. This is a demo!');
+        });
+
+        // Smooth scrolling for navigation
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+
+    <!-- Confetti Canvas -->
+    <canvas id="confetti-canvas"></canvas>
+
+    <!-- Voiceflow Chat Widget Container -->
+    <div id="flat-chat"></div>
+    <div id="voiceflow-chat-frame"></div>
+
+    <!-- Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+
+    <!-- Voiceflow Chat Widget and Extensions Script -->
+    <script type="module">
+        console.log("Script loaded. Initializing Voiceflow chat widget...");
+
+        // Import extensions from the extensions.js file
+        import {
+            TourFinderQuizExtension1,
+            PropertyCalculatorExtension1,
+            PropertyCalculatorExtension2,
+            PropertyCalculatorExtension3,
+            PropertyCalculatorExtension4,
+            PropertyCalculatorExtension5,
+            PropertyCalculatorExtension6,
+            DirectionsWorkflowExtension7,
+            DirectionsWorkflowExtension22,
+            DirectionsWorkflowExtension23,
+            DirectionsWorkflowExtension24,
+            WinterExplorerQuizExtension1,
+            WinterExplorerQuizExtension2,
+            WinterExplorerQuizExtension3,
+            WinterExplorerQuizExtension4
+        } from '/extensions.js';
+
+        // Load the Voiceflow chat widget with extensions
+        (function (d, t) {
+            var v = d.createElement(t),
+                s = d.getElementsByTagName(t)[0];
+            v.onload = function () {
+                console.log("Voiceflow widget script loaded. Initializing chat...");
+
+                window.voiceflow.chat.load({
+                    verify: { projectID: '6798b43c9f655dc50cb7cb58' }, // Replace with your Voiceflow project ID
+                    url: 'https://general-runtime.voiceflow.com',
+                    versionID: 'production', // Use 'development' for testing or 'production' for live
+                    voice: { 
+                        url: "https://runtime-api.voiceflow.com" 
+                    },
+                    user: {
+                        name: 'Demo User',
+                    },
+                    render: {
+                        mode: 'overlay',
+                    },
+                    autostart: true,
+                    allowDangerousHTML: true,
+                    assistant: {
+                        extensions: [
+                            TourFinderQuizExtension1,
+                            PropertyCalculatorExtension1,
+                            PropertyCalculatorExtension2,
+                            PropertyCalculatorExtension3,
+                            PropertyCalculatorExtension4,
+                            PropertyCalculatorExtension5,
+                            PropertyCalculatorExtension6,
+                            DirectionsWorkflowExtension7,
+                            DirectionsWorkflowExtension22,
+                            DirectionsWorkflowExtension23,
+                            DirectionsWorkflowExtension24,
+                            WinterExplorerQuizExtension1,
+                            WinterExplorerQuizExtension2,
+                            WinterExplorerQuizExtension3,
+                            WinterExplorerQuizExtension4
+                        ],
+                        stylesheet: "https://yannicksegaar.github.io/DX_Demo/VF_styles.css",
+                    },
+                }).then(() => {
+                    console.log("Voiceflow chat initialized successfully.");
+                    // Initialize the handoff listener with the Voiceflow runtime
+                    setupHandoffListener(window.voiceflow.chat.runtime);
+                }).catch((error) => {
+                    console.error("Error initializing Voiceflow chat:", error);
+                });
+            };
+            v.src = 'https://cdn.voiceflow.com/widget-next/bundle.mjs'; // Updated to the new widget version
+            v.type = 'text/javascript';
+            s.parentNode.insertBefore(v, s);
+        })(document, 'script');
+    </script>
+</body>
+</html>
