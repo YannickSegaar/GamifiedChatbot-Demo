@@ -359,7 +359,9 @@
             WinterExplorerQuizExtension4,
             SnowfallExtension1,
             SnowfallExtension2,
-            ConfettiExtension1
+            ConfettiExtension1,
+            AIFormExtension1,
+            AIConversationalQuizExtension2
         } from '/extensions.js';
 
         // Load the Voiceflow chat widget with extensions
@@ -403,7 +405,9 @@
                             WinterExplorerQuizExtension4,
                             SnowfallExtension1,
                             SnowfallExtension2,
-                            ConfettiExtension1
+                            ConfettiExtension1,
+                            AIFormExtension1,
+                            AIConversationalQuizExtension2
                         ],
                         stylesheet: "https://yannicksegaar.github.io/DX_Demo/VF_styles.css",
                     },
@@ -436,7 +440,7 @@
                 console.log("Sending first proactive message");
                 window.voiceflow.chat.proactive.push({
                     type: 'text',
-                    payload: { message: 'Hi there!' }
+                    payload: { message: 'Welcome!' }
                 });
             }, 1000);
 
@@ -445,7 +449,7 @@
                 console.log("Sending second proactive message");
                 window.voiceflow.chat.proactive.push({
                     type: 'text',
-                    payload: { message: 'Start the quiz' }
+                    payload: { message: '' }
                 });
             }, 2000);
 

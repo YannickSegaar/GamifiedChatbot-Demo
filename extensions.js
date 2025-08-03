@@ -12676,3 +12676,378 @@ export const SnowfallExtension2 = {
     }
   },
 };
+
+// YRS VERSION 1: AI POWERED FORM EXTENSION
+
+// AI-Powered Form Extension with n8n Integration
+const AIFormExtension1 = {
+    name: 'AIForm',
+    type: 'response',
+    match: ({ trace }) => {
+        return trace.type === 'ext_AIForm1' || trace.payload.name === 'ext_AIForm1';
+    },
+    render: ({ trace, element }) => {
+        const { questions = [], currentQuestion = 0, webhookUrl } = trace.payload;
+        
+        // Create form container
+        const container = document.createElement('div');
+        container.innerHTML = `
+            <div class="ai-form-container" style="
+                padding: 20px;
+                border-radius: 8px;
+                background: #f8f9fa;
+                margin: 10px 0;
+                max-width: 400px;
+            ">
+                <div class="form-header">
+                    <h3 style="margin: 0 0 15px 0; color: #333;">
+                        Question ${currentQuestion + 1} of ${questions.length}
+                    </h3>
+                    <div class="progress-bar" style="
+                        width: 100%;
+                        height: 4px;
+                        background: #e0e0e0;
+                        border-radius: 2px;
+                        margin-bottom: 20px;
+                    ">
+                        <div style="
+                            width: ${((currentQuestion + 1) / questions.length) * 100}%;
+                            height: 100%;
+                            background: #007bff;
+                            border-radius: 2px;
+                            transition: width 0.3s ease;
+                        "></div>
+                    </div>
+                </div>
+                
+                <div class="question-section">
+                    <label style="
+                        display: block;
+                        margin-bottom: 10px;
+                        font-weight: 500;
+                        color: #555;
+                    ">${questions[currentQuestion]?.text || 'Loading question...'}</label>
+                    
+                    <input 
+                        type="${questions[currentQuestion]?.type || 'text'}" 
+                        id="ai-form-input"
+                        placeholder="${questions[currentQuestion]?.placeholder || 'Enter your answer...'}"
+                        style="
+                            width: 100%;
+                            padding: 12px;
+                            border: 2px solid #ddd;
+                            border-radius: 6px;
+                            font-size: 14px;
+                            box-sizing: border-box;
+                            margin-bottom: 15px;
+                        "
+                        ${questions[currentQuestion]?.required ? 'required' : ''}
+                    />
+                    
+                    <div id="ai-response" style="
+                        margin: 15px 0;
+                        padding: 12px;
+                        background: #e8f4fd;
+                        border-radius: 6px;
+                        border-left: 4px solid #007bff;
+                        display: none;
+                    ">
+                        <div id="ai-response-text"></div>
+                    </div>
+                    
+                    <button 
+                        id="submit-answer"
+                        style="
+                            background: #007bff;
+                            color: white;
+                            border: none;
+                            padding: 12px 24px;
+                            border-radius: 6px;
+                            cursor: pointer;
+                            font-size: 14px;
+                            margin-right: 10px;
+                        "
+                    >
+                        Submit Answer
+                    </button>
+                    
+                    <button 
+                        id="next-question"
+                        style="
+                            background: #28a745;
+                            color: white;
+                            border: none;
+                            padding: 12px 24px;
+                            border-radius: 6px;
+                            cursor: pointer;
+                            font-size: 14px;
+                            display: none;
+                        "
+                    >
+                        ${currentQuestion + 1 >= questions.length ? 'Complete Form' : 'Next Question'}
+                    </button>
+                </div>
+                
+                <div id="loading" style="
+                    display: none;
+                    text-align: center;
+                    padding: 20px;
+                ">
+                    <div style="
+                        display: inline-block;
+                        width: 20px;
+                        height: 20px;
+                        border: 3px solid #f3f3f3;
+                        border-top: 3px solid #007bff;
+                        border-radius: 50%;
+                        animation: spin 1s linear infinite;
+                    "></div>
+                    <p style="margin: 10px 0 0 0; color: #666;">AI is thinking...</p>
+                </div>
+            </div>
+            
+            <style>
+                @keyframes spin {
+                    0% { transform: rotate(0deg); }
+                    100% { transform: rotate(360deg); }
+                }
+            </style>
+        `;
+
+        // Add event listeners
+        const input = container.querySelector('#ai-form-input');
+        const submitBtn = container.querySelector('#submit-answer');
+        const nextBtn = container.querySelector('#next-question');
+        const aiResponse = container.querySelector('#ai-response');
+        const aiResponseText = container.querySelector('#ai-response-text');
+        const loading = container.querySelector('#loading');
+
+        // Submit answer function
+        const submitAnswer = async () => {
+            const answer = input.value.trim();
+            if (!answer) return;
+
+            // Show loading
+            loading.style.display = 'block';
+            submitBtn.disabled = true;
+
+            try {
+                // Make webhook call to n8n
+                const response = await fetch(webhookUrl || 'https://your-n8n-instance.com/webhook/ai-form', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        question: questions[currentQuestion]?.text,
+                        answer: answer,
+                        questionIndex: currentQuestion,
+                        userId: trace.payload.userId || 'anonymous',
+                        sessionId: trace.payload.sessionId || Date.now().toString()
+                    })
+                });
+
+                const result = await response.json();
+                
+                // Display AI response
+                aiResponseText.innerHTML = result.aiResponse || 'Thank you for your answer!';
+                aiResponse.style.display = 'block';
+                
+                // Hide submit button, show next button
+                submitBtn.style.display = 'none';
+                nextBtn.style.display = 'inline-block';
+                
+                // Store the answer for later use
+                window.voiceflow.chat.interact({
+                    type: 'complete',
+                    payload: {
+                        answer: answer,
+                        aiResponse: result.aiResponse,
+                        questionIndex: currentQuestion
+                    }
+                });
+
+            } catch (error) {
+                console.error('Error calling n8n webhook:', error);
+                aiResponseText.innerHTML = 'Sorry, there was an error processing your answer. Please try again.';
+                aiResponse.style.display = 'block';
+                submitBtn.disabled = false;
+            } finally {
+                loading.style.display = 'none';
+            }
+        };
+
+        // Next question function
+        const nextQuestion = () => {
+            if (currentQuestion + 1 >= questions.length) {
+                // Form complete
+                window.voiceflow.chat.interact({
+                    type: 'complete',
+                    payload: { formCompleted: true }
+                });
+            } else {
+                // Move to next question
+                window.voiceflow.chat.interact({
+                    type: 'next',
+                    payload: { 
+                        currentQuestion: currentQuestion + 1,
+                        questions: questions,
+                        webhookUrl: webhookUrl
+                    }
+                });
+            }
+        };
+
+        // Event listeners
+        submitBtn.addEventListener('click', submitAnswer);
+        nextBtn.addEventListener('click', nextQuestion);
+        
+        // Enter key support
+        input.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter' && !submitBtn.disabled) {
+                submitAnswer();
+            }
+        });
+
+        element.appendChild(container);
+    }
+};
+
+// YRS AI Form Extension - VERSION 2
+
+/*
+  Final AI Conversational Quiz Extension
+  - This extension is driven by a payload from Voiceflow.
+  - It displays one question at a time with button-based options.
+  - After each answer, it calls an n8n webhook to get a live AI response.
+  - It maintains a visual conversation log for the user.
+*/
+export const AIConversationalQuizExtension2 = {
+  name: 'AIConversationalQuiz',
+  type: 'response',
+  match: ({ trace }) => trace.type === 'ext_ai_conversational_quiz2',
+
+  render: ({ trace, element }) => {
+    // --- Configuration from Voiceflow Payload ---
+    const {
+      questions = [],
+      currentQuestionIndex = 0,
+      webhookUrl, // The n8n webhook URL
+      conversationHistory = [], // Pass history back and forth
+    } = trace.payload;
+
+    // --- UI Rendering ---
+    const quizContainer = document.createElement('div');
+    quizContainer.className = 'ai-quiz-container';
+    quizContainer.innerHTML = `
+      <style>
+        .ai-quiz-container { background-color: #fff; border-radius: 16px; padding: 20px; border: 1px solid #e0e7ef; box-shadow: 0 4px 12px rgba(108, 146, 166, 0.1); font-family: 'Nunito Sans', sans-serif; }
+        .conversation-log { margin-bottom: 20px; max-height: 400px; overflow-y: auto; padding-right: 10px; }
+        .message { margin-bottom: 12px; padding: 10px 14px; border-radius: 12px; max-width: 85%; animation: fadeIn 0.5s ease-in-out; }
+        .user-message { background-color: #F0F4F8; color: #3B534E; margin-left: auto; text-align: right; }
+        .ai-message { background-color: #3B534E; color: white; margin-right: auto; }
+        .question-area h4 { color: #3B534E; margin-bottom: 15px; }
+        .options-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(120px, 1fr)); gap: 10px; }
+        .option-button { background-color: white; border: 1px solid #6C92A6; color: #6C92A6; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: 600; transition: all 0.2s ease; }
+        .option-button:hover:not(:disabled) { background-color: #6C92A6; color: white; }
+        .option-button:disabled { opacity: 0.6; cursor: not-allowed; background-color: #e0e7ef; }
+        .loading-spinner { border: 4px solid #f3f3f3; border-top: 4px solid #3B534E; border-radius: 50%; width: 30px; height: 30px; animation: spin 1s linear infinite; margin: 20px auto; }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .final-summary { text-align: center; }
+      </style>
+      <div class="conversation-log" id="conversation-log"></div>
+      <div class="question-area" id="question-area"></div>
+    `;
+    element.appendChild(quizContainer);
+
+    // --- Core Logic ---
+    const conversationLog = quizContainer.querySelector('#conversation-log');
+    const questionArea = quizContainer.querySelector('#question-area');
+
+    // Function to render the past conversation
+    function renderHistory() {
+        conversationLog.innerHTML = '';
+        conversationHistory.forEach(item => {
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${item.role}-message`;
+            messageDiv.textContent = item.content;
+            conversationLog.appendChild(messageDiv);
+        });
+        conversationLog.scrollTop = conversationLog.scrollHeight;
+    }
+
+    // Function to render the current question
+    function renderQuestion() {
+      const currentQuestion = questions[currentQuestionIndex];
+      questionArea.innerHTML = `
+        <h4>${currentQuestion.text}</h4>
+        <div class="options-grid">
+          ${currentQuestion.options.map(opt => `<button class="option-button" data-answer="${opt}">${opt}</button>`).join('')}
+        </div>
+      `;
+      questionArea.querySelectorAll('.option-button').forEach(button => {
+        button.addEventListener('click', handleAnswerSelection);
+      });
+    }
+
+    async function handleAnswerSelection(event) {
+      const selectedAnswer = event.target.getAttribute('data-answer');
+      const currentQuestion = questions[currentQuestionIndex];
+
+      // Update history
+      const newHistory = [
+          ...conversationHistory,
+          { role: 'user', content: selectedAnswer }
+      ];
+
+      // Disable buttons and show loading state
+      questionArea.querySelectorAll('.option-button').forEach(btn => btn.disabled = true);
+      questionArea.innerHTML += `<div class="loading-spinner"></div>`;
+      renderHistory(); // Re-render history to show the user's latest message immediately
+
+      try {
+        const response = await fetch(webhookUrl, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ question: currentQuestion.text, answer: selectedAnswer, history: newHistory })
+        });
+        const data = await response.json();
+        const aiResponse = data.reply || "That's great! Let's continue.";
+
+        // Add AI response to history and trigger next step in Voiceflow
+        const finalHistory = [
+            ...newHistory,
+            { role: 'ai', content: aiResponse }
+        ];
+
+        window.voiceflow.chat.interact({
+          type: 'complete',
+          payload: {
+            conversationHistory: finalHistory,
+            lastAnswer: selectedAnswer,
+            lastAIResponse: aiResponse,
+            isCompleted: currentQuestionIndex + 1 >= questions.length
+          }
+        });
+
+      } catch (error) {
+        console.error("Error calling n8n webhook:", error);
+        // On error, proceed without the AI response
+        window.voiceflow.chat.interact({
+            type: 'complete',
+            payload: {
+                conversationHistory: newHistory,
+                lastAnswer: selectedAnswer,
+                isCompleted: currentQuestionIndex + 1 >= questions.length,
+                error: true
+            }
+        });
+      }
+    }
+
+    // --- Initial Render ---
+    renderHistory();
+    renderQuestion();
+  }
+};
