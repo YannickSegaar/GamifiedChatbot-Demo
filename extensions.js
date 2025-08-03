@@ -12570,39 +12570,46 @@ export const WinterExplorerQuizExtension4 = {
 
 // YRS: SNOWFALL EXTENSION VERSION 1
 
-// This variable holds the active snow instance so we can access it later to stop it.
+// This variable holds the active snow instance so we can stop it.
 let snowInstance = null;
 
+// The snowfall extension, updated to match the structure of your confetti extension.
 export const SnowfallExtension1 = {
   name: 'Snowfall',
   type: 'effect',
-
-  // This now has the exact same structure as your confetti extension.
-  // It will run if the Action Name is 'snow' OR if the payload contains a 'name' property of 'snow'.
+  
+  // This function now matches the older structure you provided.
+  // It will trigger if the Custom Action's "Action Name" is set to 'ext_snowfall1'.
   match: ({ trace }) =>
-    trace.type === 'ext_snow1' || trace.payload?.name === 'ext_snow1',
-
+    trace.type === 'ext_snowfall1' || trace.payload?.name === 'ext_snowfall1',
+  
   // This function runs when the 'match' is successful.
   effect: ({ trace }) => {
-    // Safely get the action from the payload.
+    // The action ('start' or 'stop') is still read from the payload.
     const action = trace.payload?.action;
 
+    // First, check if the SnowFall library was successfully loaded.
+    if (typeof SnowFall === 'undefined') {
+        console.error('CRITICAL ERROR: The snow-fall.js library is not loaded. Check your HTML file.');
+        return;
+    }
+
+    // Logic to either start or stop the snow based on the payload.
     if (action === 'start') {
-      // If the action is 'start' and snow isn't already running, create it.
       if (!snowInstance) {
         console.log('Starting snow effect... ❄️');
         snowInstance = new SnowFall();
       }
     } else if (action === 'stop') {
-      // If the action is 'stop' and snow is running, destroy it.
       if (snowInstance) {
         console.log('Stopping snow effect...');
         snowInstance.destroy();
-        snowInstance = null; // Clear the instance
+        snowInstance = null; // Clear the instance to allow it to be started again.
       }
     }
   },
 };
+
 
 // YRS: CONFETTI EXTENSION VERSION 1
 
@@ -12624,3 +12631,5 @@ export const ConfettiExtension1 = {
     })
   },
 }
+
+
