@@ -13193,10 +13193,10 @@ export const AIConversationalQuizExtension4 = {
 // YRS: AI Form Extension - VERSION 5
 
 // Final AI Quiz Extension - Designed for the Code Step Method
-export const AIConversationalQuizExtension = {
+export const AIConversationalQuizExtension5 = {
   name: 'AIConversationalQuiz',
   type: 'response',
-  match: ({ trace }) => trace.type === 'ext_ai_conversational_quiz',
+  match: ({ trace }) => trace.type === 'ext_ai_conversational_quiz5',
 
   render: ({ trace, element }) => {
     console.log('Extension received payload:', trace.payload);
