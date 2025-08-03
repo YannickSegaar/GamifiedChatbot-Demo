@@ -1,4 +1,4 @@
-=<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -17,24 +17,14 @@
             --text-light: #576574;
             --border-radius: 16px;
         }
-
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        html {
-            scroll-behavior: smooth;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
         body {
             font-family: 'Nunito Sans', sans-serif;
             line-height: 1.7;
             color: var(--text-dark);
             background-color: #fdfdfd;
         }
-
         /* --- Header --- */
         .header {
             background: rgba(255, 255, 255, 0.8);
@@ -48,7 +38,6 @@
             box-shadow: 0 2px 10px rgba(0,0,0,0.05);
             transition: background-color 0.3s;
         }
-
         .nav-container {
             max-width: 1300px;
             margin: 0 auto;
@@ -57,7 +46,6 @@
             align-items: center;
             padding: 0 2rem;
         }
-
         .logo {
             font-size: 1.6rem;
             font-weight: 700;
@@ -66,17 +54,8 @@
             align-items: center;
             gap: 0.5rem;
         }
-
-        .logo .fa-snowflake {
-            color: var(--secondary-color);
-        }
-
-        .nav-menu {
-            display: flex;
-            list-style: none;
-            gap: 2.5rem;
-        }
-
+        .logo .fa-snowflake { color: var(--secondary-color); }
+        .nav-menu { display: flex; list-style: none; gap: 2.5rem; }
         .nav-menu a {
             color: var(--primary-color);
             text-decoration: none;
@@ -84,7 +63,6 @@
             transition: color 0.3s;
             position: relative;
         }
-        
         .nav-menu a::after {
             content: '';
             position: absolute;
@@ -96,11 +74,7 @@
             background-color: var(--secondary-color);
             transition: width 0.3s ease;
         }
-
-        .nav-menu a:hover::after {
-            width: 100%;
-        }
-
+        .nav-menu a:hover::after { width: 100%; }
         /* --- Hero Section --- */
         .hero {
             background: linear-gradient(rgba(44, 62, 80, 0.5), rgba(44, 62, 80, 0.5)),
@@ -115,14 +89,12 @@
             color: white;
             padding: 0 2rem;
         }
-
         .hero-content h1 {
             font-size: 3.5rem;
             margin-bottom: 1rem;
             text-shadow: 2px 2px 8px rgba(0,0,0,0.6);
             font-weight: 700;
         }
-
         .hero-content p {
             font-size: 1.4rem;
             margin-bottom: 2.5rem;
@@ -131,7 +103,6 @@
             margin-left: auto;
             margin-right: auto;
         }
-        
         .cta-button {
             background: var(--secondary-color);
             color: white;
@@ -143,20 +114,14 @@
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(108, 146, 166, 0.4);
         }
-
         .cta-button:hover {
             background: var(--primary-color);
             transform: translateY(-3px);
             box-shadow: 0 6px 20px rgba(59, 83, 78, 0.4);
         }
-
-        /* --- Featured Tours Section --- */
-        .featured {
-            max-width: 1300px;
-            margin: 0 auto;
-            padding: 6rem 2rem;
-        }
-
+        /* --- Other sections styling --- */
+        .featured, .sustainability { padding: 6rem 2rem; }
+        .featured { max-width: 1300px; margin: 0 auto; }
         .section-title {
             text-align: center;
             font-size: 2.8rem;
@@ -164,7 +129,6 @@
             color: var(--primary-color);
             font-weight: 700;
         }
-        
         .section-subtitle {
             text-align: center;
             font-size: 1.2rem;
@@ -174,13 +138,11 @@
             margin-left: auto;
             margin-right: auto;
         }
-
         .tours-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 2.5rem;
         }
-
         .tour-card {
             background: white;
             border-radius: var(--border-radius);
@@ -188,19 +150,11 @@
             box-shadow: 0 8px 30px rgba(108, 146, 166, 0.1);
             transition: transform 0.3s, box-shadow 0.3s;
         }
-
         .tour-card:hover {
             transform: translateY(-8px);
             box-shadow: 0 12px 40px rgba(108, 146, 166, 0.2);
         }
-
-        .tour-image {
-            height: 250px;
-            background-size: cover;
-            background-position: center;
-            position: relative;
-        }
-        
+        .tour-image { height: 250px; background-size: cover; background-position: center; position: relative; }
         .tour-image .tour-persona {
             position: absolute;
             top: 1rem;
@@ -216,143 +170,33 @@
             align-items: center;
             gap: 0.5rem;
         }
-
-        .tour-info {
-            padding: 1.5rem 2rem;
-        }
-
-        .tour-title {
-            font-size: 1.4rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-            color: var(--primary-color);
-        }
-
-        .tour-description {
-            color: var(--text-light);
-            font-size: 1rem;
-            line-height: 1.6;
-            margin-bottom: 1.5rem;
-        }
-        
-        .tour-details {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-top: 1rem;
-            border-top: 1px solid #eee;
-        }
-
-        .tour-details .duration, .tour-details .difficulty {
-            font-weight: 600;
-            color: var(--text-dark);
-        }
-        
-        .tour-details i {
-            color: var(--secondary-color);
-            margin-right: 0.5rem;
-        }
-
-        /* --- Sustainability Section --- */
-        .sustainability {
-            background: var(--accent-color);
-            padding: 6rem 2rem;
-        }
-        
-        .sustainability-content {
-            max-width: 1300px;
-            margin: 0 auto;
-            display: flex;
-            align-items: center;
-            gap: 4rem;
-        }
-        
-        .sustainability-text {
-            flex: 1;
-        }
-
-        .sustainability-image {
-            flex: 1;
-            max-width: 500px;
-        }
-        
-        .sustainability-image img {
-            width: 100%;
-            border-radius: var(--border-radius);
-            box-shadow: 0 10px 30px rgba(108, 146, 166, 0.2);
-        }
-
+        .tour-info { padding: 1.5rem 2rem; }
+        .tour-title { font-size: 1.4rem; font-weight: 700; margin-bottom: 0.5rem; color: var(--primary-color); }
+        .tour-description { color: var(--text-light); font-size: 1rem; line-height: 1.6; margin-bottom: 1.5rem; }
+        .tour-details { display: flex; justify-content: space-between; align-items: center; padding-top: 1rem; border-top: 1px solid #eee; }
+        .tour-details .duration, .tour-details .difficulty { font-weight: 600; color: var(--text-dark); }
+        .tour-details i { color: var(--secondary-color); margin-right: 0.5rem; }
+        .sustainability { background: var(--accent-color); }
+        .sustainability-content { max-width: 1300px; margin: 0 auto; display: flex; align-items: center; gap: 4rem; }
+        .sustainability-text { flex: 1; }
+        .sustainability-image { flex: 1; max-width: 500px; }
+        .sustainability-image img { width: 100%; border-radius: var(--border-radius); box-shadow: 0 10px 30px rgba(108, 146, 166, 0.2); }
         /* --- Footer --- */
-        .footer {
-            background: var(--primary-color);
-            color: white;
-            padding: 4rem 2rem 2rem;
-        }
-
-        .footer-content {
-            max-width: 1300px;
-            margin: 0 auto;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .footer-section h4 {
-            margin-bottom: 1.5rem;
-            color: white;
-            font-size: 1.2rem;
-            font-weight: 700;
-        }
-        
-        .footer-section p, .footer-section a {
-            color: #ccc;
-            text-decoration: none;
-            margin-bottom: 0.8rem;
-            transition: color 0.3s;
-        }
-        
-        .footer-section a:hover {
-            color: white;
-        }
-
-        .social-icons a {
-            font-size: 1.5rem;
-            margin-right: 1rem;
-        }
-
-        .footer-bottom {
-            text-align: center;
-            padding-top: 3rem;
-            margin-top: 3rem;
-            border-top: 1px solid rgba(255, 255, 255, 0.2);
-            color: #aaa;
-        }
-
+        .footer { background: var(--primary-color); color: white; padding: 4rem 2rem 2rem; }
+        .footer-content { max-width: 1300px; margin: 0 auto; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 2rem; }
+        .footer-section h4 { margin-bottom: 1.5rem; color: white; font-size: 1.2rem; font-weight: 700; }
+        .footer-section p, .footer-section a { color: #ccc; text-decoration: none; margin-bottom: 0.8rem; transition: color 0.3s; }
+        .footer-section a:hover { color: white; }
+        .social-icons a { font-size: 1.5rem; margin-right: 1rem; }
+        .footer-bottom { text-align: center; padding-top: 3rem; margin-top: 3rem; border-top: 1px solid rgba(255, 255, 255, 0.2); color: #aaa; }
         /* --- Responsive Design --- */
-        @media (max-width: 992px) {
-            .sustainability-content {
-                flex-direction: column;
-            }
-        }
+        @media (max-width: 992px) { .sustainability-content { flex-direction: column; } }
         @media (max-width: 768px) {
-            .nav-container {
-                flex-direction: column;
-                gap: 1rem;
-            }
-            .nav-menu {
-                flex-direction: column;
-                text-align: center;
-                gap: 1rem;
-            }
-            .hero-content h1 {
-                font-size: 2.5rem;
-            }
-            .hero-content p {
-                font-size: 1.2rem;
-            }
-            .tours-grid {
-                grid-template-columns: 1fr;
-            }
+            .nav-container { flex-direction: column; gap: 1rem; }
+            .nav-menu { flex-direction: column; text-align: center; gap: 1rem; }
+            .hero-content h1 { font-size: 2.5rem; }
+            .hero-content p { font-size: 1.2rem; }
+            .tours-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
@@ -388,7 +232,7 @@
         <h2 class="section-title">Signature Winter Experiences</h2>
         <p class="section-subtitle">Each tour is crafted with a deep respect for nature and local culture, ensuring a responsible and authentic Norwegian adventure. Not sure which to choose? Our AI guide can help you find your perfect match!</p>
         <div class="tours-grid">
-            <!-- Tour Card 1 -->
+            <!-- Tour Cards -->
             <div class="tour-card">
                 <div class="tour-image" style="background-image: url('https://images.unsplash.com/photo-1531366936337-7c912a4589a7?q=80&w=2070&auto=format&fit=crop');">
                     <div class="tour-persona"><i class="fa-solid fa-bolt"></i> Adventure Seeker</div>
@@ -402,7 +246,6 @@
                     </div>
                 </div>
             </div>
-            <!-- Tour Card 2 -->
             <div class="tour-card">
                 <div class="tour-image" style="background-image: url('https://images.unsplash.com/photo-1533109721025-d1ae7de8488a?q=80&w=1974&auto=format&fit=crop');">
                     <div class="tour-persona"><i class="fa-solid fa-people-group"></i> Cultural Immersionist</div>
@@ -416,7 +259,6 @@
                     </div>
                 </div>
             </div>
-            <!-- Tour Card 3 -->
             <div class="tour-card">
                 <div class="tour-image" style="background-image: url('https://images.unsplash.com/photo-1547756536-cdeaf2a2fa8c?q=80&w=2070&auto=format&fit=crop');">
                     <div class="tour-persona"><i class="fa-solid fa-camera"></i> Nature Photographer</div>
@@ -481,8 +323,18 @@
         </div>
     </footer>
 
-    <script>
-        // Header scroll effect
+    <!-- ===== START: VOICEFLOW & EFFECTS SETUP ===== -->
+
+    <!-- Canvas element for confetti -->
+    <canvas id="confetti-canvas" style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 9999;"></canvas>
+
+    <!-- Effect Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/snow-fall.js@0.3.0/dist/snow-fall.min.js"></script>
+
+    <!-- Voiceflow Chat Widget and Extensions Script -->
+    <script type="module">
+        // This is a basic script for the header scroll effect.
         window.addEventListener('scroll', function() {
             const header = document.querySelector('.header');
             if (window.scrollY > 100) {
@@ -492,7 +344,7 @@
             }
         });
 
-        // Smooth scrolling for navigation
+        // This is a basic script for smooth scrolling.
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
@@ -504,92 +356,51 @@
                 }
             });
         });
+
+        // --- Voiceflow Initialization ---
+        console.log("Script loaded. Initializing Voiceflow chat widget...");
+
+        // Import extensions from the extensions.js file
+        // Ensure the names here match the export names in your JS file
+        import {
+            // Your other extensions
+            SnowfallExtension1,
+            ConfettiExtension1
+        } from '/extensions.js';
+
+        // Load the Voiceflow chat widget with extensions
+        (function (d, t) {
+            var v = d.createElement(t),
+                s = d.getElementsByTagName(t)[0];
+            v.onload = function () {
+                console.log("Voiceflow widget script loaded. Initializing chat...");
+
+                window.voiceflow.chat.load({
+                    verify: { projectID: '6798b43c9f655dc50cb7cb58' },
+                    url: 'https://general-runtime.voiceflow.com',
+                    versionID: 'production',
+                    assistant: {
+                        extensions: [
+                            // Your other extensions
+                            SnowfallExtension1,
+                            ConfettiExtension1
+                        ],
+                        stylesheet: "https://yannicksegaar.github.io/DX_Demo/VF_styles.css",
+                    },
+                    // Your other settings like proactive messages
+                }).then(() => {
+                    console.log("Voiceflow chat initialized successfully.");
+                    // Your proactive chat logic can go here
+                }).catch(error => {
+                    console.error("Error initializing Voiceflow chat:", error);
+                });
+            };
+            v.src = 'https://cdn.voiceflow.com/widget-next/bundle.mjs';
+            v.type = 'text/javascript';
+            s.parentNode.insertBefore(v, s);
+        })(document, 'script');
     </script>
-
-<body>
-  <!-- Confetti Canvas -->
-  <canvas id="confetti-canvas"></canvas>
-
-  <!-- Voiceflow Chat Widget Container -->
-  <div id="flat-chat"></div>
-  <div id="voiceflow-chat-frame"></div>
-
-  <!-- Effect Libraries -->
-  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
-  
-  <!--
-    THIS IS THE CRITICAL LINE THAT FIXES THE ERROR.
-    MAKE SURE IT IS PRESENT AND EXACTLY AS WRITTEN BELOW.
-  -->
-  <script src="https://cdn.jsdelivr.net/npm/snow-fall.js@0.3.0/dist/snow-fall.min.js"></script>
-
-  <!-- Voiceflow Chat Widget and Extensions Script -->
-  <script type="module">
-    console.log("Script loaded. Initializing Voiceflow chat widget...");
-
-    // Make sure these names match your extensions.js file EXACTLY
-    import {
-      TourFinderQuizExtension1,
-      PropertyCalculatorExtension1,
-      PropertyCalculatorExtension2,
-      PropertyCalculatorExtension3,
-      PropertyCalculatorExtension4,
-      PropertyCalculatorExtension5,
-      PropertyCalculatorExtension6,
-      DirectionsWorkflowExtension7,
-      DirectionsWorkflowExtension22,
-      DirectionsWorkflowExtension23,
-      DirectionsWorkflowExtension24,
-      WinterExplorerQuizExtension1,
-      WinterExplorerQuizExtension2,
-      WinterExplorerQuizExtension3,
-      WinterExplorerQuizExtension4,
-      SnowfallExtension1,
-      ConfettiExtension1
-    } from '/extensions.js';
-
-    // Load the Voiceflow chat widget with extensions
-    (function (d, t) {
-      var v = d.createElement(t),
-        s = d.getElementsByTagName(t)[0];
-      v.onload = function () {
-        console.log("Voiceflow widget script loaded. Initializing chat...");
-
-        window.voiceflow.chat.load({
-          verify: { projectID: '6798b43c9f655dc50cb7cb58' },
-          url: 'https://general-runtime.voiceflow.com',
-          versionID: 'production',
-          // ... other settings ...
-          assistant: {
-            extensions: [
-            TourFinderQuizExtension1,
-      PropertyCalculatorExtension1,
-      PropertyCalculatorExtension2,
-      PropertyCalculatorExtension3,
-      PropertyCalculatorExtension4,
-      PropertyCalculatorExtension5,
-      PropertyCalculatorExtension6,
-      DirectionsWorkflowExtension7,
-      DirectionsWorkflowExtension22,
-      DirectionsWorkflowExtension23,
-      DirectionsWorkflowExtension24,
-      WinterExplorerQuizExtension1,
-      WinterExplorerQuizExtension2,
-      WinterExplorerQuizExtension3,
-      WinterExplorerQuizExtension4,
-      SnowfallExtension1,
-      ConfettiExtension1
-            ],
-            stylesheet: "https://yannicksegaar.github.io/DX_Demo/VF_styles.css",
-          },
-        }).then(() => {
-          // ... your proactive chat logic ...
-        });
-      };
-      v.src = 'https://cdn.voiceflow.com/widget-next/bundle.mjs';
-      v.type = 'text/javascript';
-      s.parentNode.insertBefore(v, s);
-    })(document, 'script');
-  </script>
+    
+    <!-- ===== END: VOICEFLOW & EFFECTS SETUP ===== -->
 </body>
 </html>
