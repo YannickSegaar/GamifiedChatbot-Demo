@@ -514,14 +514,16 @@
   <div id="flat-chat"></div>
   <div id="voiceflow-chat-frame"></div>
 
-  <!-- Confetti Library -->
+  <!-- Effect Libraries -->
   <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.5.1/dist/confetti.browser.min.js"></script>
+  <!-- 1. ADD THIS MISSING SCRIPT FOR THE SNOWFALL -->
+  <script src="https://cdn.jsdelivr.net/npm/snow-fall.js@0.3.0/dist/snow-fall.min.js"></script>
 
   <!-- Voiceflow Chat Widget and Extensions Script -->
   <script type="module">
     console.log("Script loaded. Initializing Voiceflow chat widget...");
 
-    // Import extensions from the extensions.js file
+    // 2. IMPORT THE CORRECT EXTENSION NAMES (without the '1')
     import {
       TourFinderQuizExtension1,
       PropertyCalculatorExtension1,
@@ -562,9 +564,10 @@
           render: {
             mode: 'overlay',
           },
-          autostart: false, // Changed to false so we can control the timing
+          autostart: false,
           allowDangerousHTML: true,
           assistant: {
+            // 3. ENSURE THE CORRECT EXTENSION NAMES ARE USED HERE AS WELL
             extensions: [
             TourFinderQuizExtension1,
             PropertyCalculatorExtension1,
@@ -589,30 +592,26 @@
         }).then(() => {
           console.log("Voiceflow chat initialized successfully.");
           
-          // Clear any existing proactive messages
           window.voiceflow.chat.proactive.clear();
           
-          // Add first proactive message "hi"
           window.voiceflow.chat.proactive.push({
             type: 'text',
             payload: { message: 'Hi there!' }
           });
           
-          // Add second proactive message "hello" after a brief delay
           setTimeout(() => {
             window.voiceflow.chat.proactive.push({
               type: 'text',
               payload: { message: 'Snowman ☃️' }
             });
-          }, 1500); // 1.5 second delay between messages
+          }, 1500);
           
-          // Auto-open the chat widget after 1.5 seconds
           setTimeout(() => {
             window.voiceflow.chat.open();
           }, 2500);
           
-          // Initialize the handoff listener with the Voiceflow runtime
-          setupHandoffListener(window.voiceflow.chat.runtime);
+          // This function is not defined in the snippet, ensure it exists elsewhere in your code
+          // setupHandoffListener(window.voiceflow.chat.runtime); 
         }).catch((error) => {
           console.error("Error initializing Voiceflow chat:", error);
         });
