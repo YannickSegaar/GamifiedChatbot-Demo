@@ -13321,10 +13321,10 @@ export const AIConversationalQuizExtension5 = {
 // YRS: AI Form Extension - VERSION 6
 
 // Bulletproof AI Quiz Extension - Expert Recommended Pattern
-export const AIConversationalQuizExtension6 = {
+export const AIConversationalQuizExtension = {
   name: 'AIConversationalQuiz',
   type: 'response',
-  match: ({ trace }) => trace.type === 'ext_ai_conversational_quiz6',
+  match: ({ trace }) => trace.type === 'ext_ai_conversational_quiz',
 
   render: ({ trace, element }) => {
     console.log('🎯 AIConversationalQuizExtension loaded. Received payload:', trace.payload);
@@ -13332,18 +13332,20 @@ export const AIConversationalQuizExtension6 = {
     // --- 1. Extract Data with Safe Defaults ---
     const {
       currentQuestionIndex = 0,
-      conversationHistory: conversationHistoryJSON = '[]',
+      conversationHistory: conversationHistoryData = [], // Expect an array or a string
       webhookUrl = '',
-      questions: questionsJSON = '[]'
+      questions = [] // Expect an array
     } = trace.payload || {};
 
     // --- 2. Safely Parse JSON Strings into Usable Objects ---
-    let questions, conversationHistory;
+    let conversationHistory;
     try {
-      questions = JSON.parse(questionsJSON);
-      conversationHistory = JSON.parse(conversationHistoryJSON);
+      // This handles both cases: an array from the first call, and a JSON string on subsequent calls.
+      conversationHistory = typeof conversationHistoryData === 'string' 
+        ? JSON.parse(conversationHistoryData) 
+        : conversationHistoryData;
     } catch (e) {
-      console.error('CRITICAL ERROR: Could not parse JSON data from Voiceflow.', e);
+      console.error('CRITICAL ERROR: Could not parse conversation history.', e);
       element.innerHTML = `<div style="color: red; padding: 20px;">Error: Invalid data format received.</div>`;
       return;
     }
