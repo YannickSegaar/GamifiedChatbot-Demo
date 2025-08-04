@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Go Tours Hawaii - Savant Preview</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Roboto:wght@400;500&display=swap');
+
+        :root {
+            --primary-blue: #004b8d;
+            --primary-orange: #f76900;
+            --dark-text: #333333;
+            --light-text: #ffffff;
+            --light-grey-bg: #f7f7f7;
+            --font-heading: 'Oswald', sans-serif;
+            --font-body: 'Roboto', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: #e9ebee;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: var(--dark-text);
+        }
+
+        #chatbot-window {
+            width: 400px;
+            height: 700px;
+            background-color: var(--light-text);
+            border-radius: 12px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        .view {
+            width: 100%;
+            height: 100%;
+            display: none;
+            flex-direction: column;
+            align-items: center;
+            padding: 25px;
+            box-sizing: border-box;
+            text-align: center;
+        }
+
+        .view.active {
+            display: flex;
+        }
+        
+        h2, h3 {
+            font-family: var(--font-heading);
+            color: var(--primary-blue);
+            text-transform: uppercase;
+            margin-top: 0;
+        }
+
+        /* --- Map View --- */
+        #map-container {
+            position: relative;
+            width: 100%;
+            max-width: 350px;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        #map-image {
+            width: 100%;
+            display: block;
+        }
+        .tour-pin {
+            position: absolute;
+            width: 28px;
+            height: 28px;
+            background-color: var(--primary-orange);
+            border: 2px solid white;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+            cursor: pointer;
+            transition: transform 0.2s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+        }
+        .tour-pin::after {
+            content: attr(data-tooltip);
+            font-family: var(--font-body);
+            font-weight: 500;
+            position: absolute;
+            bottom: 130%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: rgba(0,0,0,0.8);
+            color: white;
+            padding: 6px 12px;
+            border-radius: 5px;
+            white-space: nowrap;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.2s ease;
+            font-size: 13px;
+        }
+        .tour-pin:hover {
+            transform: translate(-50%, -50%) scale(1.15);
+        }
+        .tour-pin:hover::after {
+            opacity: 1;
+            visibility: visible;
+        }
+        .tour-pin span {
+            color: white;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+
+        /* --- Quiz View --- */
+        #quiz-view {
+            justify-content: space-between;
+        }
+        #progress-bar-container {
+            width: 100%;
+            height: 8px;
+            background-color: #e0e0e0;
+            border-radius: 4px;
+            margin-bottom: 15px;
+        }
+        #progress-bar {
+            width: 0%;
+            height: 100%;
+            background-color: var(--primary-orange);
+            border-radius: 4px;
+            transition: width 0.5s ease;
+        }
+        #question-image {
+            width: 100%;
+            height: 180px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 15px;
+        }
+        #question-text {
+            font-size: 18px;
+            line-height: 1.5;
+            font-weight: 400;
+            margin-bottom: 20px;
+        }
+        #options-container {
+            width: 100%;
+            display: grid;
+            gap: 10px;
+        }
+        .option-btn {
+            padding: 14px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            background-color: var(--light-text);
+            font-size: 16px;
+            font-family: var(--font-body);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            text-align: left;
+        }
+        .option-btn:hover:not(:disabled) {
+            background-color: var(--light-grey-bg);
+            border-color: var(--primary-blue);
+        }
+        .option-btn.correct { background-color: #E7F3FE; color: var(--primary-blue); border-color: var(--primary-blue); font-weight: 500; }
+        .option-btn.wrong { background-color: #FFF2EB; color: #D9534F; border-color: #D9534F; }
+        .option-btn:disabled { cursor: not-allowed; }
+
+        #timer {
+            font-size: 1.2em;
+            font-weight: 500;
+            color: #777;
+        }
+
+        #feedback-box {
+            display: none;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 15px;
+            line-height: 1.6;
+            background-color: var(--light-grey-bg);
+            border-left: 4px solid var(--primary-blue);
+        }
+
+        /* --- Bus Animation --- */
+        #bus-track {
+            width: 100%;
+            height: 40px;
+            margin-top: auto;
+            position: relative;
+            background-image: linear-gradient(to right, #ccc 50%, transparent 50%);
+            background-size: 15px 1px;
+            background-repeat: repeat-x;
+            background-position: center;
+        }
+        #bus {
+            position: absolute;
+            left: 0;
+            bottom: 5px;
+            width: 55px;
+            height: auto;
+            transform: translateX(-100%);
+            transition: transform 1.5s cubic-bezier(0.65, 0, 0.35, 1);
+        }
+        #bus.driving {
+            transform: translateX(calc(360px)); /* Drive across the screen */
+        }
+
+        /* --- Final View --- */
+        #final-score { font-size: 3.5em; font-family: var(--font-heading); color: var(--primary-blue); }
+        .email-input {
+            width: 90%;
+            padding: 14px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 16px;
+            font-family: var(--font-body);
+            margin-top: 15px;
+        }
+        .email-input:focus { outline: none; border-color: var(--primary-blue); box-shadow: 0 0 0 2px rgba(0, 75, 141, 0.2); }
+        .submit-btn {
+            margin-top: 15px;
+            padding: 15px 30px;
+            width: 100%;
+            border: none;
+            border-radius: 6px;
+            background-color: var(--primary-orange);
+            color: white;
+            font-size: 18px;
+            font-weight: 500;
+            font-family: var(--font-body);
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .submit-btn:hover {
+            background-color: #E06000;
+        }
+
+    </style>
+</head>
+<body>
+
+<div id="chatbot-window">
+    <div id="map-view" class="view active">
+        <h2>OAHU TOUR FINDER</h2>
+        <p style="margin-top: -5px; margin-bottom: 25px;">Select a tour to begin your interactive experience.</p>
+        <div id="map-container">
+            <img id="map-image" src="https://i.imgur.com/3Y2uA9Q.jpeg" alt="Map of Oahu">
+            </div>
+    </div>
+
+    <div id="quiz-view" class="view">
+        <div style="width:100%">
+            <h3 id="tour-title">Tour Title</h3>
+            <div id="progress-bar-container"><div id="progress-bar"></div></div>
+            <img id="question-image" src="" alt="Question Image">
+            <p id="question-text">Question goes here...</p>
+            <div id="options-container">
+                </div>
+            <div id="feedback-box">Feedback goes here...</div>
+        </div>
+        <div id="bus-track">
+            <img id="bus" src="https://i.imgur.com/kSgoi2p.png" alt="Tour Bus">
+        </div>
+    </div>
+
+    <div id="final-view" class="view">
+        <h2>EXPERIENCE COMPLETE!</h2>
+        <p>Your final score is:</p>
+        <p id="final-score">3/3</p>
+        <p style="font-size: 16px; line-height: 1.6;">As a thank you, we'd like to offer you a <strong>10% DISCOUNT</strong> on your booking!</p>
+        <p style="font-size: 14px; color: #777;">Enter your email to claim your discount code and receive your quiz results.</p>
+        <input type="email" class="email-input" placeholder="Enter your email address">
+        <button class="submit-btn" onclick="alert('Mahalo! Your discount code is on its way.')">Claim My 10% Discount</button>
+    </div>
+
+</div>
+
+<script>
+const quizData = {
+  "tours": [
+    {
+      "id": "north_shore_adventure",
+      "name": "North Shore Adventure",
+      "pin_position": {"top": "30%", "left": "45%"},
+      "questions": [
+        {
+          "question": "This massive tree has roots that grow from its branches down to the ground. What is it?",
+          "image": "https://i.imgur.com/kGGCf87.jpeg", // Banyan Tree
+          "options": ["Banyan Tree", "Wiliwili Tree", "Koa Tree"],
+          "correct_answer": 0,
+          "fun_fact": "That's correct! The Banyan Tree is a remarkable sight. On our North Shore tour, you'll see one so large it covers nearly an entire acre."
+        },
+        {
+          "question": "This North Shore bay is a legendary big wave surfing spot in the winter. What is its name?",
+          "image": "https://i.imgur.com/fJtYkM5.jpeg", // Waimea Bay
+          "options": ["Hanauma Bay", "Waikiki Bay", "Waimea Bay"],
+          "correct_answer": 2,
+          "fun_fact": "Excellent! You'll get to experience the world-famous Waimea Bay and learn about its history on our guided tour."
+        },
+        {
+          "question": "What iconic frozen treat is a must-have when visiting the North Shore?",
+          "image": "https://i.imgur.com/1B3wYwS.jpeg", // Shave Ice
+          "options": ["Dole Whip", "Shave Ice", "Acai Bowl"],
+          "correct_answer": 1,
+          "fun_fact": "You got it! We make a special stop for authentic Hawaiian Shave Ice. It's the perfect way to cool down, and it's included in your tour price."
+        }
+      ]
+    },
+    {
+      "id": "pearl_harbor_circle_island",
+      "name": "Pearl Harbor & Circle Island",
+      "pin_position": {"top": "75%", "left": "30%"},
+      "questions": [ /* For a real build, add questions here */ ]
+    }
+  ]
+};
+
+// --- No changes to the JavaScript logic needed, only styling ---
+
+let currentTour;
+let currentQuestionIndex = 0;
+let score = 0;
+
+const views = document.querySelectorAll('.view');
+const mapContainer = document.getElementById('map-container');
+const quizView = document.getElementById('quiz-view');
+const optionsContainer = document.getElementById('options-container');
+const bus = document.getElementById('bus');
+
+function switchView(viewId) {
+    views.forEach(view => view.classList.remove('active'));
+    document.getElementById(viewId).classList.add('active');
+}
+
+function startQuiz(tourId) {
+    currentTour = quizData.tours.find(t => t.id === tourId);
+    if (!currentTour || currentTour.questions.length === 0) {
+        alert("Sorry, the quiz for this tour is not ready yet!");
+        return;
+    }
+    currentQuestionIndex = 0;
+    score = 0;
+    document.getElementById('tour-title').innerText = currentTour.name;
+    switchView('quiz-view');
+    displayQuestion();
+}
+
+function displayQuestion() {
+    optionsContainer.innerHTML = '';
+    document.getElementById('feedback-box').style.display = 'none';
+    bus.style.transition = 'none';
+    bus.classList.remove('driving');
+    
+    setTimeout(() => {
+        bus.style.transform = 'translateX(-100%)';
+    }, 50);
+
+    const question = currentTour.questions[currentQuestionIndex];
+    
+    document.getElementById('question-image').src = question.image;
+    document.getElementById('question-text').innerText = question.question;
+
+    question.options.forEach((option, index) => {
+        const button = document.createElement('button');
+        button.className = 'option-btn';
+        button.innerText = option;
+        button.onclick = () => selectAnswer(index);
+        optionsContainer.appendChild(button);
+    });
+
+    const progress = ((currentQuestionIndex) / currentTour.questions.length) * 100;
+    document.getElementById('progress-bar').style.width = `${progress}%`;
+}
+
+function selectAnswer(selectedIndex) {
+    const question = currentTour.questions[currentQuestionIndex];
+    const options = optionsContainer.getElementsByTagName('button');
+
+    Array.from(options).forEach(btn => btn.disabled = true);
+    const isCorrect = selectedIndex === question.correct_answer;
+    
+    if (isCorrect) {
+        score++;
+        if (options[selectedIndex]) {
+            options[selectedIndex].classList.add('correct');
+        }
+    } else {
+        if (options[selectedIndex]) {
+            options[selectedIndex].classList.add('wrong');
+        }
+        if (options[question.correct_answer]) {
+            options[question.correct_answer].classList.add('correct');
+        }
+    }
+
+    const feedbackBox = document.getElementById('feedback-box');
+    feedbackBox.innerText = question.fun_fact;
+    feedbackBox.style.display = 'block';
+
+    setTimeout(() => {
+        bus.style.transition = 'transform 1.5s cubic-bezier(0.65, 0, 0.35, 1)';
+        bus.classList.add('driving');
+    }, 1200);
+
+    setTimeout(() => {
+        currentQuestionIndex++;
+        if (currentQuestionIndex < currentTour.questions.length) {
+            displayQuestion();
+        } else {
+            showFinalScore();
+        }
+    }, 3200);
+}
+
+function showFinalScore() {
+    document.getElementById('final-score').innerText = `${score}/${currentTour.questions.length}`;
+    switchView('final-view');
+}
+
+window.onload = () => {
+    quizData.tours.forEach((tour, index) => {
+        const pin = document.createElement('div');
+        pin.className = 'tour-pin';
+        pin.style.top = tour.pin_position.top;
+        pin.style.left = tour.pin_position.left;
+        pin.setAttribute('data-tooltip', tour.name);
+        pin.innerHTML = `<span>${index + 1}</span>`;
+        pin.onclick = () => startQuiz(tour.id);
+        mapContainer.appendChild(pin);
+    });
+};
+
+</script>
+
+</body>
+</html>

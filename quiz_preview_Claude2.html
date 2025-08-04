@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hawaiian Heritage Quiz - Go Tours Hawaii</title>
+    <style>
+        /* --- STYLING REFINED & ALIGNED WITH GO TOURS HAWAII BRAND --- */
+        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Roboto:wght@400;500;700&display=swap');
+
+        :root {
+            --primary-blue: #004b8d;
+            --primary-orange: #f76900;
+            --dark-text: #333333;
+            --light-text: #ffffff;
+            --light-grey-bg: #f7f7f7;
+            --font-heading: 'Oswald', sans-serif;
+            --font-body: 'Roboto', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: #e9ebee; /* A neutral backdrop for the chat window */
+            min-height: 100vh;
+            color: var(--dark-text);
+        }
+
+        .chat-container {
+            max-width: 420px;
+            margin: 0 auto;
+            background: #ffffff;
+            min-height: 100vh;
+            box-shadow: 0 0 30px rgba(0,0,0,0.15);
+            position: relative;
+        }
+
+        .header {
+            background: var(--primary-blue);
+            color: var(--light-text);
+            padding: 24px 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header h1 {
+            font-family: var(--font-heading);
+            font-size: 24px;
+            font-weight: 700;
+            text-transform: uppercase;
+            margin-bottom: 4px;
+        }
+
+        .header p {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+
+        .game-content {
+            padding: 24px 20px;
+        }
+
+        .welcome-screen {
+            text-align: center;
+            animation: fadeInUp 0.8s ease-out;
+        }
+
+        .welcome-screen h2 {
+            font-family: var(--font-heading);
+            color: var(--primary-blue);
+            margin-bottom: 12px;
+            font-size: 26px;
+            text-transform: uppercase;
+        }
+
+        .welcome-screen .subtitle {
+            color: var(--dark-text);
+            margin-bottom: 8px;
+            font-size: 16px;
+            font-weight: 500;
+        }
+
+        .welcome-screen p {
+            color: #6b7280;
+            margin-bottom: 28px;
+            line-height: 1.6;
+            font-size: 15px;
+        }
+
+        .map-container {
+            position: relative;
+            background: var(--light-grey-bg);
+            border-radius: 12px;
+            padding: 16px;
+            margin: 24px 0;
+            border: 1px solid #e5e7eb;
+        }
+
+        .island-map {
+            width: 100%;
+            height: 280px;
+            background: url('https://yannicksegaar.github.io/RomAIx-Logo/RomAIx_Favicon.png') center/contain no-repeat;
+            position: relative;
+        }
+
+        .tour-pin {
+            position: absolute;
+            width: 32px;
+            height: 32px;
+            background-color: var(--primary-orange);
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            border: 2px solid white;
+        }
+
+        .tour-pin:hover {
+            transform: scale(1.15);
+            box-shadow: 0 6px 12px rgba(0,0,0,0.25);
+        }
+        
+        .pin-1 { top: 25%; left: 75%; }
+        .pin-2 { top: 50%; left: 20%; }
+        .pin-3 { top: 20%; left: 35%; }
+        .pin-4 { top: 75%; left: 80%; }
+        .pin-5 { top: 70%; left: 50%; }
+
+        .tour-tooltip {
+            position: absolute;
+            background: var(--primary-blue);
+            color: white;
+            padding: 8px 14px;
+            border-radius: 8px;
+            font-size: 13px;
+            font-weight: 500;
+            opacity: 0;
+            transform: translateY(-45px);
+            pointer-events: none;
+            transition: all 0.3s ease;
+            z-index: 20;
+            white-space: nowrap;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+        }
+
+        .tour-tooltip::after {
+            content: '';
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            border: 6px solid transparent;
+            border-top-color: var(--primary-blue);
+        }
+
+        .tour-tooltip.show {
+            opacity: 1;
+            transform: translateY(-55px);
+        }
+
+        .quiz-container {
+            display: none;
+            animation: slideInRight 0.6s ease-out;
+        }
+
+        .progress-bar {
+            background: #e5e7eb;
+            height: 8px;
+            border-radius: 4px;
+            overflow: hidden;
+            margin-top: 4px;
+        }
+
+        .progress-fill {
+            background: var(--primary-orange);
+            height: 100%;
+            width: 0%;
+            border-radius: 4px;
+            transition: width 0.5s ease-out;
+        }
+
+        .location-indicator {
+            background: var(--light-grey-bg);
+            border-radius: 8px;
+            padding: 16px;
+            margin: 20px 0;
+            text-align: center;
+            border: 1px solid #e5e7eb;
+        }
+
+        .location-indicator h3 {
+            font-family: var(--font-body);
+            text-transform: none;
+            color: var(--dark-text);
+            font-size: 16px;
+            font-weight: 700;
+        }
+
+        .question-card {
+            background: white;
+            border-radius: 12px;
+            padding: 24px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.07);
+            margin: 20px 0;
+            border: 1px solid #e5e7eb;
+            position: relative;
+        }
+
+        .question-image {
+            width: 100%;
+            height: 160px;
+            background: var(--primary-blue);
+            border-radius: 8px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 56px;
+            color: white;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .question-text {
+            font-size: 18px;
+            color: var(--dark-text);
+            margin-bottom: 24px;
+            font-weight: 500;
+            line-height: 1.6;
+        }
+
+        .answer-options {
+            display: grid;
+            gap: 12px;
+        }
+
+        .answer-btn {
+            background-color: var(--light-text);
+            color: var(--dark-text);
+            border: 1px solid #ccc;
+            padding: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 15px;
+            font-weight: 500;
+            transition: all 0.2s ease;
+            text-align: left;
+        }
+
+        .answer-btn:hover:not(:disabled) {
+            border-color: var(--primary-blue);
+            background-color: #f0f8ff;
+        }
+
+        .answer-btn.correct {
+            background-color: #E7F3FE;
+            color: var(--primary-blue);
+            border-color: var(--primary-blue);
+            font-weight: 700;
+        }
+
+        .answer-btn.incorrect {
+            background-color: #FFF2EB;
+            color: #D9534F;
+            border-color: #D9534F;
+        }
+
+        .countdown {
+            position: absolute;
+            top: 12px;
+            right: 12px;
+            background: rgba(255,255,255,0.9);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 16px;
+            color: var(--dark-text);
+            border: 1px solid #eee;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .countdown.danger {
+            background: #FFF2EB;
+            color: var(--primary-orange);
+            animation: pulse 0.5s infinite;
+        }
+
+        .feedback {
+            margin-top: 20px;
+            padding: 16px;
+            border-radius: 8px;
+            display: none;
+            background-color: var(--light-grey-bg);
+            border-left: 4px solid var(--primary-blue);
+        }
+        
+        .feedback.incorrect {
+             border-left-color: var(--primary-orange);
+        }
+
+        .feedback strong {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--dark-text);
+        }
+        .feedback p {
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .results-screen {
+            display: none;
+            text-align: center;
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        .results-screen h2, .email-form h4 {
+            font-family: var(--font-heading);
+            color: var(--primary-blue);
+            text-transform: uppercase;
+        }
+
+        .score-display {
+            background: var(--primary-blue);
+            color: white;
+            padding: 24px;
+            border-radius: 12px;
+            margin: 24px 0;
+        }
+
+        .score-number {
+            font-family: var(--font-heading);
+            font-size: 48px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .performance-message {
+            background: var(--light-grey-bg);
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+            border: 1px solid #e5e7eb;
+        }
+
+        .performance-message h3 {
+            font-family: var(--font-body);
+            text-transform: none;
+            color: var(--dark-text);
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+
+        .gift-card {
+            border: 2px dashed var(--primary-orange);
+            border-radius: 12px;
+            padding: 24px;
+            margin: 24px 0;
+        }
+
+        .gift-card h3 {
+            font-family: var(--font-body);
+            text-transform: none;
+            color: var(--dark-text);
+            font-size: 18px;
+        }
+
+        .gift-discount {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--primary-orange);
+            margin: 8px 0;
+        }
+
+        .email-input {
+            width: 100%;
+            padding: 14px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            margin-bottom: 12px;
+            font-family: var(--font-body);
+        }
+
+        .email-input:focus {
+            outline: none;
+            border-color: var(--primary-blue);
+            box-shadow: 0 0 0 3px rgba(0, 75, 141, 0.2);
+        }
+
+        .submit-btn {
+            background: var(--primary-orange);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 700;
+            width: 100%;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+        }
+
+        .submit-btn:hover {
+            background-color: #E06000;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideInRight {
+            from { opacity: 0; transform: translateX(30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="header">
+            <h1>Hawaiian Heritage Quiz</h1>
+            <p>Test Your Island Knowledge</p>
+        </div>
+
+        <div class="game-content">
+            <div class="welcome-screen" id="welcomeScreen">
+                <h2>Discover Oahu's Hidden Stories</h2>
+                <p class="subtitle">Local Expert Knowledge</p>
+                <p>Challenge yourself with authentic Hawaiian insights while exploring our premium tour destinations. Select a location below to begin your educational journey.</p>
+                
+                <div class="map-container">
+                    <div class="island-map">
+                        <div class="tour-pin pin-1" data-tour="Diamond Head Summit Experience" data-id="1">1</div>
+                        <div class="tour-pin pin-2" data-tour="Pearl Harbor Historical Journey" data-id="2">2</div>
+                        <div class="tour-pin pin-3" data-tour="North Shore Cultural Adventure" data-id="3">3</div>
+                        <div class="tour-pin pin-4" data-tour="Hanauma Bay Marine Sanctuary" data-id="4">4</div>
+                        <div class="tour-pin pin-5" data-tour="Polynesian Heritage Experience" data-id="5">5</div>
+                        <div class="tour-tooltip" id="tooltip"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="quiz-container" id="quizContainer">
+                <div class="progress-container">
+                    <div class="progress-info">
+                        <span class="progress-text" id="progressText">Question 1 of 3</span>
+                        <span class="progress-text" id="scoreText">Score: 0</span>
+                    </div>
+                    <div class="progress-bar">
+                        <div class="progress-fill" id="progressFill"></div>
+                    </div>
+                </div>
+                
+                <div class="location-indicator" id="locationIndicator">
+                    <h3 id="tourName">Diamond Head Summit Experience</h3>
+                </div>
+                
+                <div class="question-card">
+                    <div class="question-image" id="questionImage">
+                        <div class="countdown" id="countdown">20</div>
+                    </div>
+                    <div class="question-text" id="questionText"></div>
+                    <div class="answer-options" id="answerOptions"></div>
+                    <div class="feedback" id="feedback"></div>
+                </div>
+            </div>
+
+            <div class="results-screen" id="resultsScreen">
+                <div class="results-header">
+                    <h2>Quiz Complete!</h2>
+                    <p>Thank you for exploring Hawaiian heritage with us.</p>
+                </div>
+
+                <div class="score-display">
+                    <div class="score-number" id="finalScore">0/3</div>
+                    <div class="score-label">Questions Correct</div>
+                </div>
+
+                <div class="performance-message" id="performanceMessage">
+                    <h3>Excellent Knowledge!</h3>
+                    <p>You demonstrate a genuine appreciation for Hawaiian culture and history. Our local guides would be impressed!</p>
+                </div>
+
+                <div class="gift-card">
+                    <h3>Your Exclusive Reward 🌺</h3>
+                    <div class="gift-discount">15% OFF</div>
+                    <p>Valid for any Go Tours Hawaii experience</p>
+                </div>
+
+                <div class="email-form">
+                    <h4>Receive Your Discount & Results</h4>
+                    <input type="email" class="email-input" placeholder="Enter your email address" id="emailInput">
+                    <button class="submit-btn" onclick="submitResults()">Send My Discount</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentTour = null;
+        let currentQuestion = 0;
+        let score = 0;
+        let timer = null;
+        let timeLeft = 20;
+
+        const tours = {
+            1: {
+                name: "Diamond Head Summit Experience",
+                questions: [
+                    {
+                        image: "🌋", // NOTE: Replace with actual image URL
+                        text: "Diamond Head was formed approximately 300,000 years ago. What geological process created this iconic landmark?",
+                        options: [
+                            "Volcanic tuff cone formation from explosive eruptions",
+                            "Coral reef buildup over millennia", 
+                            "Sedimentary rock layering from ocean deposits",
+                            "Lava flow cooling and hardening"
+                        ],
+                        correct: 0,
+                        fact: "Diamond Head is a volcanic tuff cone created by explosive eruptions that shot steam, ash, and rock fragments into the air. Our expert guides will show you the geological layers that tell this ancient story during your summit hike."
+                    },
+                    {
+                        image: "⛰️", // NOTE: Replace with actual image URL
+                        text: "What is the Hawaiian name for Diamond Head, and what does it represent?",
+                        options: [
+                            "Mauna Kea - White Mountain",
+                            "Lēʻahi - Brow of the Yellowfin Tuna", 
+                            "Haleakalā - House of the Sun",
+                            "Kīlauea - Spewing Fire"
+                        ],
+                        correct: 1,
+                        fact: "Lēʻahi means 'brow of the yellowfin tuna' in Hawaiian, referring to the crater's distinctive profile that resembles the dorsal fin of the ahi tuna. Our cultural guides share these authentic Hawaiian names and their meanings throughout your journey."
+                    }
+                ]
+            },
+            2: {
+                name: "Pearl Harbor Historical Journey",
+                questions: [
+                    {
+                        image: "⚓", // NOTE: Replace with actual image URL
+                        text: "Pearl Harbor was originally called 'Wai Momi' by Native Hawaiians. What does this name mean?",
+                        options: [
+                            "Sacred Waters",
+                            "Pearl Waters", 
+                            "Deep Harbor",
+                            "Protected Bay"
+                        ],
+                        correct: 1,
+                        fact: "Wai Momi translates to 'Pearl Waters,' named for the abundant pearl oysters that once thrived in these waters. Our Pearl Harbor experience honors both the natural Hawaiian history and the pivotal moments that shaped America, providing complete cultural context."
+                    },
+                    {
+                        image: "🚢", // NOTE: Replace with actual image URL
+                        text: "How many U.S. Navy vessels were damaged or destroyed during the December 7, 1941 attack?",
+                        options: [
+                            "12 vessels",
+                            "18 vessels", 
+                            "21 vessels",
+                            "25 vessels"
+                        ],
+                        correct: 2,
+                        fact: "Twenty-one U.S. Navy vessels were damaged or destroyed, including 8 battleships. Our comprehensive Pearl Harbor tour provides detailed accounts of each vessel's fate, told with the respect and historical accuracy this sacred site deserves."
+                    }
+                ]
+            },
+            3: {
+                name: "North Shore Cultural Adventure", 
+                questions: [
+                    {
+                        image: "🏄‍♂️", // NOTE: Replace with actual image URL
+                        text: "The North Shore is famous for massive winter waves. What oceanographic phenomenon creates these legendary swells?",
+                        options: [
+                            "Tropical storms from the south",
+                            "North Pacific storm systems", 
+                            "Underwater volcanic activity",
+                            "Trade wind patterns"
+                        ],
+                        correct: 1,
+                        fact: "Powerful North Pacific storm systems generate the massive swells that travel thousands of miles to reach Hawaii's North Shore. Our tour takes you to the best viewpoints during prime surf season, where you'll witness waves reaching 30+ feet with expert commentary."
+                    },
+                    {
+                        image: "🐢", // NOTE: Replace with actual image URL
+                        text: "Which endangered sea turtle species is commonly seen resting on North Shore beaches?",
+                        options: [
+                            "Loggerhead turtle",
+                            "Hawaiian green sea turtle (honu)", 
+                            "Hawksbill turtle",
+                            "Leatherback turtle"
+                        ],
+                        correct: 1,
+                        fact: "The Hawaiian green sea turtle (honu) is sacred in Hawaiian culture and frequently seen basking on North Shore beaches. Our responsible tour practices maintain proper viewing distances while our guides share traditional Hawaiian beliefs about these revered creatures."
+                    }
+                ]
+            },
+            4: {
+                name: "Hanauma Bay Marine Sanctuary",
+                questions: [
+                    {
+                        image: "🐠", // NOTE: Replace with actual image URL
+                        text: "Hanauma Bay is a Marine Life Conservation District. What is a mandatory requirement for all first-time visitors before entering the water?",
+                        options: [
+                           "Paying a parking fee",
+                           "Renting snorkel gear on-site",
+                           "Watching an educational video about preservation",
+                           "Signing a liability waiver"
+                        ],
+                        correct: 2,
+                        fact: "Correct! All first-time visitors must watch a short orientation video to learn about the fragile marine ecosystem and how to protect it. Our guided tour ensures you understand these rules and helps you spot the amazing coral and fish safely."
+                    },
+                    {
+                        image: "🐟", // NOTE: Replace with actual image URL
+                        text: "What is the official state fish of Hawaii, a vibrant and commonly spotted resident of Hanauma Bay?",
+                        options: [
+                            "Yellow Tang",
+                            "Parrotfish (Uhu)",
+                            "Moorish Idol",
+                            "Reef Triggerfish (Humuhumunukunukuāpuaʻa)"
+                        ],
+                        correct: 3,
+                        fact: "That's the one! It's a mouthful, but the Humuhumunukunukuāpuaʻa is a unique fish you'll likely see. Our guides are experts at spotting them and can even help you pronounce the name!"
+                    }
+                ]
+            },
+            5: {
+                name: "Polynesian Heritage Experience",
+                questions: [
+                    {
+                        image: "🗿", // NOTE: Replace with actual image URL
+                        text: "The Polynesian Cultural Center showcases cultures from across the Pacific. Which island nation is famous for its powerful 'Haka' war dance?",
+                        options: [
+                            "Samoa",
+                            "Fiji",
+                            "Aotearoa (New Zealand)",
+                            "Tahiti"
+                        ],
+                        correct: 2,
+                        fact: "Exactly! The Haka from Aotearoa (New Zealand) is a world-renowned display of strength and pride. Our heritage experience includes an authentic performance that will give you goosebumps."
+                    },
+                    {
+                        image: "🔥", // NOTE: Replace with actual image URL
+                        text: "Which Polynesian culture is renowned for its thrilling and dramatic fire-knife dancing, a highlight of many evening shows?",
+                        options: [
+                            "Tonga",
+                            "Samoa",
+                            "Hawaii",
+                            "Fiji"
+                        ],
+                        correct: 1,
+                        fact: "You're on fire! The Samoan fire-knife dance is a breathtaking spectacle of skill and bravery. Our tour includes premium seating at the evening show, so you won't miss a moment of this incredible performance."
+                    }
+                ]
+            }
+        };
+
+        // All JavaScript logic remains the same.
+        document.querySelectorAll('.tour-pin').forEach(pin => {
+            pin.addEventListener('mouseenter', (e) => {
+                const tooltip = document.getElementById('tooltip');
+                const tourName = e.target.dataset.tour;
+                tooltip.textContent = tourName;
+                const pinRect = e.target.getBoundingClientRect();
+                const containerRect = e.target.closest('.island-map').getBoundingClientRect();
+                tooltip.style.left = (pinRect.left - containerRect.left + pinRect.width/2 - tooltip.offsetWidth/2) + 'px';
+                tooltip.style.top = (pinRect.top - containerRect.top) + 'px';
+                tooltip.classList.add('show');
+            });
+            pin.addEventListener('mouseleave', () => {
+                document.getElementById('tooltip').classList.remove('show');
+            });
+            pin.addEventListener('click', (e) => {
+                const tourId = e.target.dataset.id;
+                startQuiz(parseInt(tourId));
+            });
+        });
+        function startQuiz(tourId) {
+            currentTour = tourId;
+            currentQuestion = 0;
+            score = 0;
+            document.getElementById('tourName').textContent = tours[tourId].name;
+            document.getElementById('welcomeScreen').style.display = 'none';
+            document.getElementById('quizContainer').style.display = 'block';
+            showQuestion();
+        }
+        function showQuestion() {
+            const tour = tours[currentTour];
+            if (!tour || currentQuestion >= tour.questions.length) {
+                showResults();
+                return;
+            }
+            const question = tour.questions[currentQuestion];
+            const totalQuestions = tour.questions.length;
+            const progress = ((currentQuestion + 1) / totalQuestions) * 100;
+            document.getElementById('progressFill').style.width = progress + '%';
+            document.getElementById('progressText').textContent = `Question ${currentQuestion + 1} of ${totalQuestions}`;
+            document.getElementById('scoreText').textContent = `Score: ${score}`;
+            document.getElementById('questionImage').innerHTML = `<div style="font-size: 56px; position: relative; z-index: 1;">${question.image}</div><div class="countdown" id="countdown">20</div>`;
+            document.getElementById('questionText').textContent = question.text;
+            const optionsContainer = document.getElementById('answerOptions');
+            optionsContainer.innerHTML = '';
+            question.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.className = 'answer-btn';
+                button.textContent = option;
+                button.onclick = () => selectAnswer(index);
+                optionsContainer.appendChild(button);
+            });
+            document.getElementById('feedback').style.display = 'none';
+            startCountdown();
+        }
+        function startCountdown() {
+            timeLeft = 20;
+            const countdownEl = document.getElementById('countdown');
+            countdownEl.className = 'countdown';
+            timer = setInterval(() => {
+                timeLeft--;
+                countdownEl.textContent = timeLeft;
+                if (timeLeft <= 5) {
+                    countdownEl.className = 'countdown danger';
+                }
+                if (timeLeft <= 0) {
+                    clearInterval(timer);
+                    selectAnswer(-1);
+                }
+            }, 1000);
+        }
+        function selectAnswer(selectedIndex) {
+            clearInterval(timer);
+            const tour = tours[currentTour];
+            const question = tour.questions[currentQuestion];
+            const buttons = document.querySelectorAll('.answer-btn');
+            const feedback = document.getElementById('feedback');
+            buttons.forEach((btn, index) => {
+                btn.disabled = true;
+                if (index === question.correct) {
+                    btn.classList.add('correct');
+                } else if (index === selectedIndex && selectedIndex !== question.correct) {
+                    btn.classList.add('incorrect');
+                }
+            });
+            if (selectedIndex === question.correct) {
+                score++;
+                feedback.className = 'feedback correct';
+                feedback.innerHTML = `<strong>Excellent! 🤙</strong><p>${question.fact}</p>`;
+            } else {
+                feedback.className = 'feedback incorrect';
+                if (selectedIndex === -1) {
+                    feedback.innerHTML = `<strong>Time's up! ⏰</strong><p>${question.fact}</p>`;
+                } else {
+                    feedback.innerHTML = `<strong>Close, but not quite! 🌺</strong><p>${question.fact}</p>`;
+                }
+            }
+            feedback.style.display = 'block';
+            setTimeout(() => {
+                currentQuestion++;
+                if (currentQuestion < tour.questions.length) {
+                    showQuestion();
+                } else {
+                    setTimeout(showResults, 1500);
+                }
+            }, 6000);
+        }
+        function showResults() {
+            document.getElementById('quizContainer').style.display = 'none';
+            document.getElementById('resultsScreen').style.display = 'block';
+            const totalQuestions = tours[currentTour].questions.length;
+            const percentage = Math.round((score / totalQuestions) * 100);
+            document.getElementById('finalScore').textContent = `${score}/${totalQuestions}`;
+            const performanceEl = document.getElementById('performanceMessage');
+            if (percentage >= 80) {
+                performanceEl.innerHTML = `<h3>Outstanding Knowledge! 🌟</h3><p>You demonstrate exceptional understanding of Hawaiian culture and history. Our expert guides would be impressed by your knowledge!</p>`;
+            } else if (percentage >= 50) {
+                performanceEl.innerHTML = `<h3>Great Job! 🌺</h3><p>You show genuine interest in Hawaiian heritage. Our tours will deepen your appreciation with even more fascinating insights from local experts.</p>`;
+            } else {
+                performanceEl.innerHTML = `<h3>Ready to Learn More! 🏝️</h3><p>Perfect! Our experienced local guides love sharing Hawaiian stories with curious travelers. You'll discover so much more on our authentic cultural experiences.</p>`;
+            }
+        }
+        function submitResults() {
+            const email = document.getElementById('emailInput').value.trim();
+            if (!email || !email.includes('@')) {
+                alert('Please enter a valid email address.');
+                return;
+            }
+            const tourName = tours[currentTour].name;
+            const resultData = { email, tour: tourName, score, totalQuestions: tours[currentTour].questions.length, percentage: Math.round((score / tours[currentTour].questions.length) * 100), timestamp: new Date().toISOString() };
+            console.log('Submitting results:', resultData);
+            alert(`🌺 Mahalo! Your 15% discount code and quiz results have been sent to ${email}.\n\nOur team at Go Tours Hawaii will follow up with you soon about experiencing authentic Hawaiian culture with our expert local guides!`);
+            document.querySelector('.submit-btn').disabled = true;
+            document.querySelector('.submit-btn').textContent = 'SENT!';
+        }
+    </script>
+</body>
+</html>

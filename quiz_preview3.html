@@ -1,0 +1,570 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Go Tours Hawaii - Ultimate Tour Experience</title>
+    <!-- SCRIPT FOR LOTTIE ANIMATIONS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bodymovin/5.12.2/lottie.min.js"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@700&family=Roboto:wght@400;500;700&display=swap');
+
+        :root {
+            --primary-blue: #004b8d;
+            --primary-orange: #f76900;
+            --dark-text: #333333;
+            --light-text: #ffffff;
+            --light-grey-bg: #f7f7f7;
+            --font-heading: 'Oswald', sans-serif;
+            --font-body: 'Roboto', sans-serif;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-body);
+            background-color: #e9ebee;
+            min-height: 100vh;
+            color: var(--dark-text);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .chat-container {
+            width: 100%;
+            max-width: 420px;
+            height: 100vh;
+            max-height: 800px;
+            background: #ffffff;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.2);
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .header {
+            background: var(--primary-blue);
+            color: var(--light-text);
+            padding: 20px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .header h1 {
+            font-family: var(--font-heading);
+            font-size: 22px;
+            text-transform: uppercase;
+        }
+
+        .game-content {
+            padding: 24px 20px;
+            overflow-y: auto;
+            flex-grow: 1;
+        }
+        
+        /* --- VIEW STYLES --- */
+        .view { display: none; }
+        .view.active { display: block; animation: fadeInUp 0.5s ease-out; }
+
+        /* --- BUTTONS --- */
+        .primary-btn {
+            background: var(--primary-orange);
+            color: white;
+            border: none;
+            padding: 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 700;
+            width: 100%;
+            transition: all 0.2s ease;
+            text-transform: uppercase;
+        }
+        .primary-btn:hover {
+            background-color: #E06000;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        
+        /* --- PERSONALIZATION VIEW --- */
+        .welcome-screen h2, .results-screen h2 {
+            font-family: var(--font-heading);
+            color: var(--primary-blue);
+            margin-bottom: 12px;
+            font-size: 26px;
+            text-transform: uppercase;
+            text-align: center;
+        }
+        .welcome-screen p {
+            color: #6b7280;
+            text-align: center;
+            margin-bottom: 24px;
+            line-height: 1.6;
+        }
+        .persona-options .answer-btn { margin-bottom: 10px; }
+
+        /* --- MAP VIEW --- */
+        .map-container {
+            position: relative;
+            background: var(--light-grey-bg);
+            border-radius: 12px;
+            padding: 16px;
+            margin: 24px 0;
+            border: 1px solid #e5e7eb;
+        }
+
+        .island-map {
+            width: 100%;
+            height: 280px;
+            background: url('https://yannicksegaar.github.io/RomAIx-Logo/RomAIx_Favicon.png') center/contain no-repeat;
+            position: relative;
+        }
+        
+        /* Bus animation path styles */
+        .tour-path {
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+        }
+        .tour-path path {
+            fill: none;
+            stroke: var(--primary-orange);
+            stroke-width: 3;
+            stroke-dasharray: 8 4;
+            opacity: 0.7;
+        }
+        #bus-icon {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            background: url('https://i.imgur.com/kSgoi2p.png') center/contain no-repeat;
+            display: none;
+            /* offset-path will be set by JS */
+            transition: offset-distance 2s ease-in-out;
+        }
+
+        .tour-pin {
+            position: absolute;
+            width: 28px;
+            height: 28px;
+            background-color: var(--primary-blue);
+            border-radius: 50%;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: 700;
+            font-size: 14px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            border: 2px solid white;
+        }
+        .tour-pin:hover { transform: scale(1.2); }
+        .pin-1 { top: 25%; left: 75%; }
+        .pin-2 { top: 50%; left: 20%; }
+        .pin-3 { top: 20%; left: 35%; }
+        .pin-4 { top: 75%; left: 80%; }
+        .pin-5 { top: 70%; left: 50%; }
+
+        /* --- QUIZ VIEW --- */
+        .progress-bar {
+            background: #e5e7eb; height: 8px; border-radius: 4px; overflow: hidden; margin: 16px 0;
+        }
+        .progress-fill {
+            background: var(--primary-orange); height: 100%; width: 0%; border-radius: 4px; transition: width 0.5s ease-out;
+        }
+        .question-card {
+            background: white; border-radius: 12px; padding: 20px; box-shadow: 0 4px 16px rgba(0,0,0,0.07); border: 1px solid #e5e7eb; position: relative;
+        }
+        .question-media {
+            width: 100%; height: 180px; border-radius: 8px; margin-bottom: 20px; display: flex; align-items: center; justify-content: center; font-size: 56px; color: white; position: relative; overflow: hidden; background-color: var(--primary-blue);
+        }
+        .question-media video {
+            position: absolute; top: 50%; left: 50%; width: 100%; height: 100%; object-fit: cover; transform: translate(-50%, -50%);
+        }
+        .question-text { font-size: 18px; margin-bottom: 24px; font-weight: 500; line-height: 1.6; }
+        .answer-options { display: grid; gap: 12px; }
+        .answer-btn {
+            background-color: var(--light-text); border: 1px solid #ccc; padding: 16px; border-radius: 8px; cursor: pointer; font-size: 15px; font-weight: 500; transition: all 0.2s ease; text-align: left;
+        }
+        .answer-btn:hover:not(:disabled) { border-color: var(--primary-blue); background-color: #f0f8ff; }
+        .answer-btn.correct { background-color: #E7F3FE; color: var(--primary-blue); border-color: var(--primary-blue); font-weight: 700; }
+        .answer-btn.incorrect { background-color: #FFF2EB; color: #D9534F; border-color: #D9534F; }
+        .feedback { margin-top: 20px; padding: 16px; border-radius: 8px; display: none; background-color: var(--light-grey-bg); border-left: 4px solid var(--primary-blue); }
+        .feedback.incorrect { border-left-color: var(--primary-orange); }
+        .feedback strong { display: block; margin-bottom: 8px; font-size: 16px; font-weight: 700; }
+        .feedback p { font-size: 15px; line-height: 1.6; }
+        
+        /* Slider Question Type */
+        .slider-container { text-align: center; }
+        .slider-value { font-size: 24px; font-weight: 700; color: var(--primary-blue); margin-bottom: 10px; }
+        input[type="range"] { width: 100%; }
+        
+        /* Lottie Animation Container */
+        .lottie-container { width: 80px; height: 80px; margin: 0 auto; }
+        
+        /* --- CALCULATING VIEW --- */
+        .calculating-view { text-align: center; padding-top: 100px; }
+        .calculating-view p { font-size: 18px; font-weight: 500; margin-top: 20px; }
+        #spinner-container { width: 150px; height: 150px; margin: 0 auto; }
+
+        /* --- RESULTS VIEW --- */
+        .results-header { text-align: center; margin-bottom: 20px; }
+        .score-display { background: var(--primary-blue); color: white; padding: 24px; border-radius: 12px; margin: 24px 0; text-align: center; }
+        .score-number { font-family: var(--font-heading); font-size: 48px; }
+        .learned-facts { margin: 24px 0; text-align: left; }
+        .learned-facts h3 { font-family: var(--font-heading); text-transform: uppercase; margin-bottom: 10px; }
+        .learned-facts ul { list-style: none; padding-left: 0; }
+        .learned-facts li { background: var(--light-grey-bg); padding: 12px; border-radius: 8px; margin-bottom: 8px; border-left: 3px solid var(--primary-orange); }
+        .gift-card {
+            border: 2px dashed var(--primary-orange); border-radius: 12px; padding: 24px; margin: 24px 0; text-align: center;
+            transform: scale(0); opacity: 0; /* Initial state for animation */
+        }
+        .gift-card.reveal { transform: scale(1); opacity: 1; transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
+        #gift-card-lottie { width: 100px; height: 100px; margin: 0 auto; }
+        .gift-discount { font-size: 28px; font-weight: 700; color: var(--primary-orange); margin: 8px 0; }
+        .social-sharing { margin-top: 24px; text-align: center; }
+        .social-btn { display: inline-block; margin: 0 5px; padding: 10px 15px; border-radius: 8px; background-color: #e5e7eb; color: var(--dark-text); text-decoration: none; font-weight: 500; }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+    <div class="chat-container">
+        <div class="header">
+            <h1>Go Tours Hawaii Challenge</h1>
+        </div>
+
+        <div class="game-content">
+            <!-- View 1: Personalization -->
+            <div class="view active" id="personalization-view">
+                <h2>Your Perfect Hawaiian Getaway</h2>
+                <p>To help us tailor your experience, who are you planning this adventure for?</p>
+                <div class="persona-options">
+                    <button class="answer-btn" onclick="setPersona('solo')">✈️ Just for me</button>
+                    <button class="answer-btn" onclick="setPersona('partner')">💞️ For me and a partner</button>
+                    <button class="answer-btn" onclick="setPersona('family')">👨‍👩‍👧‍👦 For my family</button>
+                </div>
+            </div>
+
+            <!-- View 2: Map Selection -->
+            <div class="view" id="map-view">
+                <h2>Choose Your Adventure</h2>
+                <p>Select a tour on the map to begin your interactive journey.</p>
+                <div class="map-container">
+                    <div class="island-map">
+                        <!-- SVG paths for bus routes -->
+                        <svg class="tour-path" viewBox="0 0 384 280">
+                            <path id="path-1" d="M100,100 C150,50 250,50 288,70"></path>
+                            <path id="path-2" d="M100,100 C50,120 50,180 77,140"></path>
+                            <!-- Add other paths here -->
+                        </svg>
+                        <div id="bus-icon"></div>
+                        <!-- Tour Pins -->
+                        <div class="tour-pin pin-1" data-id="1">1</div>
+                        <div class="tour-pin pin-2" data-id="2">2</div>
+                        <div class="tour-pin pin-3" data-id="3">3</div>
+                        <div class="tour-pin pin-4" data-id="4">4</div>
+                        <div class="tour-pin pin-5" data-id="5">5</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- View 3: Quiz -->
+            <div class="view" id="quiz-view">
+                <div class="progress-bar"><div class="progress-fill" id="progressFill"></div></div>
+                <div class="question-card">
+                    <div class="question-media" id="questionMedia"></div>
+                    <p class="question-text" id="questionText"></p>
+                    <div class="answer-options" id="answerOptions"></div>
+                    <div class="feedback" id="feedback"></div>
+                </div>
+            </div>
+            
+            <!-- View 4: Calculating Results -->
+            <div class="view calculating-view" id="calculating-view">
+                <div id="spinner-container"></div>
+                <p>Calculating your score...</p>
+            </div>
+
+            <!-- View 5: Final Results -->
+            <div class="view" id="results-view">
+                <div class="results-header">
+                    <h2 id="resultsTitle">Your Adventure Awaits!</h2>
+                </div>
+                <div class="score-display">
+                    <div class="score-number" id="finalScore">0/5</div>
+                    <div>Questions Correct</div>
+                </div>
+                <div class="learned-facts">
+                    <h3>Here's a taste of what you learned:</h3>
+                    <ul id="learnedFactsList"></ul>
+                </div>
+                <div class="gift-card" id="giftCard">
+                    <div id="gift-card-lottie"></div>
+                    <h3 id="giftCardTitle">Your Exclusive Reward!</h3>
+                    <div class="gift-discount">15% OFF</div>
+                </div>
+                <div class="social-sharing">
+                    <p>Think your friends can beat your score?</p>
+                    <a href="#" class="social-btn" id="share-twitter" target="_blank">X / Twitter</a>
+                    <a href="#" class="social-btn" id="share-facebook" target="_blank">Facebook</a>
+                </div>
+                <div style="margin-top: 24px;">
+                    <button class="primary-btn" id="cta-button">See Dates</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- STATE MANAGEMENT ---
+        let userPersona = 'solo';
+        let currentTourId = null;
+        let currentQuestionIndex = 0;
+        let score = 0;
+        let learnedFacts = [];
+
+        // --- LOTTIE ANIMATION HOLDERS ---
+        let spinnerAnim, giftAnim, correctAnim;
+
+        // --- QUIZ DATA ---
+        const tours = {
+            1: {
+                name: "Diamond Head Summit Experience",
+                path: "M100,100 C150,50 250,50 288,70",
+                questions: [
+                    { type: "multiple-choice", text: "What is the Hawaiian name for Diamond Head?", options: ["Mauna Kea", "Lēʻahi", "Haleakalā"], correct: 1, fact: "Lēʻahi means 'brow of the ahi tuna', which the crater's profile resembles." },
+                    { type: "video", videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-waves-in-the-sea-1164-large.mp4", text: "Diamond Head was formed by what kind of geological event?", options: ["Slow lava flow", "Explosive eruption", "Earthquake"], correct: 1, fact: "It was a single, explosive eruption around 300,000 years ago." },
+                    { type: "slider", text: "How long is the hike to the summit in miles?", min: 0.5, max: 2.5, step: 0.1, correct: 1.6, fact: "The trail is 1.6 miles round-trip, but steep! Our tour provides water and expert guidance." },
+                    { type: "two-truths-lie", text: "Which of these statements about Diamond Head is a LIE?", options: ["It was once a U.S. military post.", "The trail includes a 225-foot long tunnel.", "Wild goats are commonly seen on the trail."], correct: 2, fact: "While goats were once present, they are no longer common. The military history is very real, and you'll see the bunkers on our tour!" },
+                    { type: "multiple-choice", text: "The summit offers panoramic views of which famous beach?", options: ["Waikiki Beach", "Sunset Beach", "Lanikai Beach"], correct: 0, fact: "The stunning view of Waikiki is the ultimate reward at the top!" }
+                ]
+            },
+            // Add data for other tours...
+            2: { name: "Pearl Harbor Historical Journey", path: "M100,100 C50,120 50,180 77,140", questions: [/* ... */] },
+            3: { name: "North Shore Cultural Adventure", path: "M100,100 C150,50 200,50 288,70", questions: [/* ... */] },
+            4: { name: "Hanauma Bay Marine Sanctuary", path: "M100,100 C150,50 250,50 288,70", questions: [/* ... */] },
+            5: { name: "Polynesian Heritage Experience", path: "M100,100 C150,50 250,50 288,70", questions: [/* ... */] }
+        };
+
+        // --- DOM ELEMENTS ---
+        const views = document.querySelectorAll('.view');
+        const tourPins = document.querySelectorAll('.tour-pin');
+        
+        // --- FUNCTIONS ---
+        function switchView(viewId) {
+            views.forEach(v => v.classList.remove('active'));
+            document.getElementById(viewId).classList.add('active');
+        }
+
+        function setPersona(persona) {
+            userPersona = persona;
+            switchView('map-view');
+        }
+
+        function startQuiz(tourId) {
+            currentTourId = tourId;
+            currentQuestionIndex = 0;
+            score = 0;
+            learnedFacts = [];
+            
+            // Animate bus to first stop
+            const tourPath = tours[tourId].path;
+            const busIcon = document.getElementById('bus-icon');
+            busIcon.style.display = 'block';
+            busIcon.style.offsetPath = `path('${tourPath}')`;
+            busIcon.style.offsetDistance = '0%';
+            
+            setTimeout(() => {
+                busIcon.style.offsetDistance = '100%';
+            }, 100);
+            
+            // Start quiz after animation
+            setTimeout(() => {
+                busIcon.style.display = 'none';
+                switchView('quiz-view');
+                displayQuestion();
+            }, 2100);
+        }
+
+        function displayQuestion() {
+            const question = tours[currentTourId].questions[currentQuestionIndex];
+            document.getElementById('progressFill').style.width = `${((currentQuestionIndex + 1) / 5) * 100}%`;
+            document.getElementById('questionText').textContent = question.text;
+            
+            const mediaContainer = document.getElementById('questionMedia');
+            const optionsContainer = document.getElementById('answerOptions');
+            mediaContainer.innerHTML = '';
+            optionsContainer.innerHTML = '';
+            document.getElementById('feedback').style.display = 'none';
+
+            switch (question.type) {
+                case 'video':
+                    mediaContainer.innerHTML = `<video src="${question.videoUrl}" autoplay muted loop playsinline></video>`;
+                    renderMultipleChoice(question);
+                    break;
+                case 'slider':
+                    mediaContainer.innerHTML = `<div class="slider-container"><div class="slider-value" id="sliderValue">${question.min}</div></div>`;
+                    renderSlider(question);
+                    break;
+                case 'two-truths-lie':
+                    mediaContainer.innerHTML = '🤔';
+                    renderMultipleChoice(question);
+                    break;
+                default: // multiple-choice
+                    mediaContainer.innerHTML = '❓';
+                    renderMultipleChoice(question);
+            }
+        }
+
+        function renderMultipleChoice(question) {
+            const optionsContainer = document.getElementById('answerOptions');
+            question.options.forEach((option, index) => {
+                const button = document.createElement('button');
+                button.className = 'answer-btn';
+                button.textContent = option;
+                button.onclick = () => selectAnswer(index === question.correct, question.fact);
+                optionsContainer.appendChild(button);
+            });
+        }
+
+        function renderSlider(question) {
+            const optionsContainer = document.getElementById('answerOptions');
+            const sliderValueEl = document.getElementById('sliderValue');
+            const slider = document.createElement('input');
+            slider.type = 'range';
+            slider.min = question.min;
+            slider.max = question.max;
+            slider.step = question.step;
+            slider.value = question.min;
+            slider.oninput = () => { sliderValueEl.textContent = parseFloat(slider.value).toFixed(1); };
+            
+            const submitBtn = document.createElement('button');
+            submitBtn.className = 'primary-btn';
+            submitBtn.textContent = 'Lock In Answer';
+            submitBtn.onclick = () => {
+                const isCorrect = Math.abs(parseFloat(slider.value) - question.correct) < (question.step * 2); // Allow a small margin of error
+                selectAnswer(isCorrect, question.fact);
+            };
+            
+            optionsContainer.appendChild(slider);
+            optionsContainer.appendChild(submitBtn);
+        }
+
+        function selectAnswer(isCorrect, fact) {
+            document.querySelectorAll('.answer-btn, input[type="range"]').forEach(el => el.disabled = true);
+            
+            const feedbackEl = document.getElementById('feedback');
+            if (isCorrect) {
+                score++;
+                learnedFacts.push(fact);
+                feedbackEl.classList.remove('incorrect');
+                feedbackEl.classList.add('correct');
+                feedbackEl.innerHTML = `<strong>Correct! 🤙</strong><div id="correct-lottie"></div><p>${fact}</p>`;
+                correctAnim.goToAndPlay(0);
+            } else {
+                feedbackEl.classList.remove('correct');
+                feedbackEl.classList.add('incorrect');
+                feedbackEl.innerHTML = `<strong>Not quite! 🌺</strong><p>${fact}</p>`;
+            }
+            feedbackEl.style.display = 'block';
+
+            setTimeout(() => {
+                currentQuestionIndex++;
+                if (currentQuestionIndex < 5) {
+                    displayQuestion();
+                } else {
+                    showCalculatingScreen();
+                }
+            }, 4000);
+        }
+
+        function showCalculatingScreen() {
+            switchView('calculating-view');
+            spinnerAnim.goToAndPlay(0);
+            setTimeout(showResults, 2500);
+        }
+
+        function showResults() {
+            switchView('results-view');
+            const tour = tours[currentTourId];
+            
+            // Personalize title
+            let personaText = "Your";
+            if(userPersona === 'partner') personaText = "Your Couple's";
+            if(userPersona === 'family') personaText = "Your Family's";
+            document.getElementById('resultsTitle').textContent = `${personaText} ${tour.name} Summary!`;
+
+            // Display score and learned facts
+            document.getElementById('finalScore').textContent = `${score}/5`;
+            const factsList = document.getElementById('learnedFactsList');
+            factsList.innerHTML = '';
+            learnedFacts.forEach(fact => {
+                const li = document.createElement('li');
+                li.textContent = fact;
+                factsList.appendChild(li);
+            });
+            if(learnedFacts.length === 0){
+                factsList.innerHTML = '<li>No facts learned this time, but our tours are full of them!</li>';
+            }
+
+            // Animate and personalize gift card
+            document.getElementById('giftCardTitle').textContent = `A Special Offer for ${userPersona === 'solo' ? 'You' : 'You & Your ' + userPersona}`;
+            setTimeout(() => {
+                document.getElementById('giftCard').classList.add('reveal');
+                giftAnim.goToAndPlay(0);
+            }, 500);
+
+            // Setup CTA and Social Sharing
+            document.getElementById('cta-button').textContent = `See Dates for the ${tour.name}`;
+            const shareText = `I scored ${score}/5 on the Go Tours Hawaii ${tour.name} Challenge and got a 15% discount! Think you can beat me?`;
+            document.getElementById('share-twitter').href = `https://twitter.com/intent/tweet?text=${encodeURIComponent(shareText)}`;
+            document.getElementById('share-facebook').href = `https://www.facebook.com/sharer/sharer.php?u=https://gotourshawaii.com&quote=${encodeURIComponent(shareText)}`;
+        }
+
+        // --- INITIALIZATION ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // Load Lottie animations
+            spinnerAnim = lottie.loadAnimation({
+                container: document.getElementById('spinner-container'),
+                renderer: 'svg',
+                loop: true,
+                autoplay: false,
+                path: 'https://assets3.lottiefiles.com/packages/lf20_fJ7CVd.json' // Spinner
+            });
+            giftAnim = lottie.loadAnimation({
+                container: document.getElementById('gift-card-lottie'),
+                renderer: 'svg',
+                loop: false,
+                autoplay: false,
+                path: 'https://assets1.lottiefiles.com/packages/lf20_UREBIkvjw3.json' // Gift
+            });
+            correctAnim = lottie.loadAnimation({
+                container: document.getElementById('feedback'), // Will be injected
+                renderer: 'svg',
+                loop: false,
+                autoplay: false,
+                path: 'https://assets10.lottiefiles.com/packages/lf20_lk80fpsm.json' // Checkmark
+            });
+            
+            tourPins.forEach(pin => {
+                pin.addEventListener('click', (e) => startQuiz(e.target.dataset.id));
+            });
+        });
+
+    </script>
+</body>
+</html>
