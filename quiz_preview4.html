@@ -126,7 +126,7 @@
         .island-map {
             width: 100%;
             height: 280px;
-            background: url('YOUR_GITHUB_LINK_TO/oahu-map.png') center/cover no-repeat;
+            background: url('https://yannicksegaar.github.io/GamifiedChatbot-Demo/quiz_attachments/OahuMap.png') center/cover no-repeat;
             position: relative;
         }
         
@@ -135,7 +135,7 @@
             position: absolute;
             width: 40px;
             height: 40px;
-            background: url('YOUR_GITHUB_LINK_TO/tour-bus.png') center/contain no-repeat;
+            background: url('https://yannicksegaar.github.io/GamifiedChatbot-Demo/quiz_attachments/RomAIxLogo.png') center/contain no-repeat;
             display: none;
             transition: offset-distance 2s ease-in-out;
         }
@@ -342,11 +342,11 @@
             1: {
                 name: "Diamond Head Summit Experience",
                 questions: [
-                    { type: "multiple-choice", image: "🌋", imageTag: false, text: "What is the Hawaiian name for Diamond Head?", options: ["Mauna Kea", "Lēʻahi", "Haleakalā"], correct: 1, fact: "Lēʻahi means 'brow of the ahi tuna', which the crater's profile resembles." },
-                    { type: "video", videoUrl: "https://assets.mixkit.co/videos/preview/mixkit-waves-in-the-sea-1164-large.mp4", text: "Diamond Head was formed by what kind of geological event?", options: ["Slow lava flow", "Explosive eruption", "Earthquake"], correct: 1, fact: "It was a single, explosive eruption around 300,000 years ago." },
-                    { type: "slider", text: "How long is the hike to the summit in miles?", min: 0.5, max: 2.5, step: 0.1, correct: 1.6, fact: "The trail is 1.6 miles round-trip, but steep! Our tour provides water and expert guidance." },
-                    { type: "two-truths-lie", image: "🤔", imageTag: false, text: "Which of these statements about Diamond Head is a LIE?", options: ["It was once a U.S. military post.", "The trail includes a 225-foot long tunnel.", "Wild goats are commonly seen on the trail."], correct: 2, fact: "While goats were once present, they are no longer common. The military history is very real, and you'll see the bunkers on our tour!" },
-                    { type: "multiple-choice", image: "🏖️", imageTag: false, text: "The summit offers panoramic views of which famous beach?", options: ["Waikiki Beach", "Sunset Beach", "Lanikai Beach"], correct: 0, fact: "The stunning view of Waikiki is the ultimate reward at the top!" }
+                    { type: "multiple-choice", image: "https://yannicksegaar.github.io/GamifiedChatbot-Demo/quiz_attachments/DiamondHead.jpg", imageTag: true, text: "What is the Hawaiian name for Diamond Head?", options: ["Mauna Kea", "Lēʻahi", "Haleakalā"], correct: 1, fact: "Lēʻahi means 'brow of the ahi tuna', which the crater's profile resembles." },
+                    { type: "video", videoUrl: "https://yannicksegaar.github.io/GamifiedChatbot-Demo/quiz_attachments/DiamondHeadVideo.mp4", text: "Diamond Head was formed by what kind of geological event?", options: ["Slow lava flow", "Explosive eruption", "Earthquake"], correct: 1, fact: "It was a single, explosive eruption around 300,000 years ago." },
+                    { type: "slider", image: "https://yannicksegaar.github.io/GamifiedChatbot-Demo/quiz_attachments/DiamondHeadSummitTrail.png", imageTag: true, text: "How long is the hike to the summit in miles?", min: 0.5, max: 2.5, step: 0.1, correct: 1.6, fact: "The trail is 1.6 miles round-trip, but steep! Our tour provides water and expert guidance." },
+                    { type: "two-truths-lie", image: "https://yannicksegaar.github.io/GamifiedChatbot-Demo/quiz_attachments/DiamondHead2.jpg", imageTag: true, text: "Which of these statements about Diamond Head is a LIE?", options: ["It was once a U.S. military post.", "The trail includes a 225-foot long tunnel.", "Wild goats are commonly seen on the trail."], correct: 2, fact: "While goats were once present, they are no longer common. The military history is very real, and you'll see the bunkers on our tour!" },
+                    { type: "multiple-choice", image: "https://yannicksegaar.github.io/GamifiedChatbot-Demo/quiz_attachments/DiamondHeadWaikikiBeach.jpg", imageTag: true, text: "The summit offers panoramic views of which famous beach?", options: ["Waikiki Beach", "Sunset Beach", "Lanikai Beach"], correct: 0, fact: "The stunning view of Waikiki is the ultimate reward at the top!" }
                 ]
             },
             // IMPORTANT: FILL OUT THE REST OF THE TOURS HERE
@@ -416,9 +416,13 @@
                     renderMultipleChoice(question);
                     break;
                 case 'slider':
-                    mediaContainer.innerHTML = `<div class="slider-container"><div class="slider-value" id="sliderValue">${question.min}</div></div>`;
-                    renderSlider(question);
-                    break;
+    if (question.imageTag) {
+        mediaContainer.innerHTML = `<img src="${question.image}" alt="Tour question visual" style="width:100%; height:100%; object-fit:cover;">`;
+    } else {
+        mediaContainer.innerHTML = `<div class="slider-container"><div class="slider-value" id="sliderValue">${question.min}</div></div>`;
+    }
+    renderSlider(question);
+    break;
                 default:
                     if (question.imageTag) {
                         mediaContainer.innerHTML = `<img src="${question.image}" alt="Tour question visual" style="width:100%; height:100%; object-fit:cover;">`;
