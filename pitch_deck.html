@@ -1,0 +1,434 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RomAIx Pitch Deck</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #F8F9FA;
+        }
+        .slide-container {
+            width: 100%;
+            max-width: 1100px;
+            aspect-ratio: 16/9;
+            margin: 2rem auto;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            border-radius: 12px;
+            overflow: hidden;
+            position: relative;
+            background: #fff;
+        }
+        .slide {
+            display: none;
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            transition: opacity 0.5s ease-in-out;
+        }
+        .slide.active {
+            display: flex;
+            opacity: 1;
+        }
+        .nav-button {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: rgba(47, 62, 70, 0.6);
+            color: white;
+            border: none;
+            padding: 0.75rem;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 10;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+        }
+        .nav-button:hover {
+            background-color: rgba(88, 124, 116, 0.8);
+        }
+        .prev { left: 1rem; }
+        .next { right: 1rem; }
+        .pagination {
+            position: absolute;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 10;
+        }
+        .dot {
+            width: 10px;
+            height: 10px;
+            background-color: rgba(47, 62, 70, 0.4);
+            border-radius: 50%;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .dot.active {
+            background-color: #587C74;
+        }
+        .brand-primary { color: #587C74; }
+        .brand-secondary { color: #2F3E46; }
+        .bg-brand-primary { background-color: #587C74; }
+        .bg-brand-secondary { background-color: #2F3E46; }
+        
+        /* Slide Specific Styles */
+        .title-overlay {
+            background: linear-gradient(90deg, rgba(47, 62, 70, 0.85) 0%, rgba(47, 62, 70, 0.1) 100%);
+        }
+        .stat-card {
+            background-color: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(5px);
+            border-left: 5px solid #587C74;
+        }
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 1.25rem;
+            top: 1.25rem;
+            bottom: -1.25rem;
+            width: 2px;
+            background-color: #D1D5DB;
+            transform: translateX(-50%);
+        }
+        .timeline-item:last-child::before {
+            display: none;
+        }
+        .timeline-dot {
+            position: absolute;
+            left: 1.25rem;
+            top: 1.25rem;
+            width: 1.25rem;
+            height: 1.25rem;
+            border-radius: 9999px;
+            background-color: white;
+            border: 3px solid #587C74;
+            transform: translate(-50%, -50%);
+            z-index: 1;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 p-4">
+
+    <div class="slide-container">
+        <!-- Slide 1: Title Slide -->
+        <div id="slide1" class="slide active bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1551632811-561732d1e306?q=80&w=2070&auto=format&fit=crop');">
+            <div class="w-full h-full title-overlay p-12 md:p-20 flex flex-col justify-center items-start text-white">
+                <h1 class="text-4xl md:text-6xl font-bold leading-tight">Engaging the Modern Traveler</h1>
+                <p class="text-xl md:text-2xl mt-4 font-light">Driving Bookings for [Prospect's Company Name] with Gamified AI</p>
+                <div class="mt-12 flex items-center gap-8">
+                    <div class="text-2xl font-bold brand-secondary bg-white py-2 px-4 rounded-md">RomAIx</div>
+                    <span class="text-4xl font-thin">+</span>
+                    <div class="text-2xl font-bold text-gray-700 bg-white py-2 px-4 rounded-md">[Prospect's Logo]</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 2: The Winter Operator's Challenge -->
+        <div id="slide2" class="slide flex-col md:flex-row">
+            <div class="w-full md:w-1/2 h-1/2 md:h-full bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1455156218412-7c7173b39544?q=80&w=1974&auto=format&fit=crop');"></div>
+            <div class="w-full md:w-1/2 p-10 md:p-16 flex flex-col justify-center">
+                <h2 class="text-3xl md:text-4xl font-bold brand-secondary">The Winter Operator's <span class="brand-primary">Challenge</span></h2>
+                <p class="mt-6 text-lg text-gray-600">We understand your world—the pressure of seasonality, weather risks, and the constant fight for every booking. The core challenge remains: <strong class="brand-secondary">turning website clicks into confirmed bookings</strong> in a fiercely competitive market.</p>
+                <div class="mt-8 p-6 rounded-lg bg-gray-50 border-l-4 border-brand-primary">
+                    <p class="text-md italic text-gray-700">"The winter season is getting shorter and more unpredictable, intensifying the need for effective early-season marketing."</p>
+                    <span class="text-sm text-gray-500 mt-2 block">- Industry Report <sup>4</sup></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 3: The Big Shift -->
+        <div id="slide3" class="slide flex-col justify-center items-center p-10 md:p-20 bg-brand-secondary text-white">
+            <h2 class="text-3xl md:text-5xl font-bold text-center">The <span class="text-teal-300">Big Shift</span></h2>
+            <p class="mt-4 text-xl text-center max-w-4xl font-light">Today's traveler expects more than a website. They expect an <strong class="font-semibold">experience</strong> from the very first click. Passive browsing is no longer enough.</p>
+            <div class="mt-12 w-full max-w-5xl grid grid-cols-1 md:grid-cols-2 gap-8">
+                <div class="bg-white/10 p-8 rounded-lg text-center">
+                    <p class="text-6xl font-bold text-teal-300">8 sec.</p>
+                    <p class="mt-2 text-lg">Average adult attention span.<sup>13</sup></p>
+                </div>
+                <div class="bg-white/10 p-8 rounded-lg text-center">
+                    <p class="text-6xl font-bold text-teal-300">12x</p>
+                    <p class="mt-2 text-lg">More likely to share gamified content on social media.<sup>18</sup></p>
+                </div>
+            </div>
+            <p class="mt-10 text-xl text-center font-semibold">Engagement is the new currency for capturing attention.</p>
+        </div>
+
+        <!-- Slide 4: The Proven Solution -->
+        <div id="slide4" class="slide flex-col md:flex-row-reverse">
+            <div class="w-full md:w-1/2 h-1/2 md:h-full bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1611162617213-6d22e5057ac8?q=80&w=1974&auto=format&fit=crop');"></div>
+            <div class="w-full md:w-1/2 p-10 md:p-16 flex flex-col justify-center">
+                <h2 class="text-3xl md:text-4xl font-bold brand-secondary">The Proven Solution: <span class="brand-primary">Gamification</span></h2>
+                <p class="mt-6 text-lg text-gray-600">This isn't a gimmick; it's a mainstream, multi-billion dollar industry. The world's top companies use game psychology to drive real business results.</p>
+                <div class="mt-8 space-y-4">
+                     <p class="text-md text-gray-700"><strong class="brand-primary text-xl">Over 70%</strong> of Global 2000 companies use gamification.<sup>24</sup></p>
+                     <p class="text-md text-gray-700"><strong class="brand-primary text-xl">$90 Billion</strong> projected market size by 2031.<sup>23</sup></p>
+                </div>
+                <div class="mt-8">
+                    <p class="text-sm font-semibold text-gray-500 mb-2">AS USED BY BRANDS LIKE:</p>
+                    <div class="flex gap-6 items-center text-gray-400">
+                        <i class="fab fa-nike text-4xl"></i>
+                        <i class="fab fa-starbucks text-4xl"></i>
+                        <i class="fab fa-google text-4xl"></i>
+                        <span class="font-bold text-2xl">Deloitte</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 5: The ROI of Play (UPDATED) -->
+        <div id="slide5" class="slide flex-col justify-center items-center p-10 md:p-20 bg-brand-primary text-white">
+            <h2 class="text-4xl md:text-5xl font-bold text-center">The <span class="text-teal-200">ROI</span> of Play</h2>
+            <p class="mt-2 text-xl text-center max-w-3xl font-light">This isn't just about fun; it's about measurable results that directly impact your bottom line.</p>
+            <div class="mt-12 w-full max-w-5xl grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
+                <div class="bg-white/10 p-8 rounded-lg">
+                    <p class="text-5xl md:text-7xl font-bold text-teal-200">+700%</p>
+                    <p class="mt-2 text-lg">Increase in New Customer Acquisitions <sup>24</sup></p>
+                </div>
+                <div class="bg-white/10 p-8 rounded-lg border-2 border-teal-200 shadow-lg">
+                    <p class="text-5xl md:text-7xl font-bold text-teal-200">7x</p>
+                    <p class="mt-2 text-lg">Higher Conversion Rates <sup>14</sup></p>
+                </div>
+                <div class="bg-white/10 p-8 rounded-lg">
+                    <p class="text-5xl md:text-7xl font-bold text-teal-200">7-Fold</p>
+                    <p class="mt-2 text-lg">Higher Profitability Margins <sup>26</sup></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 6: The Interest Check -->
+        <div id="slide6" class="slide flex-col justify-center items-center p-10 md:p-20 text-center">
+            <i class="far fa-clock text-6xl brand-primary"></i>
+            <h2 class="text-3xl md:text-4xl font-bold brand-secondary mt-6">A Promise Kept: <span class="brand-primary">Your Time is Valuable</span></h2>
+            <p class="mt-4 text-lg max-w-3xl text-gray-600">I promised a 10-minute overview, and I want to honor that commitment. You've seen the 'why'—the data-proven potential to transform engagement and drive bookings.</p>
+            <p class="mt-4 text-lg max-w-3xl text-gray-600 font-semibold">The next step is the 'how'—a live demo of the experience in action.</p>
+            <p class="mt-8 text-xl brand-secondary">Are you interested in continuing for another 10 minutes to see the solution live?</p>
+            <div class="mt-8 flex gap-4">
+                <button class="bg-brand-primary text-white font-bold py-3 px-8 rounded-lg text-lg shadow-lg hover:bg-opacity-90 transition-all">Yes, Show Me the Demo</button>
+                <button class="bg-gray-300 text-brand-secondary font-bold py-3 px-8 rounded-lg text-lg hover:bg-gray-400 transition-all">No, Thank You</button>
+            </div>
+        </div>
+
+        <!-- Slide 7: How It Works -->
+        <div id="slide7" class="slide flex-col md:flex-row">
+            <div class="w-full md:w-1/2 p-10 md:p-16 flex flex-col justify-center">
+                <h2 class="text-3xl md:text-4xl font-bold brand-secondary">How It Works: The <span class="brand-primary">"Adventure-Ready"</span> Assessment</h2>
+                <p class="mt-6 text-lg text-gray-600">Let's show you how we turn a boring form into a fun, data-rich conversation that your customers will actually enjoy.</p>
+                <p class="mt-4 text-lg text-gray-600">From <strong class="brand-secondary">anonymous visitor</strong> to <strong class="brand-secondary">qualified lead</strong> in 90 seconds.</p>
+                <div class="mt-8">
+                    <button class="bg-brand-primary text-white font-bold py-4 px-8 rounded-lg text-xl shadow-lg hover:bg-brand-secondary transition-colors">
+                        <i class="fas fa-play mr-2"></i> Launch Live Demo
+                    </button>
+                </div>
+            </div>
+            <div class="w-full md:w-1/2 h-full flex items-center justify-center bg-gray-100 p-8">
+                <img src="https://placehold.co/400x600/587C74/FFFFFF?text=Live+Demo+UI" alt="Live Demo UI Mockup" class="rounded-lg shadow-2xl">
+            </div>
+        </div>
+        
+        <!-- Slide 8: The Outcome -->
+        <div id="slide8" class="slide flex-col md:flex-row-reverse">
+             <div class="w-full md:w-1/2 p-10 md:p-16 flex flex-col justify-center bg-gray-50">
+                <h2 class="text-3xl md:text-4xl font-bold brand-secondary">The Outcome: A <span class="brand-primary">Warmed-Up, Actionable Lead</span></h2>
+                <p class="mt-6 text-lg text-gray-600">The result is a rich profile sent directly to your CRM. Your sales team can now have a personalized, high-converting follow-up call instead of a cold one.</p>
+                <p class="mt-4 text-lg text-gray-600">No more guessing games. Just actionable intelligence.</p>
+            </div>
+            <div class="w-full md:w-1/2 h-full flex items-center justify-center p-8 bg-brand-secondary">
+                <div class="bg-white rounded-lg shadow-2xl p-6 w-full max-w-md">
+                    <h3 class="font-bold text-lg brand-secondary">New Qualified Lead: Jane Doe</h3>
+                    <p class="text-sm text-gray-500">jane.doe@email.com</p>
+                    <hr class="my-4">
+                    <div class="space-y-3 text-sm">
+                        <p><strong class="brand-primary w-28 inline-block">Travel Style:</strong> Family Fun</p>
+                        <p><strong class="brand-primary w-28 inline-block">Experience Level:</strong> Beginner</p>
+                        <p><strong class="brand-primary w-28 inline-block">Tour Interest:</strong> Scenic Snowshoe Adventure</p>
+                        <p><strong class="brand-primary w-28 inline-block">Group Size:</strong> 4 people</p>
+                        <p><strong class="brand-primary w-28 inline-block">Status:</strong> Hot Lead 🔥</p>
+                    </div>
+                    <button class="bg-brand-primary w-full mt-4 text-white font-bold py-2 px-4 rounded-lg hover:bg-brand-secondary transition-colors">View in CRM</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 9: Portfolio of Experiences -->
+        <div id="slide9" class="slide flex-col justify-center items-center p-10 md:p-20">
+            <h2 class="text-3xl md:text-4xl font-bold brand-secondary text-center">More Than a Quiz: <span class="brand-primary">A Portfolio of Experiences</span></h2>
+            <p class="mt-4 text-xl text-center max-w-3xl text-gray-600">We have a playbook of experiences, all designed to meet your specific business goals.</p>
+            <div class="mt-12 w-full max-w-4xl grid grid-cols-1 md:grid-cols-3 gap-8">
+                <div class="text-center p-6 border border-gray-200 rounded-lg">
+                    <i class="fas fa-map-signs text-4xl brand-primary"></i>
+                    <h3 class="mt-4 font-bold text-lg brand-secondary">Interactive Tour Previews</h3>
+                    <p class="mt-2 text-sm text-gray-500">Let users "walk through" a tour before they book.</p>
+                </div>
+                <div class="text-center p-6 border-2 border-brand-primary rounded-lg shadow-lg">
+                    <i class="fas fa-snowflake text-4xl brand-primary"></i>
+                    <h3 class="mt-4 font-bold text-lg brand-secondary">Off-Season Trivia</h3>
+                    <p class="mt-2 text-sm text-gray-500">Keep your audience engaged all year round.</p>
+                </div>
+                <div class="text-center p-6 border border-gray-200 rounded-lg">
+                    <i class="fas fa-gift text-4xl brand-primary"></i>
+                    <h3 class="mt-4 font-bold text-lg brand-secondary">Personalized Package Builders</h3>
+                    <p class="mt-2 text-sm text-gray-500">Allow customers to build their dream vacation.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 10: The Technology -->
+        <div id="slide10" class="slide bg-brand-secondary text-white flex-col md:flex-row">
+            <div class="w-full md:w-1/2 h-full flex items-center justify-center p-8">
+                 <img src="https://placehold.co/400x400/FFFFFF/2F3E46?text=AI+Core" alt="AI Core Graphic" class="rounded-full shadow-2xl">
+            </div>
+            <div class="w-full md:w-1/2 p-10 md:p-16 flex flex-col justify-center">
+                <h2 class="text-3xl md:text-4xl font-bold">The Technology: Powered by <span class="text-teal-300">AI & Automation</span></h2>
+                <p class="mt-6 text-lg font-light">Our use of AI allows for dynamic, personalized conversations that adapt to each user, making the experience feel unique and authentic. It's smart, scalable, and seamlessly integrated.</p>
+                <div class="mt-8 p-6 rounded-lg bg-white/10 border-l-4 border-teal-300">
+                    <p class="text-lg italic text-white">"AI-driven gamified systems can lead to a <strong class="font-bold">300% increase</strong> in positive outcomes."</p>
+                    <span class="text-sm text-gray-300 mt-2 block">- Forbes <sup>25</sup></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 11: The Partnership & Timeline -->
+        <div id="slide11" class="slide flex-col justify-center p-10 md:p-20">
+            <h2 class="text-3xl md:text-4xl font-bold brand-secondary text-center">Your Path to Higher Engagement in <span class="brand-primary">6 Weeks</span></h2>
+            <p class="mt-4 text-xl text-center max-w-3xl text-gray-600">We handle everything from strategy to deployment in a clear, collaborative, and efficient process.</p>
+            <div class="mt-12 w-full max-w-2xl mx-auto">
+                <div class="relative pl-10">
+                    <!-- Timeline Item 1 -->
+                    <div class="timeline-item relative pb-10">
+                        <div class="timeline-dot"></div>
+                        <h4 class="font-bold text-lg brand-secondary">Weeks 1-2: Discovery & Strategy</h4>
+                        <p class="text-gray-600">Kickoff call, brand deep-dive, and concept finalization.</p>
+                    </div>
+                    <!-- Timeline Item 2 -->
+                    <div class="timeline-item relative pb-10">
+                        <div class="timeline-dot"></div>
+                        <h4 class="font-bold text-lg brand-secondary">Weeks 3-4: Design & Development</h4>
+                        <p class="text-gray-600">Conversational script writing, UI/UX mockups, and core AI build.</p>
+                    </div>
+                    <!-- Timeline Item 3 -->
+                    <div class="timeline-item relative pb-10">
+                        <div class="timeline-dot"></div>
+                        <h4 class="font-bold text-lg brand-secondary">Week 5: Integration & Testing</h4>
+                        <p class="text-gray-600">CRM connection, automation workflows, and rigorous UAT.</p>
+                    </div>
+                    <!-- Timeline Item 4 -->
+                    <div class="timeline-item relative">
+                        <div class="timeline-dot"></div>
+                        <h4 class="font-bold text-lg brand-secondary">Week 6: Deployment & Go-Live</h4>
+                        <p class="text-gray-600">Launch on your website with intensive performance monitoring.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 12: The Investment & Guarantee -->
+        <div id="slide12" class="slide flex-col md:flex-row bg-gray-50">
+            <div class="w-full md:w-1/2 p-10 md:p-16 flex flex-col justify-center">
+                <h2 class="text-3xl md:text-4xl font-bold brand-secondary">The Investment & Our <span class="brand-primary">Guarantee</span></h2>
+                <p class="mt-6 text-lg text-gray-600">We offer simple, transparent pricing and a performance guarantee because we are confident in the results. <strong class="brand-secondary">We win when you win.</strong></p>
+                <div class="mt-8 space-y-4">
+                    <div class="p-4 border rounded-lg">
+                        <h4 class="font-bold brand-secondary">One-Time Setup Fee</h4>
+                        <p class="text-sm text-gray-600">Covers strategy, design, development, and integration.</p>
+                    </div>
+                    <div class="p-4 border rounded-lg">
+                        <h4 class="font-bold brand-secondary">Monthly Optimization Retainer</h4>
+                        <p class="text-sm text-gray-600">Includes licensing, maintenance, A/B testing, and reporting.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="w-full md:w-1/2 h-full flex items-center justify-center bg-brand-primary p-10 text-white">
+                <div class="text-center">
+                    <i class="fas fa-shield-alt text-6xl mb-4"></i>
+                    <h3 class="text-2xl font-bold">Our Performance Guarantee</h3>
+                    <p class="mt-4 max-w-md">We guarantee our gamified experience will generate at least <strong>[Number]</strong> qualified leads or increase your lead conversion rate by <strong>[X]%</strong> within 90 days. If not, our monthly retainer is free for the next 90 days while we hit the goal.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Slide 13: Next Steps -->
+        <div id="slide13" class="slide bg-cover bg-center" style="background-image: url('https://images.unsplash.com/photo-1542744173-8e7e53415bb0?q=80&w=2070&auto=format&fit=crop');">
+            <div class="w-full h-full p-12 md:p-20 flex flex-col justify-center items-center text-center bg-black/60 text-white">
+                <h2 class="text-4xl md:text-5xl font-bold">Let's Build Your Perfect Winter Experience</h2>
+                <p class="mt-4 text-xl max-w-3xl font-light">Our immediate next step is to schedule a 30-minute strategy session to map out a custom gamified experience for your most popular tour.</p>
+                <div class="mt-10 bg-white/90 text-brand-secondary p-8 rounded-lg shadow-2xl">
+                    <h3 class="text-2xl font-bold">Your Name</h3>
+                    <p class="text-lg">Title</p>
+                    <hr class="my-3 border-brand-primary/50">
+                    <p class="text-md"><i class="fas fa-envelope mr-2 brand-primary"></i> email@romainx.com</p>
+                    <p class="text-md mt-1"><i class="fas fa-phone mr-2 brand-primary"></i> (555) 123-4567</p>
+                </div>
+                 <button class="mt-8 bg-brand-primary text-white font-bold py-4 px-8 rounded-lg text-xl shadow-lg hover:bg-white hover:text-brand-primary transition-all duration-300">
+                    Schedule Your Strategy Session
+                </button>
+            </div>
+        </div>
+
+    </div>
+
+    <button class="nav-button prev"><i class="fas fa-chevron-left"></i></button>
+    <button class="nav-button next"><i class="fas fa-chevron-right"></i></button>
+    <div class="pagination"></div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const slides = document.querySelectorAll('.slide');
+            const nextBtn = document.querySelector('.next');
+            const prevBtn = document.querySelector('.prev');
+            const paginationContainer = document.querySelector('.pagination');
+            let currentSlide = 0;
+
+            // Create pagination dots
+            slides.forEach((slide, index) => {
+                const dot = document.createElement('div');
+                dot.classList.add('dot');
+                if (index === 0) dot.classList.add('active');
+                dot.addEventListener('click', () => goToSlide(index));
+                paginationContainer.appendChild(dot);
+            });
+            
+            const dots = document.querySelectorAll('.dot');
+
+            function goToSlide(n) {
+                slides[currentSlide].classList.remove('active');
+                dots[currentSlide].classList.remove('active');
+                currentSlide = (n + slides.length) % slides.length;
+                slides[currentSlide].classList.add('active');
+                dots[currentSlide].classList.add('active');
+            }
+
+            nextBtn.addEventListener('click', () => {
+                goToSlide(currentSlide + 1);
+            });
+
+            prevBtn.addEventListener('click', () => {
+                goToSlide(currentSlide - 1);
+            });
+            
+            // Keyboard navigation
+            document.addEventListener('keydown', (e) => {
+                if(e.key === 'ArrowRight') {
+                    goToSlide(currentSlide + 1);
+                } else if (e.key === 'ArrowLeft') {
+                    goToSlide(currentSlide - 1);
+                }
+            });
+
+            // Set initial slide
+            goToSlide(0);
+        });
+    </script>
+</body>
+</html>
