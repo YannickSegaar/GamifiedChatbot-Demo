@@ -21676,7 +21676,7 @@ export const HawaiianSnorkelQuizExtension11 = {
     } = trace.payload || {};
 
     // --- n8n Webhook URL ---
-    const N8N_WEBHOOK_URL = 'https://n8n.romaix-n8n.xyz/webhook-test/11b3be66-f80f-49f6-8067-9e2d1c4230b8';
+    const N8N_WEBHOOK_URL = 'https://n8n.romaix-n8n.xyz/webhook/11b3be66-f80f-49f6-8067-9e2d1c4230b8';
 
     // --- Other Tours Data for Carousel (UPDATED WITH ALL 8 TOURS) ---
     const otherTours = [
