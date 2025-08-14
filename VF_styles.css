@@ -1,6 +1,6 @@
 /* Increase the height of the popover window */
 .vfrc-chat--overlay {
-    height: 600px !important; /* Increase from default ~400px */
+    height: 900px !important; /* Increase from default ~400px */
     max-height: 80vh !important; /* Ensure it doesn't exceed viewport */
 }
 
