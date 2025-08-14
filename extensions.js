@@ -14583,12 +14583,12 @@ export const HawaiianSnorkelQuizExtension2 = {
         title: 'You see a majestic sea turtle! You want to:',
         description: 'What\'s your first instinct when you spot a "honu"?',
         multiSelect: false,
-        image: 'https://images.unsplash.com/photo-1593695399522-c63e46827219?q=80&w=2070&auto=format&fit=crop',
+        image: 'https://yannicksegaar.github.io/GamifiedChatbot-Demo/HawaiiTourExperts_Quiz/q2_hero_turtle.png',
         options: [
-          { id: 'q2a', text: 'Know its species and why it\'s here', image: 'https://images.unsplash.com/photo-1559190394-df5a2ba392c8?q=80&w=2070&auto=format&fit=crop', points: { m: 2 }, funFact: 'Great curiosity! Our guides carry waterproof ID cards to help you distinguish between the Green Sea Turtle and the rarer Hawksbill, and they\'ll explain the importance of this specific habitat.' },
-          { id: 'q2b', text: 'Find the most colorful reef for a photo', image: 'https://images.unsplash.com/photo-1573443788939-5515a5a21136?q=80&w=1974&auto=format&fit=crop', points: { a: 2 }, funFact: 'Excellent eye! We know the spots where vibrant coral and sunlight create the most stunning underwater backdrops for your turtle photos.' },
-          { id: 'q2c', text: 'Float calmly and just watch it glide by', image: 'https://images.unsplash.com/photo-1588932947597-a4d852c93895?q=80&w=2070&auto=format&fit=crop', points: { r: 2 }, funFact: 'A wonderful approach. We teach "pono" (respectful) viewing practices, ensuring you can enjoy the moment peacefully without disturbing the turtles\' natural behavior.' },
-          { id: 'q2d', text: 'Make sure the kids get a great, safe view', image: 'https://images.unsplash.com/photo-1620455808611-e8a4a2c6b41a?q=80&w=2070&auto=format&fit=crop', points: { f: 2 }, funFact: 'Safety first! Our guides are experts at helping children use their gear and positioning them for the best, safest view of the turtles.' },
+          { id: 'q2a', text: 'Know its species and why it\'s here', image: 'https://yannicksegaar.github.io/GamifiedChatbot-Demo/HawaiiTourExperts_Quiz/q2_answer_turtleclose.png', points: { m: 2 }, funFact: 'Great curiosity! Our guides carry waterproof ID cards to help you distinguish between the Green Sea Turtle and the rarer Hawksbill, and they\'ll explain the importance of this specific habitat.' },
+          { id: 'q2b', text: 'Find the most colorful reef for a photo', image: 'https://yannicksegaar.github.io/GamifiedChatbot-Demo/HawaiiTourExperts_Quiz/q2_answer_turtlereef.png', points: { a: 2 }, funFact: 'Excellent eye! We know the spots where vibrant coral and sunlight create the most stunning underwater backdrops for your turtle photos.' },
+          { id: 'q2c', text: 'Float calmly and just watch it glide by', image: 'https://yannicksegaar.github.io/GamifiedChatbot-Demo/HawaiiTourExperts_Quiz/q2_answer_turtledistant.png', points: { r: 2 }, funFact: 'A wonderful approach. We teach "pono" (respectful) viewing practices, ensuring you can enjoy the moment peacefully without disturbing the turtles\' natural behavior.' },
+          { id: 'q2d', text: 'Make sure the kids get a great, safe view', image: 'https://yannicksegaar.github.io/GamifiedChatbot-Demo/HawaiiTourExperts_Quiz/q2_answer_turtlekids.png', points: { f: 2 }, funFact: 'Safety first! Our guides are experts at helping children use their gear and positioning them for the best, safest view of the turtles.' },
         ]
       },
       {
@@ -14596,12 +14596,12 @@ export const HawaiianSnorkelQuizExtension2 = {
         title: 'Which eco-friendly practice is most important to you?',
         description: 'Your choices help protect Hawaii\'s precious marine life.',
         multiSelect: false,
-        image: 'https://images.unsplash.com/photo-1543394346-99711a143cc4?q=80&w=2070&auto=format&fit=crop',
+        image: 'https://yannicksegaar.github.io/GamifiedChatbot-Demo/HawaiiTourExperts_Quiz/q3_hero_split.png',
         options: [
-          { id: 'q3a', text: 'Using only reef-safe sunscreen', image: 'https://images.unsplash.com/photo-1611273735312-499a5b5a79ba?q=80&w=2070&auto=format&fit=crop', points: { m: 2, r: 1 }, funFact: 'That\'s the spirit! We provide complimentary, high-quality, mineral-based reef-safe sunscreen on every tour to protect our delicate coral ecosystems.' },
-          { id: 'q3b', text: 'Supporting local conservation efforts', image: 'https://images.unsplash.com/photo-1622872914538-a813c93c4892?q=80&w=2070&auto=format&fit=crop', points: { m: 2, f: 1 }, funFact: 'Mahalo! A portion of every ticket goes directly to the Hawaii Wildlife Fund to support their sea turtle rescue and habitat restoration programs.' },
-          { id: 'q3c', text: 'Keeping a respectful distance from wildlife', image: 'https://images.unsplash.com/photo-1550963901-4404a8b79b51?q=80&w=2070&auto=format&fit=crop', points: { r: 2, f: 1 }, funFact: 'Respect is key! Our "Honu Guardian" pledge, which all guests take, ensures we follow NOAA guidelines to stay at least 10 feet from turtles, protecting them from stress.' },
-          { id: 'q3d', text: 'Joining a tour that actively removes ocean trash', image: 'https://images.unsplash.com/photo-1618493633784-0147bf611514?q=80&w=1974&auto=format&fit=crop', points: { a: 2, m: 1 }, funFact: 'Love that! On our "Reef Rescue" snorkel, we provide mesh bags and dedicate the last 15 minutes to a fun, guided cleanup of any marine debris we find.' },
+          { id: 'q3a', text: 'Using only reef-safe sunscreen', image: 'https://yannicksegaar.github.io/GamifiedChatbot-Demo/HawaiiTourExperts_Quiz/q3_answer_sunscreen.png', points: { m: 2, r: 1 }, funFact: 'That\'s the spirit! We provide complimentary, high-quality, mineral-based reef-safe sunscreen on every tour to protect our delicate coral ecosystems.' },
+          { id: 'q3b', text: 'Supporting local conservation efforts', image: 'https://yannicksegaar.github.io/GamifiedChatbot-Demo/HawaiiTourExperts_Quiz/q3_answer_coralplanting.png', points: { m: 2, f: 1 }, funFact: 'Mahalo! A portion of every ticket goes directly to the Hawaii Wildlife Fund to support their sea turtle rescue and habitat restoration programs.' },
+          { id: 'q3c', text: 'Keeping a respectful distance from wildlife', image: 'https://yannicksegaar.github.io/GamifiedChatbot-Demo/HawaiiTourExperts_Quiz/q3_answer_respect.png', points: { r: 2, f: 1 }, funFact: 'Respect is key! Our "Honu Guardian" pledge, which all guests take, ensures we follow NOAA guidelines to stay at least 10 feet from turtles, protecting them from stress.' },
+          { id: 'q3d', text: 'Joining a tour that actively removes ocean trash', image: 'https://yannicksegaar.github.io/GamifiedChatbot-Demo/HawaiiTourExperts_Quiz/q3_answer_cleanup.png', points: { a: 2, m: 1 }, funFact: 'Love that! On our "Reef Rescue" snorkel, we provide mesh bags and dedicate the last 15 minutes to a fun, guided cleanup of any marine debris we find.' },
         ]
       },
       {
@@ -14609,12 +14609,12 @@ export const HawaiianSnorkelQuizExtension2 = {
         title: 'When it comes to snorkel gear, you prefer:',
         description: 'What makes you feel most comfortable in the water?',
         multiSelect: false,
-        image: 'https://images.unsplash.com/photo-1577423568293-2f808a7a7a5f?q=80&w=2070&auto=format&fit=crop',
+        image: 'https://yannicksegaar.github.io/GamifiedChatbot-Demo/HawaiiTourExperts_Quiz/q4_hero_gear.png',
         options: [
-          { id: 'q4a', text: 'Top-of-the-line, no-fog mask', image: 'https://images.unsplash.com/photo-1612198734361-7339a3b68843?q=80&w=2070&auto=format&fit=crop', points: { m: 1, a: 1 }, funFact: 'Clarity is everything! We invest in premium, low-volume masks with a special anti-fog coating to ensure you have a crystal-clear, uninterrupted view.' },
-          { id: 'q4b', text: 'A comfortable flotation belt to just relax', image: 'https://images.unsplash.com/photo-1530541930197-58e26e8a8fdc?q=80&w=2070&auto=format&fit=crop', points: { r: 2 }, funFact: 'Relaxation is our specialty. We offer complimentary, comfortable flotation noodles and belts so you can float effortlessly and just enjoy the show.' },
-          { id: 'q4c', text: 'Fins that give you extra power', image: 'https://images.unsplash.com/photo-1604991811389-91d179d273f3?q=80&w=2070&auto=format&fit=crop', points: { a: 2 }, funFact: 'Feel the power! Our performance fins are designed for maximum propulsion with minimum effort, perfect for exploring a wider area of the reef.' },
-          { id: 'q4d', text: 'Gear that\'s sanitized and fits my kids', image: 'https://images.unsplash.com/photo-1556912955-551a19f268a7?q=80&w=2070&auto=format&fit=crop', points: { f: 2 }, funFact: 'We\'ve got you covered. All our gear undergoes a multi-step sanitation process, and we have a full range of child-specific sizes for a perfect, leak-free fit.' },
+          { id: 'q4a', text: 'Top-of-the-line, no-fog mask', image: 'https://yannicksegaar.github.io/GamifiedChatbot-Demo/HawaiiTourExperts_Quiz/q4_answer_mask.png', points: { m: 1, a: 1 }, funFact: 'Clarity is everything! We invest in premium, low-volume masks with a special anti-fog coating to ensure you have a crystal-clear, uninterrupted view.' },
+          { id: 'q4b', text: 'A comfortable flotation belt to just relax', image: 'https://yannicksegaar.github.io/GamifiedChatbot-Demo/HawaiiTourExperts_Quiz/q4_answer_flotation.png', points: { r: 2 }, funFact: 'Relaxation is our specialty. We offer complimentary, comfortable flotation noodles and belts so you can float effortlessly and just enjoy the show.' },
+          { id: 'q4c', text: 'Fins that give you extra power', image: 'https://yannicksegaar.github.io/GamifiedChatbot-Demo/HawaiiTourExperts_Quiz/q4_answer_fins.png', points: { a: 2 }, funFact: 'Feel the power! Our performance fins are designed for maximum propulsion with minimum effort, perfect for exploring a wider area of the reef.' },
+          { id: 'q4d', text: 'Gear that\'s sanitized and fits my kids', image: 'https://yannicksegaar.github.io/GamifiedChatbot-Demo/HawaiiTourExperts_Quiz/q4_answer_cleangear.png', points: { f: 2 }, funFact: 'We\'ve got you covered. All our gear undergoes a multi-step sanitation process, and we have a full range of child-specific sizes for a perfect, leak-free fit.' },
         ]
       },
       {
@@ -14622,12 +14622,12 @@ export const HawaiianSnorkelQuizExtension2 = {
         title: 'Your perfect tour boat has:',
         description: 'What kind of vessel completes your ideal ocean day?',
         multiSelect: false,
-        image: 'https://images.unsplash.com/photo-1527004193719-b8c1a673d6e2?q=80&w=2070&auto=format&fit=crop',
+        image: 'https://yannicksegaar.github.io/GamifiedChatbot-Demo/HawaiiTourExperts_Quiz/q5_hero_catamaran.png',
         options: [
-          { id: 'q5a', text: 'An on-board marine biologist for Q&A', image: 'https://images.unsplash.com/photo-1581093450021-4a7360aa9a2f?q=80&w=2070&auto=format&fit=crop', points: { m: 2, f: 1 }, funFact: 'Knowledge is power! Every single one of our tours has a dedicated marine naturalist on board specifically to answer questions and share insights about the wildlife you see.' },
-          { id: 'q5b', text: 'Lots of shade and a smooth ride', image: 'https://images.unsplash.com/photo-1599263013876-54c2356c590a?q=80&w=2070&auto=format&fit=crop', points: { r: 2, f: 1 }, funFact: 'Comfort is key. Our custom-built catamaran is designed for stability and features a large shaded cabin, ensuring a smooth and relaxing ride to our snorkel spots.' },
-          { id: 'q5c', text: 'A fast boat to get to remote spots quickly', image: 'https://images.unsplash.com/photo-1563503200435-f9657c3f30b9?q=80&w=2070&auto=format&fit=crop', points: { a: 2 }, funFact: 'Let\'s go! Our adventure tours use a high-speed zodiac, allowing us to reach pristine, remote reefs that are inaccessible to larger, slower boats.' },
-          { id: 'q5d', text: 'An easy-access swim step and snacks!', image: 'https://images.unsplash.com/photo-1551024601-bec78aea704b?q=80&w=1964&auto=format&fit=crop', points: { f: 2, r: 1 }, funFact: 'We agree! Our boat features a walk-in swim step (no ladders!) and we provide complimentary local juices and fresh pineapple slices after your swim.' },
+          { id: 'q5a', text: 'An on-board marine biologist for Q&A', image: 'https://yannicksegaar.github.io/GamifiedChatbot-Demo/HawaiiTourExperts_Quiz/q5_answer_guide.png', points: { m: 2, f: 1 }, funFact: 'Knowledge is power! Every single one of our tours has a dedicated marine naturalist on board specifically to answer questions and share insights about the wildlife you see.' },
+          { id: 'q5b', text: 'Lots of shade and a smooth ride', image: 'https://yannicksegaar.github.io/GamifiedChatbot-Demo/HawaiiTourExperts_Quiz/q5_answer_shade.png', points: { r: 2, f: 1 }, funFact: 'Comfort is key. Our custom-built catamaran is designed for stability and features a large shaded cabin, ensuring a smooth and relaxing ride to our snorkel spots.' },
+          { id: 'q5c', text: 'A fast boat to get to remote spots quickly', image: 'https://yannicksegaar.github.io/GamifiedChatbot-Demo/HawaiiTourExperts_Quiz/q5_answer_fastboat.png', points: { a: 2 }, funFact: 'Let\'s go! Our adventure tours use a high-speed zodiac, allowing us to reach pristine, remote reefs that are inaccessible to larger, slower boats.' },
+          { id: 'q5d', text: 'An easy-access swim step and snacks!', image: 'https://yannicksegaar.github.io/GamifiedChatbot-Demo/HawaiiTourExperts_Quiz/q5_answer_swimstep.png', points: { f: 2, r: 1 }, funFact: 'We agree! Our boat features a walk-in swim step (no ladders!) and we provide complimentary local juices and fresh pineapple slices after your swim.' },
         ]
       }
     ];
@@ -14638,7 +14638,7 @@ export const HawaiianSnorkelQuizExtension2 = {
         id: 'marine-biologist-in-training',
         name: 'The Marine Biologist in Training',
         description: 'You\'re driven by a deep curiosity for the ocean. For you, a great tour isn\'t just about seeing turtles; it\'s about understanding their world, protecting their habitat, and learning something new.',
-        image: 'https://images.unsplash.com/photo-1584433144859-1fc3ab64a957?q=80&w=1930&auto=format&fit=crop',
+        image: 'https://yannicksegaar.github.io/GamifiedChatbot-Demo/HawaiiTourExperts_Quiz/persona_biologist.png',
         personalizationHook: 'Because you value **{answerText}**, our educational tour is a perfect match.',
         recommendation: {
           name: 'Ultimate Honu Encounter & Reef Study',
@@ -14650,7 +14650,7 @@ export const HawaiianSnorkelQuizExtension2 = {
         id: 'relaxation-rover',
         name: 'The Relaxation Rover',
         description: 'You\'re in Hawaii to unwind and soak in the serene beauty. Your ideal day involves floating in calm, turquoise waters, feeling the warm sun, and peacefully observing nature without any rush.',
-        image: 'https://images.unsplash.com/photo-1590001149719-8b548a245533?q=80&w=1974&auto=format&fit=crop',
+        image: 'https://yannicksegaar.github.io/GamifiedChatbot-Demo/HawaiiTourExperts_Quiz/persona_relaxer.png',
         personalizationHook: 'Since you\'re looking for **{answerText}**, you\'ll love this tranquil journey.',
         recommendation: {
           name: 'Serenity Snorkel Sail',
@@ -14662,7 +14662,7 @@ export const HawaiianSnorkelQuizExtension2 = {
         id: 'aloha-adventure-seeker',
         name: 'The Aloha Adventure Seeker',
         description: 'You want to experience the thrilling side of the islands. You\'re looking for more than just a pretty view—you want to explore sea caves, cruise the coastline, and find the most dramatic underwater landscapes.',
-        image: 'https://images.unsplash.com/photo-1502680390469-27c2386b2b85?q=80&w=2070&auto=format&fit=crop',
+        image: 'https://yannicksegaar.github.io/GamifiedChatbot-Demo/HawaiiTourExperts_Quiz/persona_adventurer.png',
         personalizationHook: 'Your love for **{answerText}** means you\'re ready for this exciting adventure.',
         recommendation: {
           name: 'Coastal Explorer & Reef Adventure',
@@ -14674,7 +14674,7 @@ export const HawaiianSnorkelQuizExtension2 = {
         id: 'family-voyager',
         name: 'The Family Voyager',
         description: 'Your top priority is creating amazing memories with your loved ones. You need an experience that is safe, engaging, and fun for all ages, with expert guides who make everyone feel comfortable in the water.',
-        image: 'https://images.unsplash.com/photo-1527099985684-33ab79b2a42a?q=80&w=2070&auto=format&fit=crop',
+        image: 'https://yannicksegaar.github.io/GamifiedChatbot-Demo/HawaiiTourExperts_Quiz/persona_family.png',
         personalizationHook: 'Because you want **{answerText}**, this family-friendly tour is the perfect choice.',
         recommendation: {
           name: 'Ohana Turtle Town Discovery',
