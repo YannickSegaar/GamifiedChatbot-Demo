@@ -22498,7 +22498,7 @@ export const HawaiianSnorkelQuizExtension12 = {
     } = trace.payload || {};
 
     // --- n8n Webhook URL ---
-    const N8N_WEBHOOK_URL = 'https://n8n.romaix-n8n.xyz/webhook-test/11b3be66-f80f-49f6-8067-9e2d1c4230b8';
+    const N8N_WEBHOOK_URL = 'https://n8n.romaix-n8n.xyz/webhook/11b3be66-f80f-49f6-8067-9e2d1c4230b8';
 
     // --- Other Tours Data for Carousel (UPDATED WITH ALL 8 TOURS) ---
     const otherTours = [
@@ -22841,7 +22841,7 @@ export const HawaiianSnorkelQuizExtension12 = {
         </div>
 
         <div id="contact-step" class="workflow-step">
-            <h3 class="intro-title">Get a Personal Callback</h3>
+            <h3 class="intro-title">Get Personalized Plan</h3>
             <p class="intro-description">Our tour experts would be happy to contact you with more details. Just fill out your information below!</p>
             <form id="lead-form" novalidate>
                 <div class="form-group">
@@ -22956,7 +22956,7 @@ export const HawaiianSnorkelQuizExtension12 = {
             case 'results':
                  buttonsHTML = `
                     <button id="contact-btn" class="btn btn-primary">Get a Personal Callback</button>
-                    <button id="restart-btn" class="btn btn-secondary">Start Over</button>
+                    <button id="restart-btn" class="btn btn-secondary">Book Now!</button>
                 `;
                 break;
             case 'contact':
