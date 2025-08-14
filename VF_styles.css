@@ -47,6 +47,25 @@
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2) !important;
 }
 
+/* ===== NEW: VOICEFLOW IN-CHAT BUTTON ALIGNMENT FIX ===== */
+
+/* This targets buttons with images/text INSIDE the chat window */
+.vfrc-button {
+    display: flex !important;
+    align-items: center !important; /* Vertically center image and text */
+    justify-content: center !important; /* Horizontally center content */
+    gap: 8px !important; /* Create space between the image and the text */
+    padding-left: 12px !important; /* Add some padding to the left of the image */
+    padding-right: 16px !important; /* Add some padding to the right of the text */
+}
+
+/* Control the size of the image within the button */
+.vfrc-button img {
+    max-width: 28px !important;
+    height: auto !important;
+}
+
+
 /* ===== RESPONSIVE DESIGN (Adjusted for new base styles) ===== */
 @media (max-width: 480px) {
     .vfrc-launcher {
