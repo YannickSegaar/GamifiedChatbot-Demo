@@ -1,79 +1,231 @@
-/* ===== VOICEFLOW LAUNCHER - FIXED COLLISION ISSUE ===== */
+/* ===== VOICEFLOW LAUNCHER - PROPORTIONALLY LARGER ===== */
 
-/* Main launcher container */
+/* Main launcher container - INCREASED SIZE */
 .vfrc-launcher {
     width: auto !important;
     height: auto !important;
-    min-height: 56px !important; /* Ensure minimum height */
-    padding: 8px 16px !important; /* Reduced padding to prevent collision */
-    border-radius: 28px !important; /* Adjusted for new height */
+    min-height: 72px !important; /* Increased from ~56px default */
+    min-width: 160px !important; /* Increased minimum width */
+    padding: 14px 22px !important; /* Increased padding proportionally */
+    border-radius: 36px !important; /* Half of min-height for pill shape */
     bottom: 24px !important;
     right: 24px !important;
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15) !important;
-    display: flex !important; /* Force flex layout on main container */
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2) !important; /* Enhanced shadow */
+    display: flex !important;
     align-items: center !important;
     justify-content: center !important;
-    gap: 8px !important; /* Direct gap on launcher */
+    gap: 12px !important; /* Increased gap between logo and text */
 }
 
-/* Launcher image/avatar styling - FIXED */
+/* Launcher logo/image - PROPORTIONALLY LARGER */
 .vfrc-launcher img,
 .vfrc-launcher .vfrc-avatar,
 .vfrc-launcher [class*="avatar"],
 .vfrc-launcher [class*="image"] {
-    width: 32px !important; /* Slightly smaller to prevent collision */
-    height: 32px !important;
+    width: 48px !important; /* Increased from ~32px */
+    height: 48px !important;
     border-radius: 50% !important;
-    margin: 0 !important; /* Remove all margins */
-    flex-shrink: 0 !important; /* Prevent image from shrinking */
+    margin: 0 !important;
+    flex-shrink: 0 !important;
 }
 
-/* Launcher text styling - FIXED */
+/* Launcher text "Let's Talk!" - PROPORTIONALLY LARGER */
 .vfrc-launcher span,
 .vfrc-launcher [class*="text"],
 .vfrc-launcher [class*="title"] {
-    font-size: 14px !important; /* Slightly smaller font */
-    font-weight: 600 !important;
-    line-height: 1.1 !important; /* Tighter line height */
+    font-size: 18px !important; /* Increased from ~14px */
+    font-weight: 700 !important; /* Bolder for better visibility */
+    line-height: 1.2 !important;
     white-space: nowrap !important;
-    margin: 0 !important; /* Remove all margins */
-    padding: 0 !important; /* Remove all padding */
-    flex-shrink: 0 !important; /* Prevent text from shrinking */
-}
-
-/* ALTERNATIVE: Target all direct children of launcher */
-.vfrc-launcher > * {
     margin: 0 !important;
     padding: 0 !important;
+    flex-shrink: 0 !important;
+    color: inherit !important; /* Ensure text color follows theme */
 }
 
-/* Force proper spacing between elements */
-.vfrc-launcher > *:not(:last-child) {
-    margin-right: 8px !important;
+/* Remove any conflicting margins/padding */
+.vfrc-launcher > * {
+    margin: 0 !important;
 }
 
-/* Optional: Hover effects */
+/* Enhanced hover effect for larger launcher */
 .vfrc-launcher:hover {
-    transform: scale(1.05) !important;
-    transition: all 0.2s ease !important;
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2) !important;
+    transform: scale(1.08) !important; /* Slightly more pronounced */
+    transition: all 0.3s ease !important;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.25) !important;
 }
+
+/* ===== POPOVER CHAT WIDGET - INCREASED HEIGHT ===== */
+
+/* Main chat container - TALLER POPOVER */
+.vfrc-chat,
+.vfrc-widget,
+.vfrc-chat--overlay {
+    height: 650px !important; /* Increased from default ~500px */
+    max-height: 80vh !important; /* Ensure it doesn't exceed viewport */
+    width: 400px !important; /* You can adjust width too if needed */
+}
+
+/* Chat messages container - TALLER SCROLLABLE AREA */
+.vfrc-chat--content,
+.vfrc-messages,
+.vfrc-conversation {
+    height: calc(100% - 120px) !important; /* Account for header and input */
+    max-height: calc(80vh - 120px) !important;
+}
+
+/* Chat header - maintain proportions */
+.vfrc-header {
+    min-height: 60px !important;
+    padding: 12px 16px !important;
+}
+
+/* Chat input area - maintain proportions */
+.vfrc-input,
+.vfrc-chat--input {
+    min-height: 60px !important;
+    padding: 12px 16px !important;
+}
+
+/* ===== SIZE VARIATIONS (Optional - Uncomment to use) ===== */
+
+/* EXTRA LARGE LAUNCHER OPTION */
+/*
+.vfrc-launcher.xl-launcher {
+    min-height: 88px !important;
+    min-width: 200px !important;
+    padding: 18px 28px !important;
+    border-radius: 44px !important;
+    gap: 16px !important;
+}
+
+.vfrc-launcher.xl-launcher img,
+.vfrc-launcher.xl-launcher .vfrc-avatar {
+    width: 60px !important;
+    height: 60px !important;
+}
+
+.vfrc-launcher.xl-launcher span,
+.vfrc-launcher.xl-launcher [class*="text"] {
+    font-size: 22px !important;
+}
+*/
+
+/* MEDIUM LAUNCHER OPTION */
+/*
+.vfrc-launcher.md-launcher {
+    min-height: 64px !important;
+    min-width: 140px !important;
+    padding: 12px 18px !important;
+    border-radius: 32px !important;
+    gap: 10px !important;
+}
+
+.vfrc-launcher.md-launcher img,
+.vfrc-launcher.md-launcher .vfrc-avatar {
+    width: 40px !important;
+    height: 40px !important;
+}
+
+.vfrc-launcher.md-launcher span,
+.vfrc-launcher.md-launcher [class*="text"] {
+    font-size: 16px !important;
+}
+*/
 
 /* ===== RESPONSIVE DESIGN ===== */
-@media (max-width: 480px) {
+
+/* Tablet adjustments */
+@media (max-width: 768px) {
     .vfrc-launcher {
-        padding: 6px 12px !important;
-        gap: 6px !important;
+        min-height: 68px !important;
+        min-width: 150px !important;
+        padding: 12px 20px !important;
+        border-radius: 34px !important;
+        gap: 10px !important;
     }
     
     .vfrc-launcher img,
     .vfrc-launcher .vfrc-avatar {
-        width: 28px !important;
-        height: 28px !important;
+        width: 44px !important;
+        height: 44px !important;
     }
     
     .vfrc-launcher span,
     .vfrc-launcher [class*="text"] {
-        font-size: 13px !important;
+        font-size: 17px !important;
+    }
+    
+    /* Popover adjustments for tablet */
+    .vfrc-chat,
+    .vfrc-widget,
+    .vfrc-chat--overlay {
+        height: 600px !important;
+        width: 380px !important;
+    }
+}
+
+/* Mobile adjustments */
+@media (max-width: 480px) {
+    .vfrc-launcher {
+        min-height: 64px !important;
+        min-width: 140px !important;
+        padding: 10px 18px !important;
+        border-radius: 32px !important;
+        gap: 8px !important;
+    }
+    
+    .vfrc-launcher img,
+    .vfrc-launcher .vfrc-avatar {
+        width: 40px !important;
+        height: 40px !important;
+    }
+    
+    .vfrc-launcher span,
+    .vfrc-launcher [class*="text"] {
+        font-size: 16px !important;
+    }
+    
+    /* Popover adjustments for mobile */
+    .vfrc-chat,
+    .vfrc-widget,
+    .vfrc-chat--overlay {
+        height: 550px !important;
+        width: 350px !important;
+        max-height: 85vh !important;
+    }
+}
+
+/* Very small mobile adjustments */
+@media (max-width: 360px) {
+    .vfrc-chat,
+    .vfrc-widget,
+    .vfrc-chat--overlay {
+        width: 320px !important;
+        height: 500px !important;
+    }
+}
+
+/* ===== ADDITIONAL ENHANCEMENTS ===== */
+
+/* Ensure popover positioning is correct */
+.vfrc-chat--overlay {
+    bottom: 100px !important; /* Adjust based on your launcher size */
+    right: 24px !important;
+}
+
+/* Optional: Add subtle animation to popover opening */
+.vfrc-chat {
+    animation: slideUp 0.3s ease-out !important;
+}
+
+@keyframes slideUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
     }
 }
