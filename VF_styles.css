@@ -1,43 +1,55 @@
-/* ===== VOICEFLOW LAUNCHER - CORRECTED FOR DYNAMIC SIZING & ALIGNMENT ===== */
+/* ===== VOICEFLOW LAUNCHER - FIXED COLLISION ISSUE ===== */
 
-/* Main launcher container - DYNAMIC SIZING */
+/* Main launcher container */
 .vfrc-launcher {
-    width: auto !important; /* Let width be determined by content */
-    height: auto !important; /* Let height be determined by content + padding */
-    padding: 12px 18px !important; /* Symmetrical padding for vertical centering and horizontal space */
-    border-radius: 50px !important; /* Large radius for a consistent pill shape */
+    width: auto !important;
+    height: auto !important;
+    min-height: 56px !important; /* Ensure minimum height */
+    padding: 8px 16px !important; /* Reduced padding to prevent collision */
+    border-radius: 28px !important; /* Adjusted for new height */
     bottom: 24px !important;
     right: 24px !important;
     box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15) !important;
+    display: flex !important; /* Force flex layout on main container */
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 8px !important; /* Direct gap on launcher */
 }
 
-/* Launcher image/avatar styling */
+/* Launcher image/avatar styling - FIXED */
 .vfrc-launcher img,
-.vfrc-launcher .vfrc-launcher--avatar,
-.vfrc-launcher .vfrc-launcher--image {
-    width: 38px !important; /* Defined size for the image */
-    height: 38px !important;
+.vfrc-launcher .vfrc-avatar,
+.vfrc-launcher [class*="avatar"],
+.vfrc-launcher [class*="image"] {
+    width: 32px !important; /* Slightly smaller to prevent collision */
+    height: 32px !important;
     border-radius: 50% !important;
-    margin-right: 0 !important; /* Use gap for spacing, not margin */
+    margin: 0 !important; /* Remove all margins */
+    flex-shrink: 0 !important; /* Prevent image from shrinking */
 }
 
-/* Launcher text styling */
-.vfrc-launcher .vfrc-launcher--text,
-.vfrc-launcher .vfrc-launcher--title,
-.vfrc-launcher span {
-    font-size: 16px !important;
+/* Launcher text styling - FIXED */
+.vfrc-launcher span,
+.vfrc-launcher [class*="text"],
+.vfrc-launcher [class*="title"] {
+    font-size: 14px !important; /* Slightly smaller font */
     font-weight: 600 !important;
-    line-height: 1.2 !important;
+    line-height: 1.1 !important; /* Tighter line height */
     white-space: nowrap !important;
+    margin: 0 !important; /* Remove all margins */
+    padding: 0 !important; /* Remove all padding */
+    flex-shrink: 0 !important; /* Prevent text from shrinking */
 }
 
-/* Container for image + text layout - ALIGNMENT FIX */
-.vfrc-launcher .vfrc-launcher--content,
-.vfrc-launcher .vfrc-launcher--inner {
-    display: flex !important;
-    align-items: center !important; /* Vertically centers the image and text */
-    justify-content: flex-start !important; /* Aligns content to the left */
-    gap: 10px !important; /* Space between image and text */
+/* ALTERNATIVE: Target all direct children of launcher */
+.vfrc-launcher > * {
+    margin: 0 !important;
+    padding: 0 !important;
+}
+
+/* Force proper spacing between elements */
+.vfrc-launcher > *:not(:last-child) {
+    margin-right: 8px !important;
 }
 
 /* Optional: Hover effects */
@@ -47,42 +59,21 @@
     box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2) !important;
 }
 
-/* ===== NEW: VOICEFLOW IN-CHAT BUTTON ALIGNMENT FIX ===== */
-
-/* This targets buttons with images/text INSIDE the chat window */
-.vfrc-button {
-    display: flex !important;
-    align-items: center !important; /* Vertically center image and text */
-    justify-content: center !important; /* Horizontally center content */
-    gap: 8px !important; /* Create space between the image and the text */
-    padding-left: 12px !important; /* Add some padding to the left of the image */
-    padding-right: 16px !important; /* Add some padding to the right of the text */
-}
-
-/* Control the size of the image within the button */
-.vfrc-button img {
-    max-width: 28px !important;
-    height: auto !important;
-}
-
-
-/* ===== RESPONSIVE DESIGN (Adjusted for new base styles) ===== */
+/* ===== RESPONSIVE DESIGN ===== */
 @media (max-width: 480px) {
     .vfrc-launcher {
-        padding: 10px 16px !important; /* Slightly smaller padding on mobile */
+        padding: 6px 12px !important;
+        gap: 6px !important;
     }
     
     .vfrc-launcher img,
-    .vfrc-launcher .vfrc-launcher--avatar {
-        width: 36px !important;
-        height: 36px !important;
+    .vfrc-launcher .vfrc-avatar {
+        width: 28px !important;
+        height: 28px !important;
     }
     
-    .vfrc-launcher .vfrc-launcher--text {
-        font-size: 15px !important;
+    .vfrc-launcher span,
+    .vfrc-launcher [class*="text"] {
+        font-size: 13px !important;
     }
 }
-
-/* NOTE: The .large-launcher and .small-launcher classes have been removed 
-  as the new base style is fully dynamic and responsive, making them redundant.
-*/
