@@ -16034,7 +16034,7 @@ export const HawaiianSnorkelQuizExtension3 = {
                 <strong>For the Tour Operator:</strong> This is the view your customer sees after selecting the 'Turtle Snorkel Tour' from the tour selection carousel. It's designed to build excitement and provide context before the quiz begins.
             </p>
             <div class="video-container">
-                <iframe src="https://www.youtube.com/embed/216_co0_E2w?si=jA_yX_4b8_yZ_3R_&autoplay=1&mute=1&controls=0&loop=1&playlist=216_co0_E2w" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe src="https://yannicksegaar.github.io/GamifiedChatbot-Demo/HawaiiTourExperts_Quiz/SnorkelingTourVideo.mp4" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
             <h3 class="intro-title">Get Ready to Meet the Honu!</h3>
             <p class="intro-description">Our turtle snorkel tour is a true favourite! Play the quiz to discover your personal snorkel style and get a tour recommendation perfectly matched to you.</p>
