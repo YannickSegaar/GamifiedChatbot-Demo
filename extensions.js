@@ -15445,3 +15445,961 @@ export const HawaiianSnorkelQuizExtension2 = {
     };
   }
 };
+
+// YRS: HAWAII TOUR EXPERTS TURTLE QUIZ - VERSION 3
+
+export const HawaiianSnorkelQuizExtension3 = {
+  name: 'HawaiianSnorkelQuiz',
+  type: 'response',
+  match: ({ trace }) =>
+    trace.type === 'ext_hawaiianSnorkelQuiz3' || trace.payload?.name === 'ext_hawaiianSnorkelQuiz3',
+  render: ({ trace, element }) => {
+    // --- Configuration from Voiceflow Payload ---
+    const {
+      workflowTitle = 'Find Your Hawaiian Snorkel Style',
+      height = '700',
+      backgroundColor = '#F8F8F8', // --hte-bg-section
+      maxWidth = '500px',
+      // --- Branding from Hawaiian Styling Sheet ---
+      primaryColor = '#8B5A96', // --hte-purple-primary
+      secondaryColor = '#2196F3', // --hte-blue-accent
+      accentColor = '#FFFFFF', // --hte-white
+      highlightColor = '#6B4473', // --hte-purple-dark
+      // --- Border & Shadow ---
+      borderWidth = '1px',
+      borderColor = '#E0E0E0', // --hte-gray-lighter
+      borderStyle = 'solid',
+      borderRadius = '12px', // --hte-radius-lg
+      shadowColor = 'rgba(0, 0, 0, 0.12)', // --hte-shadow-card
+      shadowSize = '8px',
+      animateIn = true,
+    } = trace.payload || {};
+
+    // --- Quiz Questions Data with Hawaiian Turtle Tour Fun Facts ---
+    const questions = [
+      {
+        id: 'q1-priority',
+        title: 'Your ideal day in Hawaii is all about:',
+        description: 'What kind of island experience are you dreaming of?',
+        multiSelect: false,
+        image: 'https://yannicksegaar.github.io/GamifiedChatbot-Demo/HawaiiTourExperts_Quiz/q1_hero_beach.png',
+        options: [
+          { id: 'q1a', text: 'Learning about the reef ecosystem', image: 'https://yannicksegaar.github.io/GamifiedChatbot-Demo/HawaiiTourExperts_Quiz/q1_answer_reef.png', points: { m: 2, f: 1 }, funFact: 'Fantastic choice! Our tours are led by certified marine naturalists who can teach you how to identify fish and explain the lifecycle of the honu (Hawaiian Green Sea Turtle).' },
+          { id: 'q1b', text: 'Finding a secluded, peaceful cove', image: 'https://yannicksegaar.github.io/GamifiedChatbot-Demo/HawaiiTourExperts_Quiz/q1_answer_cove.png', points: { r: 2, m: 1 }, funFact: 'You\'ll love this! We specialize in visiting less-crowded "turtle cleaning stations" where you can observe turtles in a calm, natural setting away from the big tour boats.' },
+          { id: 'q1c', text: 'Action-packed ocean adventure', image: 'https://yannicksegaar.github.io/GamifiedChatbot-Demo/HawaiiTourExperts_Quiz/q1_answer_zodiac.png', points: { a: 2, f: 1 }, funFact: 'Awesome! Our "Ocean Explorer" package combines snorkeling with a thrilling zodiac boat ride along the coast to see sea caves and lava tubes up close.' },
+          { id: 'q1d', text: 'Easy, safe fun for the whole family', image: 'https://yannicksegaar.github.io/GamifiedChatbot-Demo/HawaiiTourExperts_Quiz/q1_answer_family.png', points: { f: 2, r: 1 }, funFact: 'Perfect! We provide high-quality life vests, flotation devices, and have in-water guides to ensure everyone from kids to grandparents has a safe and amazing time.' },
+        ]
+      },
+      {
+        id: 'q2-turtle',
+        title: 'You see a majestic sea turtle! You want to:',
+        description: 'What\'s your first instinct when you spot a "honu"?',
+        multiSelect: false,
+        image: 'https://yannicksegaar.github.io/GamifiedChatbot-Demo/HawaiiTourExperts_Quiz/q2_hero_turtle.png',
+        options: [
+          { id: 'q2a', text: 'Know its species and why it\'s here', image: 'https://yannicksegaar.github.io/GamifiedChatbot-Demo/HawaiiTourExperts_Quiz/q2_answer_turtleclose.png', points: { m: 2 }, funFact: 'Great curiosity! Our guides carry waterproof ID cards to help you distinguish between the Green Sea Turtle and the rarer Hawksbill, and they\'ll explain the importance of this specific habitat.' },
+          { id: 'q2b', text: 'Find the most colorful reef for a photo', image: 'https://yannicksegaar.github.io/GamifiedChatbot-Demo/HawaiiTourExperts_Quiz/q2_answer_turtlereef.png', points: { a: 2 }, funFact: 'Excellent eye! We know the spots where vibrant coral and sunlight create the most stunning underwater backdrops for your turtle photos.' },
+          { id: 'q2c', text: 'Float calmly and just watch it glide by', image: 'https://yannicksegaar.github.io/GamifiedChatbot-Demo/HawaiiTourExperts_Quiz/q2_answer_turtledistant.png', points: { r: 2 }, funFact: 'A wonderful approach. We teach "pono" (respectful) viewing practices, ensuring you can enjoy the moment peacefully without disturbing the turtles\' natural behavior.' },
+          { id: 'q2d', text: 'Make sure the kids get a great, safe view', image: 'https://yannicksegaar.github.io/GamifiedChatbot-Demo/HawaiiTourExperts_Quiz/q2_answer_turtlekids.png', points: { f: 2 }, funFact: 'Safety first! Our guides are experts at helping children use their gear and positioning them for the best, safest view of the turtles.' },
+        ]
+      },
+      {
+        id: 'q3-conservation',
+        title: 'Which eco-friendly practice is most important to you?',
+        description: 'Your choices help protect Hawaii\'s precious marine life.',
+        multiSelect: false,
+        image: 'https://yannicksegaar.github.io/GamifiedChatbot-Demo/HawaiiTourExperts_Quiz/q3_hero_split.png',
+        options: [
+          { id: 'q3a', text: 'Using only reef-safe sunscreen', image: 'https://yannicksegaar.github.io/GamifiedChatbot-Demo/HawaiiTourExperts_Quiz/q3_answer_sunscreen.png', points: { m: 2, r: 1 }, funFact: 'That\'s the spirit! We provide complimentary, high-quality, mineral-based reef-safe sunscreen on every tour to protect our delicate coral ecosystems.' },
+          { id: 'q3b', text: 'Supporting local conservation efforts', image: 'https://yannicksegaar.github.io/GamifiedChatbot-Demo/HawaiiTourExperts_Quiz/q3_answer_coralplanting.png', points: { m: 2, f: 1 }, funFact: 'Mahalo! A portion of every ticket goes directly to the Hawaii Wildlife Fund to support their sea turtle rescue and habitat restoration programs.' },
+          { id: 'q3c', text: 'Keeping a respectful distance from wildlife', image: 'https://yannicksegaar.github.io/GamifiedChatbot-Demo/HawaiiTourExperts_Quiz/q3_answer_respect.png', points: { r: 2, f: 1 }, funFact: 'Respect is key! Our "Honu Guardian" pledge, which all guests take, ensures we follow NOAA guidelines to stay at least 10 feet from turtles, protecting them from stress.' },
+          { id: 'q3d', text: 'Joining a tour that actively removes ocean trash', image: 'https://yannicksegaar.github.io/GamifiedChatbot-Demo/HawaiiTourExperts_Quiz/q3_answer_cleanup.png', points: { a: 2, m: 1 }, funFact: 'Love that! On our "Reef Rescue" snorkel, we provide mesh bags and dedicate the last 15 minutes to a fun, guided cleanup of any marine debris we find.' },
+        ]
+      },
+      {
+        id: 'q4-gear',
+        title: 'When it comes to snorkel gear, you prefer:',
+        description: 'What makes you feel most comfortable in the water?',
+        multiSelect: false,
+        image: 'https://yannicksegaar.github.io/GamifiedChatbot-Demo/HawaiiTourExperts_Quiz/q4_hero_gear.png',
+        options: [
+          { id: 'q4a', text: 'Top-of-the-line, no-fog mask', image: 'https://yannicksegaar.github.io/GamifiedChatbot-Demo/HawaiiTourExperts_Quiz/q4_answer_mask.png', points: { m: 1, a: 1 }, funFact: 'Clarity is everything! We invest in premium, low-volume masks with a special anti-fog coating to ensure you have a crystal-clear, uninterrupted view.' },
+          { id: 'q4b', text: 'A comfortable flotation belt to just relax', image: 'https://yannicksegaar.github.io/GamifiedChatbot-Demo/HawaiiTourExperts_Quiz/q4_answer_flotation.png', points: { r: 2 }, funFact: 'Relaxation is our specialty. We offer complimentary, comfortable flotation noodles and belts so you can float effortlessly and just enjoy the show.' },
+          { id: 'q4c', text: 'Fins that give you extra power', image: 'https://yannicksegaar.github.io/GamifiedChatbot-Demo/HawaiiTourExperts_Quiz/q4_answer_fins.png', points: { a: 2 }, funFact: 'Feel the power! Our performance fins are designed for maximum propulsion with minimum effort, perfect for exploring a wider area of the reef.' },
+          { id: 'q4d', text: 'Gear that\'s sanitized and fits my kids', image: 'https://yannicksegaar.github.io/GamifiedChatbot-Demo/HawaiiTourExperts_Quiz/q4_answer_cleangear.png', points: { f: 2 }, funFact: 'We\'ve got you covered. All our gear undergoes a multi-step sanitation process, and we have a full range of child-specific sizes for a perfect, leak-free fit.' },
+        ]
+      },
+      {
+        id: 'q5-boat',
+        title: 'Your perfect tour boat has:',
+        description: 'What kind of vessel completes your ideal ocean day?',
+        multiSelect: false,
+        image: 'https://yannicksegaar.github.io/GamifiedChatbot-Demo/HawaiiTourExperts_Quiz/q5_hero_catamaran.png',
+        options: [
+          { id: 'q5a', text: 'An on-board marine biologist for Q&A', image: 'https://yannicksegaar.github.io/GamifiedChatbot-Demo/HawaiiTourExperts_Quiz/q5_answer_guide.png', points: { m: 2, f: 1 }, funFact: 'Knowledge is power! Every single one of our tours has a dedicated marine naturalist on board specifically to answer questions and share insights about the wildlife you see.' },
+          { id: 'q5b', text: 'Lots of shade and a smooth ride', image: 'https://yannicksegaar.github.io/GamifiedChatbot-Demo/HawaiiTourExperts_Quiz/q5_answer_shade.png', points: { r: 2, f: 1 }, funFact: 'Comfort is key. Our custom-built catamaran is designed for stability and features a large shaded cabin, ensuring a smooth and relaxing ride to our snorkel spots.' },
+          { id: 'q5c', text: 'A fast boat to get to remote spots quickly', image: 'https://yannicksegaar.github.io/GamifiedChatbot-Demo/HawaiiTourExperts_Quiz/q5_answer_fastboat.png', points: { a: 2 }, funFact: 'Let\'s go! Our adventure tours use a high-speed zodiac, allowing us to reach pristine, remote reefs that are inaccessible to larger, slower boats.' },
+          { id: 'q5d', text: 'An easy-access swim step and snacks!', image: 'https://yannicksegaar.github.io/GamifiedChatbot-Demo/HawaiiTourExperts_Quiz/q5_answer_swimstep.png', points: { f: 2, r: 1 }, funFact: 'We agree! Our boat features a walk-in swim step (no ladders!) and we provide complimentary local juices and fresh pineapple slices after your swim.' },
+        ]
+      }
+    ];
+
+    // --- Persona Results Data ---
+    const personaResults = {
+      m: {
+        id: 'marine-biologist-in-training',
+        name: 'The Marine Biologist in Training',
+        description: 'You\'re driven by a deep curiosity for the ocean. For you, a great tour isn\'t just about seeing turtles; it\'s about understanding their world, protecting their habitat, and learning something new.',
+        image: 'https://yannicksegaar.github.io/GamifiedChatbot-Demo/HawaiiTourExperts_Quiz/persona_biologist.png',
+        personalizationHook: 'Because you value **{answerText}**, our educational tour is a perfect match.',
+        recommendation: {
+          name: 'Ultimate Honu Encounter & Reef Study',
+          details: 'Join our lead naturalist for an in-depth exploration of a turtle cleaning station. This small-group tour focuses on behavior, biology, and conservation.',
+          bookingUrl: '#' // Placeholder URL
+        }
+      },
+      r: {
+        id: 'relaxation-rover',
+        name: 'The Relaxation Rover',
+        description: 'You\'re in Hawaii to unwind and soak in the serene beauty. Your ideal day involves floating in calm, turquoise waters, feeling the warm sun, and peacefully observing nature without any rush.',
+        image: 'https://yannicksegaar.github.io/GamifiedChatbot-Demo/HawaiiTourExperts_Quiz/persona_relaxer.png',
+        personalizationHook: 'Since you\'re looking for **{answerText}**, you\'ll love this tranquil journey.',
+        recommendation: {
+          name: 'Serenity Snorkel Sail',
+          details: 'A gentle sail on our spacious catamaran to a calm, protected cove. Enjoy a leisurely snorkel and relax on deck with complimentary local refreshments.',
+          bookingUrl: '#' // Placeholder URL
+        }
+      },
+      a: {
+        id: 'aloha-adventure-seeker',
+        name: 'The Aloha Adventure Seeker',
+        description: 'You want to experience the thrilling side of the islands. You\'re looking for more than just a pretty view—you want to explore sea caves, cruise the coastline, and find the most dramatic underwater landscapes.',
+        image: 'https://yannicksegaar.github.io/GamifiedChatbot-Demo/HawaiiTourExperts_Quiz/persona_adventurer.png',
+        personalizationHook: 'Your love for **{answerText}** means you\'re ready for this exciting adventure.',
+        recommendation: {
+          name: 'Coastal Explorer & Reef Adventure',
+          details: 'Hop on our high-speed zodiac to explore remote reefs and volcanic coastlines. This tour is faster, goes further, and is packed with action.',
+          bookingUrl: '#' // Placeholder URL
+        }
+      },
+      f: {
+        id: 'family-voyager',
+        name: 'The Family Voyager',
+        description: 'Your top priority is creating amazing memories with your loved ones. You need an experience that is safe, engaging, and fun for all ages, with expert guides who make everyone feel comfortable in the water.',
+        image: 'https://yannicksegaar.github.io/GamifiedChatbot-Demo/HawaiiTourExperts_Quiz/persona_family.png',
+        personalizationHook: 'Because you want **{answerText}**, this family-friendly tour is the perfect choice.',
+        recommendation: {
+          name: 'Ohana Turtle Town Discovery',
+          details: 'Our most popular family tour! We visit a calm, shallow reef known for friendly turtles. All gear, flotation, and in-water guides are included.',
+          bookingUrl: '#' // Placeholder URL
+        }
+      }
+    };
+
+    // --- State Variables ---
+    let currentStep = 'intro';
+    let answers = {};
+    let calculatingTimeout = null;
+    let currentQuestionIndex = 1;
+
+    // --- Initial Setup ---
+    element.innerHTML = '';
+    const container = document.createElement('div');
+    container.style.cssText = 'width: 100%; display: flex; justify-content: center; align-items: flex-start; background-color: transparent; margin: 0; padding: 10px 0;';
+    const wrapper = document.createElement('div');
+    wrapper.className = 'hawaii-quiz-wrapper';
+    wrapper.style.cssText = `
+      width: ${maxWidth}; min-width: ${maxWidth}; max-width: ${maxWidth};
+      border: ${borderWidth} ${borderStyle} ${borderColor}; border-radius: ${borderRadius};
+      overflow: hidden; background-color: ${backgroundColor};
+      box-shadow: 0 4px ${shadowSize} ${shadowColor}; height: ${height}px;
+      display: flex; flex-direction: column; margin: 0 auto; position: relative;
+    `;
+    
+    if (animateIn) {
+      wrapper.style.opacity = '0';
+      wrapper.style.transform = 'translateY(20px)';
+      wrapper.style.transition = 'opacity 0.5s ease, transform 0.5s ease';
+    }
+
+    // --- HTML & CSS for the entire quiz ---
+    wrapper.innerHTML = `
+      <style>
+        @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap');
+        
+        .hawaii-quiz-wrapper * {
+          box-sizing: border-box;
+        }
+        
+        .workflow-header {
+          background: ${primaryColor};
+          color: white;
+          padding: 18px 20px;
+          text-align: center;
+        }
+        
+        .workflow-header h2 {
+          margin: 0;
+          font-family: 'Montserrat', sans-serif;
+          font-size: 19px;
+          font-weight: 600;
+          letter-spacing: 0.5px;
+        }
+        
+        .workflow-content {
+          flex: 1;
+          overflow-y: auto;
+          padding: 30px 25px 90px 25px;
+          position: relative;
+          font-family: 'Open Sans', sans-serif;
+        }
+        
+        .workflow-step {
+          display: none;
+          animation: fadeIn 0.4s ease-in-out;
+        }
+        
+        .workflow-step.active {
+          display: flex;
+          flex-direction: column;
+        }
+        
+        @keyframes fadeIn {
+          from { opacity: 0; transform: translateY(15px); }
+          to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* --- Progress Indicator --- */
+        .progress-indicator {
+          display: flex;
+          justify-content: center;
+          gap: 12px;
+          margin-bottom: 25px;
+        }
+        
+        .progress-dot {
+          width: 10px;
+          height: 10px;
+          border-radius: 50%;
+          background-color: ${borderColor};
+          transition: all 0.3s ease;
+        }
+        
+        .progress-dot.active {
+          background-color: ${secondaryColor};
+          transform: scale(1.3);
+        }
+
+        .progress-dot.completed {
+          background-color: ${primaryColor};
+        }
+        
+        /* --- Intro Step --- */
+        .intro-image {
+          width: 100%;
+          height: 220px;
+          object-fit: cover;
+          border-radius: ${borderRadius};
+          margin-bottom: 25px;
+        }
+        
+        .intro-title, .question-title, .results-title {
+          font-family: 'Montserrat', sans-serif;
+          font-size: 24px;
+          font-weight: 700;
+          color: ${primaryColor};
+          margin-bottom: 15px;
+          text-align: center;
+        }
+        
+        .intro-description, .question-description, .demo-explanation {
+          font-family: 'Open Sans', sans-serif;
+          font-size: 16px;
+          color: #4A4A4A; /* --hte-gray-text */
+          line-height: 1.6;
+          margin-bottom: 25px;
+          text-align: center;
+        }
+
+        .demo-explanation {
+            font-size: 14px;
+            padding: 10px;
+            background-color: #e8eaf6;
+            border-radius: 8px;
+            color: #3f51b5;
+        }
+
+        .video-container {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            padding-top: 56.25%; /* 16:9 Aspect Ratio */
+            border-radius: 12px;
+            margin-bottom: 20px;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            bottom: 0;
+            right: 0;
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+        
+        /* --- Question Step --- */
+        .question-image {
+          width: 100%;
+          height: 180px;
+          object-fit: cover;
+          border-radius: 12px;
+          margin-bottom: 20px;
+        }
+
+        .options-container {
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 12px;
+        }
+        
+        .option {
+          display: flex;
+          align-items: center;
+          border: 2px solid ${borderColor};
+          border-radius: 8px; /* --hte-radius-md */
+          padding: 12px;
+          cursor: pointer;
+          transition: all 0.2s ease;
+          background-color: ${accentColor};
+        }
+        
+        .option:hover {
+          border-color: ${secondaryColor};
+          transform: translateY(-2px);
+          box-shadow: 0 4px 15px ${shadowColor};
+        }
+        
+        .option.selected {
+          border-color: ${primaryColor};
+          background-color: #F5F5F5; /* --hte-gray-lightest */
+        }
+        
+        .option-image {
+          width: 60px;
+          height: 60px;
+          object-fit: cover;
+          border-radius: 4px; /* --hte-radius-sm */
+          margin-right: 15px;
+        }
+        
+        .option-text {
+          font-family: 'Open Sans', sans-serif;
+          font-size: 16px;
+          font-weight: 600;
+          color: #333;
+          flex: 1;
+        }
+        
+        .option-check {
+          width: 24px;
+          height: 24px;
+          border: 2px solid ${borderColor};
+          border-radius: 50%;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          transition: all 0.2s ease;
+        }
+
+        .option.selected .option-check {
+          background-color: ${primaryColor};
+          border-color: ${primaryColor};
+        }
+
+        .option-check svg { display: none; }
+        .option.selected .option-check svg { display: block; }
+        
+        /* --- Fun Fact Box --- */
+        .fun-fact-box {
+            background: linear-gradient(135deg, #F5F5F5, #fff);
+            border-left: 4px solid ${secondaryColor};
+            border-radius: 8px;
+            padding: 15px 20px;
+            margin-top: 20px;
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out, padding 0.5s ease-in-out;
+        }
+
+        .fun-fact-box.visible {
+            max-height: 200px;
+            opacity: 1;
+            padding: 15px 20px;
+        }
+
+        .fun-fact-title {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            color: ${primaryColor};
+            margin-bottom: 5px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .fun-fact-text {
+            font-family: 'Open Sans', sans-serif;
+            font-size: 15px;
+            color: #4A4A4A;
+            line-height: 1.6;
+        }
+
+        /* --- Calculating Step --- */
+        .calculating-container {
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          justify-content: center;
+          height: 100%;
+          text-align: center;
+        }
+        
+        .calculating-container .spinner {
+          width: 60px;
+          height: 60px;
+          border: 5px solid rgba(33, 150, 243, 0.3);
+          border-top-color: ${secondaryColor};
+          border-radius: 50%;
+          animation: spin 1s linear infinite;
+          margin-bottom: 30px;
+        }
+
+        @keyframes spin {
+          to { transform: rotate(360deg); }
+        }
+        
+        /* --- Results Step --- */
+        .results-card {
+          background-color: ${accentColor};
+          border-radius: ${borderRadius};
+          padding: 25px;
+          text-align: center;
+          border: 1px solid ${borderColor};
+        }
+
+        .persona-image {
+          width: 120px;
+          height: 120px;
+          object-fit: cover;
+          border-radius: 50%;
+          margin: 0 auto 20px auto;
+          border: 4px solid white;
+          box-shadow: 0 5px 15px ${shadowColor};
+        }
+
+        .persona-name {
+          font-family: 'Montserrat', sans-serif;
+          font-size: 26px;
+          font-weight: 700;
+          color: ${primaryColor};
+          margin: 0 0 10px 0;
+        }
+
+        .persona-description {
+          font-family: 'Open Sans', sans-serif;
+          font-size: 15px;
+          color: #4A4A4A;
+          line-height: 1.6;
+          margin-bottom: 20px;
+        }
+
+        .personalization-hook {
+            font-style: italic;
+            color: ${primaryColor};
+            margin-bottom: 20px;
+            font-weight: 600;
+            background-color: #F8F8F8;
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        .recommendation-box {
+          background-color: white;
+          border: 2px dashed ${secondaryColor};
+          padding: 20px;
+          border-radius: 12px;
+          margin-top: 20px;
+        }
+
+        .recommendation-title {
+          font-family: 'Montserrat', sans-serif;
+          font-size: 14px;
+          font-weight: 600;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+          color: ${secondaryColor};
+          margin: 0 0 10px 0;
+        }
+
+        .recommendation-name {
+          font-family: 'Montserrat', sans-serif;
+          font-size: 18px;
+          font-weight: 700;
+          color: ${primaryColor};
+          margin: 0 0 8px 0;
+        }
+
+        .recommendation-details {
+          font-family: 'Open Sans', sans-serif;
+          font-size: 15px;
+          color: #4A4A4A;
+          line-height: 1.5;
+        }
+        
+        /* --- Bottom Buttons --- */
+        .btn-container {
+          position: absolute;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          display: flex;
+          justify-content: space-between;
+          gap: 15px;
+          padding: 20px 25px;
+          background-color: ${backgroundColor};
+          border-top: 1px solid ${borderColor};
+          z-index: 10;
+        }
+        
+        .btn {
+          padding: 14px 20px;
+          border-radius: 8px; /* --hte-radius-md */
+          font-family: 'Open Sans', sans-serif;
+          font-weight: 600;
+          cursor: pointer;
+          border: none;
+          font-size: 16px;
+          transition: all 0.2s ease;
+          flex-grow: 1;
+          text-align: center;
+          text-decoration: none;
+          display: inline-flex;
+          justify-content: center;
+          align-items: center;
+          text-transform: uppercase;
+          letter-spacing: 0.5px;
+        }
+        
+        .btn-primary {
+          background-color: ${primaryColor};
+          color: white;
+          box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-primary:hover:not(:disabled) {
+          background-color: ${highlightColor};
+          transform: translateY(-2px);
+          box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+        
+        .btn-primary:disabled {
+          background-color: #B0BEC5;
+          cursor: not-allowed;
+          opacity: 0.8;
+        }
+        
+        .btn-secondary {
+          background-color: ${accentColor};
+          color: ${primaryColor};
+          border: 2px solid ${primaryColor};
+        }
+        
+        .btn-secondary:hover {
+          background-color: ${primaryColor};
+          color: white;
+        }
+      </style>
+
+      <div class="workflow-header">
+        <h2 id="header-title">Gamified Quiz Demo</h2>
+      </div>
+
+      <div class="workflow-content">
+        <!-- NEW DEMO INTRO STEP -->
+        <div id="intro-step" class="workflow-step active">
+            <p class="demo-explanation">
+                <strong>For the Tour Operator:</strong> This is the view your customer sees after selecting the 'Turtle Snorkel Tour' from the tour selection carousel. It's designed to build excitement and provide context before the quiz begins.
+            </p>
+            <div class="video-container">
+                <iframe src="https://www.youtube.com/embed/216_co0_E2w?si=jA_yX_4b8_yZ_3R_&autoplay=1&mute=1&controls=0&loop=1&playlist=216_co0_E2w" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            </div>
+            <h3 class="intro-title">Get Ready to Meet the Honu!</h3>
+            <p class="intro-description">Our turtle snorkel tour is a true favourite! Play the quiz to discover your personal snorkel style and get a tour recommendation perfectly matched to you.</p>
+        </div>
+
+        <!-- RENAMED ORIGINAL INTRO STEP -->
+        <div id="quiz-start-step" class="workflow-step">
+          <img class="intro-image" src="https://yannicksegaar.github.io/GamifiedChatbot-Demo/HawaiiTourExperts_Quiz/HawaiiTourExperts_logo.png" alt="Hawaii Tours Logo">
+          <h3 class="intro-title">Discover Your Inner Honu</h3>
+          <p class="intro-description">Answer 5 quick questions to reveal your unique Hawaiian snorkel style and get a personalized turtle tour recommendation!</p>
+        </div>
+        
+        <div id="question-step" class="workflow-step">
+          <div id="progress-indicator" class="progress-indicator"></div>
+          <div id="question-content"></div>
+        </div>
+        
+        <div id="calculating-step" class="workflow-step">
+          <div class="calculating-container">
+            <div class="spinner"></div>
+            <h3 class="results-title">Finding Your Perfect Wave...</h3>
+            <p class="intro-description">We're matching your preferences with our amazing turtle adventures.</p>
+          </div>
+        </div>
+        
+        <div id="results-step" class="workflow-step">
+          <div id="results-content"></div>
+        </div>
+
+        <div id="lead-capture-step" class="workflow-step">
+            <h3 class="intro-title">Get Your Full Itinerary!</h3>
+            <p class="intro-description">Enter your details below, and we'll email your snorkel persona and a custom guide for your recommended tour.</p>
+            <form id="lead-form">
+                <div class="form-group">
+                    <label for="user-name">Name</label>
+                    <input type="text" id="user-name" name="name" required>
+                </div>
+                <div class="form-group">
+                    <label for="user-email">Email</label>
+                    <input type="email" id="user-email" name="email" required>
+                </div>
+            </form>
+        </div>
+      </div>
+
+      <div class="btn-container" id="footer-buttons"></div>
+    `;
+
+    // --- Append to DOM ---
+    container.appendChild(wrapper);
+    element.appendChild(container);
+
+    if (animateIn) {
+      setTimeout(() => {
+        wrapper.style.opacity = '1';
+        wrapper.style.transform = 'translateY(0)';
+      }, 100);
+    }
+
+    // --- Core Functions ---
+    function showStep(stepId) {
+      const steps = wrapper.querySelectorAll('.workflow-step');
+      steps.forEach(step => step.classList.remove('active'));
+      
+      const targetStep = wrapper.querySelector(`#${stepId}-step`);
+      if (targetStep) {
+        targetStep.classList.add('active');
+        currentStep = stepId;
+        renderFooterButtons();
+        
+        if (stepId === 'question') renderCurrentQuestion();
+        if (stepId === 'results') renderResults();
+      }
+    }
+
+    function renderFooterButtons() {
+        const footer = wrapper.querySelector('#footer-buttons');
+        let buttonsHTML = '';
+
+        switch(currentStep) {
+            case 'intro':
+                buttonsHTML = `<button id="start-btn" class="btn btn-primary">Take the Quiz!</button>`;
+                break;
+            case 'quiz-start':
+                buttonsHTML = `<button id="start-quiz-btn" class="btn btn-primary">Start Quiz</button>`;
+                break;
+            case 'question':
+                buttonsHTML = `
+                    <button id="back-btn" class="btn btn-secondary">Back</button>
+                    <button id="next-btn" class="btn btn-primary" disabled>Next</button>
+                `;
+                break;
+            case 'results':
+                 buttonsHTML = `
+                    <a href="#" id="book-now-btn" target="_blank" class="btn btn-primary">Book This Tour</a>
+                    <button id="email-results-btn" class="btn btn-secondary">Email My Results</button>
+                `;
+                break;
+            case 'lead-capture':
+                buttonsHTML = `
+                    <button id="back-to-results-btn" class="btn btn-secondary">Back</button>
+                    <button id="submit-lead-btn" class="btn btn-primary">Send My Itinerary</button>
+                `;
+                break;
+            default:
+                buttonsHTML = '';
+                break;
+        }
+        footer.innerHTML = buttonsHTML;
+        setupEventListeners();
+    }
+    
+    function renderProgressIndicator() {
+      const container = wrapper.querySelector('#progress-indicator');
+      if (!container) return;
+      
+      container.innerHTML = '';
+      const totalSteps = questions.length;
+      
+      for (let i = 1; i <= totalSteps; i++) {
+        const dot = document.createElement('div');
+        dot.className = 'progress-dot';
+        if (i < currentQuestionIndex) dot.classList.add('completed');
+        if (i === currentQuestionIndex) dot.classList.add('active');
+        container.appendChild(dot);
+      }
+    }
+
+    function renderCurrentQuestion() {
+      const index = currentQuestionIndex - 1;
+      const question = questions[index];
+      if (!question) return;
+      
+      renderProgressIndicator();
+      
+      const content = wrapper.querySelector('#question-content');
+      content.innerHTML = `
+        <img class="question-image" src="${question.image}" alt="${question.title}" onerror="this.style.display='none'">
+        <h3 class="question-title">${question.title}</h3>
+        <p class="question-description">${question.description}</p>
+        <div class="options-container" id="question-options">
+          ${question.options.map(option => `
+            <div class="option" data-option-id="${option.id}">
+              <img class="option-image" src="${option.image}" alt="${option.text}" onerror="this.style.display='none'">
+              <div class="option-text">${option.text}</div>
+              <div class="option-check">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="white" stroke-width="3" stroke-linecap="round" stroke-linejoin="round">
+                    <polyline points="20 6 9 17 4 12"></polyline>
+                </svg>
+              </div>
+            </div>
+          `).join('')}
+        </div>
+        <div class="fun-fact-box" id="fun-fact-box">
+            <div class="fun-fact-title">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z"></path><path d="M12 22v-6"></path></svg>
+                Insider Tip
+            </div>
+            <p class="fun-fact-text" id="fun-fact-text"></p>
+        </div>
+      `;
+      
+      const options = wrapper.querySelectorAll('.option');
+      options.forEach(option => {
+          option.onclick = () => {
+              handleOptionClick(question, option.dataset.optionId);
+          };
+      });
+
+      updateSelectedOptions();
+      updateNextButtonState();
+    }
+    
+    function handleOptionClick(question, optionId) {
+      answers[question.id] = optionId;
+      updateSelectedOptions();
+      updateNextButtonState();
+
+      const selectedOption = question.options.find(opt => opt.id === optionId);
+      const funFactBox = wrapper.querySelector('#fun-fact-box');
+      const funFactText = wrapper.querySelector('#fun-fact-text');
+
+      if (selectedOption && funFactBox && funFactText) {
+          funFactText.textContent = selectedOption.funFact;
+          funFactBox.classList.add('visible');
+      }
+    }
+    
+    function updateSelectedOptions() {
+      const question = questions[currentQuestionIndex - 1];
+      if (!question) return;
+      
+      const options = wrapper.querySelectorAll('#question-options .option');
+      options.forEach(option => {
+        const optionId = option.dataset.optionId;
+        option.classList.toggle('selected', answers[question.id] === optionId);
+      });
+    }
+    
+    function updateNextButtonState() {
+      const nextBtn = wrapper.querySelector('#next-btn');
+      if (!nextBtn) return;
+      
+      const question = questions[currentQuestionIndex - 1];
+      nextBtn.disabled = !answers[question.id];
+      
+      if (currentQuestionIndex === questions.length) {
+        nextBtn.textContent = 'See Results';
+      } else {
+        nextBtn.textContent = 'Next';
+      }
+    }
+    
+    function calculateResults() {
+      const scores = { m: 0, r: 0, a: 0, f: 0 };
+
+      questions.forEach(question => {
+        const selectedOptionId = answers[question.id];
+        if (selectedOptionId) {
+          const selectedOption = question.options.find(opt => opt.id === selectedOptionId);
+          if (selectedOption && selectedOption.points) {
+            for (const persona in selectedOption.points) {
+              scores[persona] += selectedOption.points[persona];
+            }
+          }
+        }
+      });
+      
+      let topPersona = 'r';
+      let maxScore = 0;
+      for (const persona in scores) {
+        if (scores[persona] > maxScore) {
+          maxScore = scores[persona];
+          topPersona = persona;
+        }
+      }
+      
+      return personaResults[topPersona];
+    }
+    
+    function renderResults() {
+      const result = calculateResults();
+      const content = wrapper.querySelector('#results-content');
+      
+      const firstAnswerId = answers['q1-priority'];
+      const firstAnswerText = questions[0].options.find(opt => opt.id === firstAnswerId)?.text.toLowerCase() || 'adventure';
+      const personalizedHook = result.personalizationHook.replace('{answerText}', `<strong>${firstAnswerText}</strong>`);
+
+      content.innerHTML = `
+        <div class="results-card">
+            <img class="persona-image" src="${result.image}" alt="${result.name}" onerror="this.style.display='none'">
+            <h3 class="persona-name">${result.name}</h3>
+            <p class="persona-description">${result.description}</p>
+            <p class="personalization-hook">${personalizedHook}</p>
+            <div class="recommendation-box">
+                <p class="recommendation-title">Your Recommended Tour</p>
+                <h4 class="recommendation-name">${result.recommendation.name}</h4>
+                <p class="recommendation-details">${result.recommendation.details}</p>
+            </div>
+        </div>
+      `;
+      content.querySelector('.personalization-hook').innerHTML = personalizedHook;
+
+      const bookBtn = wrapper.querySelector('#book-now-btn');
+      if(bookBtn) {
+        bookBtn.href = result.recommendation.bookingUrl;
+      }
+    }
+    
+    function handleCompletion(leadData = {}) {
+      const finalPersona = calculateResults();
+      if (window.voiceflow?.chat) {
+        window.voiceflow.chat.interact({
+          type: 'request',
+          payload: {
+            type: 'hawaiian-quiz-complete',
+            data: {
+              persona: finalPersona.name,
+              recommendedTour: finalPersona.recommendation.name,
+              answers: answers,
+              lead: leadData
+            }
+          }
+        });
+      } else {
+        console.log(`Quiz Complete! Persona: ${finalPersona.name}. Lead: ${leadData.name}, ${leadData.email}`);
+        alert(`Quiz Complete! Your persona is: ${finalPersona.name}.`);
+      }
+    }
+
+    function setupEventListeners() {
+        const el = (selector) => wrapper.querySelector(selector);
+
+        const startBtn = el('#start-btn');
+        const startQuizBtn = el('#start-quiz-btn');
+        const nextBtn = el('#next-btn');
+        const backBtn = el('#back-btn');
+        const emailResultsBtn = el('#email-results-btn');
+        const backToResultsBtn = el('#back-to-results-btn');
+        const submitLeadBtn = el('#submit-lead-btn');
+        
+        if(startBtn) startBtn.onclick = () => showStep('quiz-start');
+        if(startQuizBtn) startQuizBtn.onclick = () => showStep('question');
+        
+        if(nextBtn) nextBtn.onclick = () => {
+            if (currentQuestionIndex < questions.length) {
+                currentQuestionIndex++;
+                showStep('question');
+            } else {
+                showStep('calculating');
+                calculatingTimeout = setTimeout(() => showStep('results'), 2500);
+            }
+        };
+
+        if(backBtn) backBtn.onclick = () => {
+            if (currentQuestionIndex > 1) {
+                currentQuestionIndex--;
+                showStep('question');
+            } else {
+                showStep('quiz-start');
+            }
+        };
+
+        if(emailResultsBtn) emailResultsBtn.onclick = () => showStep('lead-capture');
+        if(backToResultsBtn) backToResultsBtn.onclick = () => showStep('results');
+
+        if(submitLeadBtn) submitLeadBtn.onclick = (e) => {
+            e.preventDefault();
+            const nameInput = el('#user-name');
+            const emailInput = el('#user-email');
+            if (nameInput.value && emailInput.value && emailInput.checkValidity()) {
+                handleCompletion({ name: nameInput.value, email: emailInput.value });
+                const formContainer = el('#lead-capture-step');
+                formContainer.innerHTML = `<h3 class="intro-title">Mahalo!</h3><p class="intro-description">Your personalized snorkel guide is on its way to your inbox.</p>`;
+                el('#footer-buttons').innerHTML = `<button id="restart-btn" class="btn btn-primary">Start Over</button>`;
+                el('#restart-btn').onclick = () => {
+                  currentQuestionIndex = 1;
+                  answers = {};
+                  showStep('intro');
+                }
+            } else {
+                // A simple validation message without using alert()
+                const form = el('#lead-form');
+                let errorMsg = form.querySelector('.error-message');
+                if (!errorMsg) {
+                    errorMsg = document.createElement('p');
+                    errorMsg.className = 'error-message';
+                    errorMsg.style.color = 'red';
+                    errorMsg.style.textAlign = 'center';
+                    errorMsg.style.marginTop = '10px';
+                    form.appendChild(errorMsg);
+                }
+                errorMsg.textContent = 'Please enter a valid name and email address.';
+            }
+        };
+    }
+
+    // --- Initial Render ---
+    showStep('intro');
+
+    // --- Cleanup Function ---
+    return function cleanup() {
+      if (calculatingTimeout) {
+        clearTimeout(calculatingTimeout);
+      }
+    };
+  }
+};

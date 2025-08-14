@@ -1,0 +1,50 @@
+/* ===== VOICEFLOW LAUNCHER ICON CUSTOMIZATION ===== */
+
+/* Increase the size of the launcher button */
+.vfrc-launcher {
+    width: 80px !important;
+    height: 80px !important;
+    /* Default is usually around 56px */
+}
+
+/* Adjust the launcher icon/image inside the button */
+.vfrc-launcher img,
+.vfrc-launcher svg,
+.vfrc-launcher .vfrc-launcher--icon {
+    width: 48px !important;
+    height: 48px !important;
+    /* Scale the icon proportionally to the larger button */
+}
+
+/* Optional: Adjust positioning if needed */
+.vfrc-launcher {
+    bottom: 24px !important;
+    right: 24px !important;
+    /* Adjust positioning from edges if desired */
+}
+
+/* Optional: Add custom hover effects for the larger button */
+.vfrc-launcher:hover {
+    transform: scale(1.1) !important;
+    transition: transform 0.2s ease !important;
+}
+
+/* Optional: Adjust shadow for better visual impact with larger size */
+.vfrc-launcher {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* If you want to customize the launcher for different screen sizes */
+@media (max-width: 768px) {
+    .vfrc-launcher {
+        width: 70px !important;
+        height: 70px !important;
+    }
+    
+    .vfrc-launcher img,
+    .vfrc-launcher svg,
+    .vfrc-launcher .vfrc-launcher--icon {
+        width: 42px !important;
+        height: 42px !important;
+    }
+}
