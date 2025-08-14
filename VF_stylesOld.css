@@ -1,0 +1,126 @@
+/* ===== VOICEFLOW LAUNCHER WITH IMAGE + TEXT CUSTOMIZATION (CORRECTED) ===== */
+
+/* Main launcher container - Corrected for better proportions */
+.vfrc-launcher {
+    width: auto !important;
+    min-width: 140px !important; /* Increased for more space */
+    height: 64px !important; /* Decreased for a balanced rectangle shape */
+    padding: 0 20px !important; /* Adjusted for better horizontal spacing */
+    border-radius: 32px !important; /* Half of the new height for a perfect pill shape */
+}
+
+/* Launcher image/avatar styling - Resized to fit */
+.vfrc-launcher img,
+.vfrc-launcher .vfrc-launcher--avatar,
+.vfrc-launcher .vfrc-launcher--image {
+    width: 40px !important; /* Resized for new container height */
+    height: 40px !important;
+    border-radius: 50% !important;
+    margin-right: 0 !important; /* Removed margin to rely on 'gap' for spacing */
+}
+
+/* Launcher text styling - Adjusted for clarity */
+.vfrc-launcher .vfrc-launcher--text,
+.vfrc-launcher .vfrc-launcher--title,
+.vfrc-launcher span {
+    font-size: 15px !important; /* Slightly adjusted for better fit */
+    font-weight: 600 !important;
+    line-height: 1.2 !important;
+    white-space: nowrap !important;
+}
+
+/* Container for image + text layout - Improved spacing */
+.vfrc-launcher .vfrc-launcher--content,
+.vfrc-launcher .vfrc-launcher--inner {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 12px !important; /* Increased gap for better spacing between image and text */
+}
+
+/* Optional: Hover effects for the larger launcher */
+.vfrc-launcher:hover {
+    transform: scale(1.05) !important;
+    transition: all 0.2s ease !important;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2) !important;
+}
+
+/* ===== SIZE VARIATIONS (These are optional classes you can add) ===== */
+
+/* LARGE SIZE OPTION */
+.vfrc-launcher.large-launcher {
+    height: 100px !important;
+    min-width: 150px !important;
+    padding: 16px 20px !important;
+}
+
+.vfrc-launcher.large-launcher img,
+.vfrc-launcher.large-launcher .vfrc-launcher--avatar {
+    width: 60px !important;
+    height: 60px !important;
+}
+
+.vfrc-launcher.large-launcher .vfrc-launcher--text {
+    font-size: 18px !important;
+}
+
+/* SMALL SIZE OPTION */
+.vfrc-launcher.small-launcher {
+    height: 60px !important;
+    min-width: 100px !important;
+    padding: 8px 12px !important;
+}
+
+.vfrc-launcher.small-launcher img,
+.vfrc-launcher.small-launcher .vfrc-launcher--avatar {
+    width: 36px !important;
+    height: 36px !important;
+}
+
+.vfrc-launcher.small-launcher .vfrc-launcher--text {
+    font-size: 14px !important;
+}
+
+/* ===== RESPONSIVE DESIGN (Kept your original queries) ===== */
+@media (max-width: 768px) {
+    .vfrc-launcher {
+        height: 70px !important;
+        min-width: 110px !important;
+        padding: 10px 14px !important;
+    }
+    
+    .vfrc-launcher img,
+    .vfrc-launcher .vfrc-launcher--avatar {
+        width: 42px !important;
+        height: 42px !important;
+    }
+    
+    .vfrc-launcher .vfrc-launcher--text {
+        font-size: 15px !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .vfrc-launcher {
+        height: 65px !important;
+        min-width: 100px !important;
+        padding: 8px 12px !important;
+    }
+    
+    .vfrc-launcher img,
+    .vfrc-launcher .vfrc-launcher--avatar {
+        width: 38px !important;
+        height: 38px !important;
+    }
+    
+    .vfrc-launcher .vfrc-launcher--text {
+        font-size: 14px !important;
+    }
+}
+
+/* ===== POSITIONING ADJUSTMENTS ===== */
+.vfrc-launcher {
+    bottom: 24px !important;
+    right: 24px !important;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.15) !important;
+}
